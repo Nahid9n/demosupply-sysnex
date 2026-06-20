@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="{{asset('/')}}Frontend/css/styles.css">
     @yield('css')
     @stack('css')
+
 </head>
 <body>
 

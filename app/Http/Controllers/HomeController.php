@@ -14,6 +14,24 @@ class HomeController extends Controller
 
         return view('frontEnd.home.index');
     }
+    public function services(){
+        return view('frontEnd.services.index');
+    }
+    public function serviceDetails($slug){
+        return view('frontEnd.services.details');
+    }
+    public function about(){
+        return view('frontEnd.about-us.index');
+    }
+    public function device(){
+        return view('frontEnd.product.device');
+    }
+    public function electrolite(){
+        return view('frontEnd.product.electrolite');
+    }
+    public function water(){
+        return view('frontEnd.product.water');
+    }
     public function contact(){
         return view('frontEnd.contact-us.index');
     }
@@ -41,17 +59,5 @@ class HomeController extends Controller
             'success' => true,
             'message' => 'Form Submit Success.'
         ], 200);
-    }
-    public function about(){
-        return view('frontEnd.about-us.index');
-    }
-    public function device(){
-        return view('frontEnd.product.device');
-    }
-    public function electrolite(){
-        return view('frontEnd.product.electrolite');
-    }
-    public function water(){
-        return view('frontEnd.product.water');
     }
 }

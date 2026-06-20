@@ -24,6 +24,8 @@
 
     <!-- Theme Config js (Require in all Page) -->
     <script src="{{asset('/')}}Backend/assets/js/config.min.js"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-lite.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -231,6 +233,12 @@
     </script>
 @endif
 @stack('js')
+<script src="{{asset('/')}}Backend/assets/js/summernote.min.js"></script>
+<script>
+    $('.summernote').summernote({
+        height: 200
+    });
+</script>
 </body>
 
 

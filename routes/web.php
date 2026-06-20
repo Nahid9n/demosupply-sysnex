@@ -21,6 +21,8 @@ Route::get('/cc', function () {
 Route::get('/', [\App\Http\Controllers\HomeController::class,'index'])->name('home');
 Route::get('/contact-us', [\App\Http\Controllers\HomeController::class,'contact'])->name('contact');
 Route::get('/about-us', [\App\Http\Controllers\HomeController::class,'about'])->name('about');
+Route::get('/service', [\App\Http\Controllers\HomeController::class,'services'])->name('services');
+Route::get('/service/{slug}', [\App\Http\Controllers\HomeController::class,'serviceDetails'])->name('service.details');
 Route::get('/electrolite', [\App\Http\Controllers\HomeController::class,'electrolite'])->name('electrolite');
 Route::get('/water-filter', [\App\Http\Controllers\HomeController::class,'water'])->name('water');
 Route::get('/device', [\App\Http\Controllers\HomeController::class,'device'])->name('device');
@@ -36,6 +38,19 @@ Route::prefix('admin')->group(function () {
     // Authenticated routes (web guard)
     Route::middleware('auth:web')->group(function () {
         Route::get('/dashboard', [DashboardController::class,'dashboard'])->name('admin.dashboard');
+        Route::controller(Admin\ServiceController::class)->group(function (){
+            Route::get('/services','index')->name('admin.services.index');
+            Route::get('/service/create','create')->name('admin.services.create');
+            Route::post('/service/store','store')->name('admin.services.store');
+            Route::get('/service/edit/{id}','edit')->name('admin.services.edit');
+            Route::post('/service/update/{id}','update')->name('admin.services.update');
+            Route::delete('/service/delete','destroy')->name('admin.services.delete');
+            Route::get('/check-slug', 'checkSlug')->name('check.slug');
+        });
+
+
+
+
         Route::get('/role-permission', [RolePermissionController::class,'index'])->name('admin.role.permission');
         Route::get('/role-permission/create', [RolePermissionController::class,'create'])->name('admin.role.permission.create');
         Route::post('/role-permission/store', [RolePermissionController::class,'store'])->name('admin.role.permission.store');
@@ -67,6 +82,14 @@ Route::prefix('admin')->group(function () {
     });
 
 });
+Route::get('/sync-permission', function () {
 
+    \Illuminate\Support\Facades\Artisan::call('db:seed', [
+        '--class' => 'Database\\Seeders\\PermissionSeeder',
+        '--force' => true,
+    ]);
+
+    return 'Permissions & Roles synced successfully!';
+});
 
 

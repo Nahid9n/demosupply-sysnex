@@ -21,6 +21,7 @@ class PermissionSeeder extends Seeder
             'profile',
             'setting', 'reset.password',
             'user.list', 'user.store','user.update','user.delete',
+            'service.list','service.store','service.update','service.delete'
         ];
 
         // Create Permissions

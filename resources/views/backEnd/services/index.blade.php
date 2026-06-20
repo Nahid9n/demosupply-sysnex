@@ -1,0 +1,78 @@
+@extends('backEnd.layout.master') {{-- Adjust based on master structural file path --}}
+@section('body')
+    <div class="py-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h4 class="fw-bold text-slate-900 mb-0">Service Lists</h4>
+            </div>
+            <a href="{{ route('admin.services.create') }}" class="btn btn-primary rounded-3 px-4 py-2 fw-semibold">
+                <i class="ri-add-line me-1"></i> Add New Service
+            </a>
+        </div>
+
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+            <div class="table-responsive">
+                <table class="table align-middle mb-0">
+                    <thead class="bg-primary text-uppercase fs-8 fw-bold text-slate-700">
+                    <tr>
+                        <th class="ps-4 py-3 text-white">Service Profile</th>
+                        <th class="text-white">Slug Node</th>
+                        <th class="text-white">Inclusions / Prices</th>
+                        <th class="text-white">Gallery</th>
+                        <th class="text-white">Status</th>
+                        <th class="text-end pe-4 text-white">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody class="fs-7">
+                    @forelse($services as $srv)
+                        <tr style="border-bottom: 1px solid #f1f5f9;">
+                            <td class="ps-4 py-3">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="rounded-3 bg-light d-flex align-items-center justify-content-center text-primary" style="width: 42px; height: 42px;">
+                                        <i class="{{ $srv->icon_class }} fs-5"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="fw-bold text-slate-900 mb-0">{{ $srv->name }}</h6>
+                                        <span class="text-muted fs-8">{{ $srv->page_title ?? 'No target title set' }}</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-muted">/service/{{ $srv->slug }}</td>
+                            <td>
+                                <span class="badge bg-info-soft text-info px-2 py-1 rounded-2">{{ $srv->items_count }} Items</span>
+                                <span class="badge bg-emerald-soft text-emerald px-2 py-1 rounded-2 ms-1">{{ $srv->pricings_count }} Price Lines</span>
+                            </td>
+                            <td><span class="badge bg-secondary-soft text-secondary px-2 py-1 rounded-2">{{ $srv->gallery_count }} Shots</span></td>
+                            <td>
+                            <span class="badge {{ $srv->status == 1 ? 'bg-success-soft text-success' : 'bg-danger-soft text-danger' }} px-2 py-1 rounded-2">
+                                {{ $srv->status == 1 ? 'Active Pipeline' : 'Disabled' }}
+                            </span>
+                            </td>
+                            <td class="text-end pe-4">
+                                <div class="d-flex justify-content-end gap-2">
+                                    <a href="{{ route('admin.services.edit', $srv->id) }}" class="btn btn-sm btn-light border rounded-2 text-primary" title="Edit Catalog"><i class="ri-edit-line"></i></a>
+                                    <form action="{{ route('admin.services.delete', $srv->id) }}" method="POST" onsubmit="return confirm('Purge this entire vertical data stack?');">
+                                        @csrf @method('DELETE')
+                                        <button class="btn btn-sm btn-light border rounded-2 text-danger"><i class="ri-delete-bin-line"></i></button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr><td colspan="6" class="text-center py-5 text-muted">service Not Found.</td></tr>
+                    @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .bg-info-soft { background-color: rgba(14, 165, 233, 0.1); color: #0ea5e9; }
+        .bg-emerald-soft { background-color: rgba(16, 185, 129, 0.1); color: #10b981; }
+        .bg-success-soft { background-color: rgba(34, 197, 94, 0.1); color: #22c55e; }
+        .bg-danger-soft { background-color: rgba(239, 68, 68, 0.1); color: #ef4444; }
+        .bg-secondary-soft { background-color: rgba(100, 116, 139, 0.1); color: #64748b; }
+        .fs-8 { font-size: 0.75rem; } .fs-7 { font-size: 0.85rem; }
+    </style>
+@endsection
