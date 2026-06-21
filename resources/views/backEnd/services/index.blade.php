@@ -1,10 +1,9 @@
-@extends('backEnd.layout.master') {{-- Adjust based on master structural file path --}}
+@extends('backEnd.layout.master')
+@section('title','Services')
 @section('body')
     <div class="py-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <div>
-                <h4 class="fw-bold text-slate-900 mb-0">Service Lists</h4>
-            </div>
+            <div><h4 class="fw-bold text-slate-900 mb-0">Service Lists</h4></div>
             <a href="{{ route('admin.services.create') }}" class="btn btn-primary rounded-3 px-4 py-2 fw-semibold">
                 <i class="ri-add-line me-1"></i> Add New Service
             </a>
@@ -13,17 +12,17 @@
         <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
             <div class="table-responsive">
                 <table class="table align-middle mb-0">
-                    <thead class="bg-primary text-uppercase fs-8 fw-bold text-slate-700">
+                    <thead class="bg-primary text-uppercase text-wrap fs-6 fw-bold text-slate-700">
                     <tr>
                         <th class="ps-4 py-3 text-white">Service</th>
                         <th class="text-white">Slug</th>
-                        <th class="text-white">Inclusions / Prices</th>
+                        <th class="text-white">Service Included / Prices</th>
                         <th class="text-white">Gallery</th>
                         <th class="text-white">Status</th>
                         <th class="text-end pe-4 text-white">Actions</th>
                     </tr>
                     </thead>
-                    <tbody class="fs-7">
+                    <tbody class="fs-5">
                     @forelse($services as $srv)
                         <tr style="border-bottom: 1px solid #f1f5f9;">
                             <td class="ps-4 py-3">
@@ -32,28 +31,28 @@
                                         <img class="img-fluid" src="{{asset($srv->hero_image)}}" alt=""><i class="{{ $srv->icon_class }} fs-5"></i>
                                     </div>
                                     <div>
-                                        <h6 class="fw-bold text-slate-900 mb-0">{{ $srv->name }}</h6>
-                                        <span class="text-muted fs-8">{{ $srv->page_title ?? 'No target title set' }}</span>
+                                        <h5 class="fw-bold text-slate-900 mb-0">{{ $srv->name }}</h5>
+                                        <span class="text-muted fs-5">{{ $srv->page_title ?? 'No target title set' }}</span>
                                     </div>
                                 </div>
                             </td>
                             <td class="text-muted">{{ $srv->slug }}</td>
                             <td>
-                                <span class="badge bg-info-soft text-info px-2 py-1 rounded-2">{{ $srv->items_count }} Items</span>
-                                <span class="badge bg-emerald-soft text-emerald px-2 py-1 rounded-2 ms-1">{{ $srv->pricings_count }} Price Lines</span>
+                                <span class="badge bg-info-soft text-info px-2 py-1 rounded-2">{{ $srv->items_count }} Items Included</span>
+                                <span class="badge bg-emerald-soft text-emerald px-2 py-1 rounded-2 ms-1">{{ $srv->pricings_count }} Price</span>
                             </td>
-                            <td><span class="badge bg-secondary-soft text-secondary px-2 py-1 rounded-2">{{ $srv->gallery_count }} Shots</span></td>
+                            <td><span class="badge bg-secondary-soft text-secondary px-2 py-1 rounded-2">{{ $srv->gallery_count }} Images</span></td>
                             <td>
-                            <span class="badge {{ $srv->status == 1 ? 'bg-success-soft text-success' : 'bg-danger-soft text-danger' }} px-2 py-1 rounded-2">
-                                {{ $srv->status == 1 ? 'Active Pipeline' : 'Disabled' }}
+                            <span class="badge {{ $srv->status == 1 ? 'bg-success text-white' : 'bg-danger text-white' }} px-2 py-1 rounded-2">
+                                {{ $srv->status == 1 ? 'Active' : 'Inactive' }}
                             </span>
                             </td>
-                            <td class="text-end pe-4">
-                                <div class="d-flex justify-content-end gap-2">
-                                    <a href="{{ route('admin.services.edit', $srv->id) }}" class="btn btn-sm btn-light border rounded-2 text-primary" title="Edit Catalog"><i class="ri-edit-line"></i></a>
+                            <td class="text-end">
+                                <div class="d-flex justify-content-end gap-1">
+                                    <a href="{{ route('admin.services.edit', $srv->id) }}" class="btn btn-sm btn-success border rounded-2 text-white" title="Edit Catalog"><i class="ri-edit-line"></i></a>
                                     <form action="{{ route('admin.services.delete', $srv->id) }}" method="POST" onsubmit="return confirm('Purge this entire vertical data stack?');">
                                         @csrf @method('DELETE')
-                                        <button class="btn btn-sm btn-light border rounded-2 text-danger"><i class="ri-delete-bin-line"></i></button>
+                                        <button class="btn btn-sm btn-danger border rounded-2 text-white"><i class="ri-delete-bin-line"></i></button>
                                     </form>
                                 </div>
                             </td>

@@ -17,7 +17,7 @@ return new class extends Migration
             /* Core Identity */
             $table->string('name');
             $table->string('slug')->unique();
-            $table->string('icon_class')->default('fa-solid fa-bolt');
+            $table->string('icon_class')->nullable()->default('fa-solid fa-bolt');
             $table->string('phone')->nullable();
             $table->string('whatsApp')->nullable();
             $table->tinyInteger('status')->default(1);

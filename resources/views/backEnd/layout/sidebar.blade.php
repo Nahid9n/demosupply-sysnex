@@ -45,26 +45,18 @@
                     </ul>
                 </div>
             </li>
-            @canany(['service.list','landing.page.list'])
+
+            @can('service.list')
                 <li class="nav-item">
-                    <a class="nav-link menu-arrow" href="#sidebarService" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarDashboards">
+                    <a class="nav-link" href="{{route('admin.services.index')}}">
                         <span class="nav-icon"><i class="ri-service-fill"></i></span>
-                        <span class="nav-text"> Services </span>
+                        <span class="nav-text">Services</span>
                     </a>
-                    <div class="collapse {{ request()->is('admin/service*') ? 'show' : '' }}" id="sidebarService">
-                        <ul class="nav sub-navbar-nav">
-                            @can('service.list')
-                                <li class="sub-nav-item">
-                                    <a class="sub-nav-link {{ request()->is('admin/service*') ? 'active' : '' }}" href="{{route('admin.services.index')}}">Services</a>
-                                </li>
-                            @endcan
-                        </ul>
-                    </div>
                 </li>
             @endcan
             @can('gallery.list')
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('gallery.index')}}">
+                    <a class="nav-link" href="{{route('admin.gallery.index')}}">
                         <span class="nav-icon"><i class="ri-gallery-fill"></i></span>
                         <span class="nav-text">Gallery</span>
                     </a>
@@ -72,54 +64,28 @@
             @endcan
             @can('testimonial.list')
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('testimonial.index')}}">
+                    <a class="nav-link" href="{{route('admin.testimonial.index')}}">
                         <span class="nav-icon"><i class="ri-team-fill"></i></span>
                         <span class="nav-text">Testimonial</span>
                     </a>
                 </li>
             @endcan
-            @can('faq.list')
+            {{--@can('faq.list')
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('faq.index')}}">
                         <span class="nav-icon"><i class="ri-question-fill"></i></span>
                         <span class="nav-text">Faqs</span>
                     </a>
                 </li>
-            @endcan
-            @can('slider.list')
+            @endcan--}}
+            {{--@can('slider.list')
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('slider.index') }}">
                         <span class="nav-icon"><i class="ri-slideshow-2-fill"></i></span>
                         <span class="nav-text">Sliders</span>
                     </a>
                 </li>
-            @endcan
-
-{{--            <li class="menu-title">Custom</li>--}}
-            @if (auth()->user()->can('role.permission') || auth()->user()->can('reset.password'))
-            <li class="nav-item">
-                <a class="nav-link menu-arrow" href="#sidebarAuthentication" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarAuthentication">
-                    <span class="nav-icon"><i class="ri-lock-password-line"></i></span>
-                    <span class="nav-text"> Authentication </span>
-                </a>
-                <div class="collapse" id="sidebarAuthentication">
-                    <ul class="nav sub-navbar-nav">
-                        @if (auth()->user()->can('role.permission'))
-                        <li class="sub-nav-item">
-                            <a class="sub-nav-link" href="{{route('admin.role.permission')}}">Role & Permission</a>
-                        </li>
-                        @endif
-                        @if (auth()->user()->can('reset.password'))
-                        <li class="sub-nav-item">
-                            <a class="sub-nav-link" href="{{route('admin.reset.password')}}">Reset Password</a>
-                        </li>
-                        @endif
-
-                    </ul>
-                </div>
-            </li>
-            @endif
-
+            @endcan--}}
             <li class="nav-item">
                 <a class="nav-link" href="{{route('admin.message')}}">
                     <span class="nav-icon">
@@ -148,6 +114,29 @@
                     <span class="nav-text">Users</span>
                 </a>
             </li>
+            @endif
+            @if (auth()->user()->can('role.permission') || auth()->user()->can('reset.password'))
+                <li class="nav-item">
+                    <a class="nav-link menu-arrow" href="#sidebarAuthentication" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarAuthentication">
+                        <span class="nav-icon"><i class="ri-lock-password-line"></i></span>
+                        <span class="nav-text"> Authentication </span>
+                    </a>
+                    <div class="collapse" id="sidebarAuthentication">
+                        <ul class="nav sub-navbar-nav">
+                            @if (auth()->user()->can('role.permission'))
+                                <li class="sub-nav-item">
+                                    <a class="sub-nav-link" href="{{route('admin.role.permission')}}">Role & Permission</a>
+                                </li>
+                            @endif
+                            @if (auth()->user()->can('reset.password'))
+                                <li class="sub-nav-item">
+                                    <a class="sub-nav-link" href="{{route('admin.reset.password')}}">Reset Password</a>
+                                </li>
+                            @endif
+
+                        </ul>
+                    </div>
+                </li>
             @endif
         </ul>
     </div>

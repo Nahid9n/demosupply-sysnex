@@ -48,7 +48,36 @@ Route::prefix('admin')->group(function () {
             Route::get('/check-slug', 'checkSlug')->name('check.slug');
             Route::delete('/gallery-image/{id}/delete',  'deleteGalleryImage')->name('gallery.image.delete');
         });
+//        Route::controller(\App\Http\Controllers\Admin\FaqController::class)->group(function () {
+//            Route::get('/faqs', 'index')->name('faq.index');
+//            Route::post('/faq-store', 'store')->name('admin.faq.store');
+//            Route::put('/faq-update', 'update')->name('admin.faq.update');
+//            Route::delete('/faq-delete/{id}', 'destroy')->name('admin.faq.delete');
+//            Route::get('/faq-status/{id}/{status}', 'statusUpdate')->name('admin.faq.status.update');
+//        });
+        Route::controller(\App\Http\Controllers\Admin\TestimonialController::class)->group(function () {
+            Route::get('/testimonials', 'index')->name('admin.testimonial.index');
+            Route::post('/testimonial-store', 'store')->name('admin.testimonial.store');
+            Route::put('/testimonial-update/{id}', 'update')->name('admin.testimonial.update');
+            Route::delete('/testimonial-delete/{id}', 'destroy')->name('admin.testimonial.delete');
+            Route::get('/testimonial-status/{id}/{status}', 'statusUpdate')->name('admin.testimonial.status.update');
+        });
 
+        /*Route::controller(\App\Http\Controllers\Admin\SliderController::class)->group(function () {
+            Route::get('/sliders', 'index')->name('slider.index');
+            Route::post('/slider-store', 'store')->name('admin.slider.store');
+            Route::put('/slider-update', 'update')->name('admin.slider.update');
+            Route::delete('/slider-delete/{id}', 'destroy')->name('admin.slider.delete');
+            Route::get('/slider-status/{id}/{status}', 'statusUpdate')->name('admin.slider.status.update');
+        });*/
+
+        Route::controller(\App\Http\Controllers\Admin\GalleryController::class)->group(function () {
+            Route::get('/galleries', 'index')->name('admin.gallery.index');
+            Route::post('/gallery-store', 'store')->name('admin.gallery.store');
+            Route::put('/gallery-update', 'update')->name('admin.gallery.update');
+            Route::delete('/gallery-delete/{id}', 'destroy')->name('admin.gallery.delete');
+            Route::get('/gallery-status/{id}/{status}', 'statusUpdate')->name('admin.gallery.status.update');
+        });
 
 
 
