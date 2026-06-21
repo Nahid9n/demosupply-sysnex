@@ -209,7 +209,8 @@
         });
     });
 </script>
-
+<!-- SweetAlert2 CDN (যদি লেআউটে না থাকে তবেই রাখুন) -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @if(session('success'))
     <script>
         Swal.fire({

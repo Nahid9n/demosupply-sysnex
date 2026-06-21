@@ -123,18 +123,31 @@
                     <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
                         <h5 class="fw-bold text-slate-800 mb-3 border-bottom pb-2">Main Cover Image</h5>
                         @if($service->hero_image)
-                            <img src="{{ asset('storage/' . $service->hero_image) }}" class="img-fluid rounded-3 mb-2" style="max-height: 120px; object-fit: cover;">
+                            <img src="{{ asset($service->hero_image) }}" class="img-fluid rounded-3 mb-2 w-50" style="max-height: 120px; object-fit: cover;">
                         @endif
                         <input type="file" name="cover_image" class="form-control">
                     </div>
 
                     <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
                         <h5 class="fw-bold text-slate-800 mb-3 border-bottom pb-2">Work Portfolio Gallery</h5>
-                        <div class="d-flex flex-wrap gap-1 mb-2">
+
+                        <div class="d-flex flex-wrap gap-2 mb-3">
                             @foreach($service->gallery as $gl)
-                                <img src="{{ asset('storage/' . $gl->image_path) }}" class="img-thumbnail" style="width: 60px; height: 60px; object-fit: cover;">
+                                <div class="position-relative portfolio-image-wrapper" style="width: 100px; height: 100px;">
+                                    <img src="{{ asset($gl->image_path) }}" class="img-thumbnail w-100 h-100" style="object-fit: cover;">
+
+                                    <!-- ডিলিট বাটন -->
+                                    <button type="button"
+                                            class="btn btn-danger btn-sm p-0 d-flex align-items-center justify-content-center position-absolute rounded-circle delete-gallery-img"
+                                            style="top: -5px; right: -5px; width: 22px; height: 22px; font-size: 11px; z-index: 10;"
+                                            data-id="{{ $gl->id }}"
+                                            title="Delete Image">
+                                        <i class="ri-delete-bin-2-line"></i>
+                                    </button>
+                                </div>
                             @endforeach
                         </div>
+
                         <input type="file" name="portfolio_images[]" class="form-control mb-2" multiple>
                         <input type="text" name="gallery_section_title" class="form-control mb-2" value="{{ $service->gallery_title }}" placeholder="Gallery Section Heading">
                     </div>
@@ -181,5 +194,50 @@
             </div>`;
             document.getElementById('faq-container').insertAdjacentHTML('beforeend', node);
         }
+    </script>
+    <script>
+        document.querySelectorAll('.delete-gallery-img').forEach(button => {
+            button.addEventListener('click', function() {
+                let wrapper = this.closest('.portfolio-image-wrapper');
+                let imageId = this.getAttribute('data-id');
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "Are you sure to delete ?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes , Delete the file',
+                    cancelButtonText: 'Cancel'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        let baseUrl = "{{ route('gallery.image.delete', ':id') }}";
+                        let deleteUrl = baseUrl.replace(':id', imageId);
+                        fetch(deleteUrl, {
+                            method: 'DELETE',
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                'Content-Type': 'application/json'
+                            }
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.success) {
+                                    wrapper.remove();
+                                    Swal.fire('delete!', data.message, 'success');
+                                } else {
+                                    Swal.fire('Failed!', 'Please try again', 'error');
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                                Swal.fire('wrong!', 'server did not responde', 'error');
+                            });
+
+                    }
+                });
+            });
+        });
     </script>
 @endsection

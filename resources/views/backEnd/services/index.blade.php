@@ -15,8 +15,8 @@
                 <table class="table align-middle mb-0">
                     <thead class="bg-primary text-uppercase fs-8 fw-bold text-slate-700">
                     <tr>
-                        <th class="ps-4 py-3 text-white">Service Profile</th>
-                        <th class="text-white">Slug Node</th>
+                        <th class="ps-4 py-3 text-white">Service</th>
+                        <th class="text-white">Slug</th>
                         <th class="text-white">Inclusions / Prices</th>
                         <th class="text-white">Gallery</th>
                         <th class="text-white">Status</th>
@@ -28,8 +28,8 @@
                         <tr style="border-bottom: 1px solid #f1f5f9;">
                             <td class="ps-4 py-3">
                                 <div class="d-flex align-items-center gap-3">
-                                    <div class="rounded-3 bg-light d-flex align-items-center justify-content-center text-primary" style="width: 42px; height: 42px;">
-                                        <i class="{{ $srv->icon_class }} fs-5"></i>
+                                    <div class="rounded-3 bg-light d-flex align-items-center justify-content-center text-primary" style="width: 100px;">
+                                        <img class="img-fluid" src="{{asset($srv->hero_image)}}" alt=""><i class="{{ $srv->icon_class }} fs-5"></i>
                                     </div>
                                     <div>
                                         <h6 class="fw-bold text-slate-900 mb-0">{{ $srv->name }}</h6>
@@ -37,7 +37,7 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="text-muted">/service/{{ $srv->slug }}</td>
+                            <td class="text-muted">{{ $srv->slug }}</td>
                             <td>
                                 <span class="badge bg-info-soft text-info px-2 py-1 rounded-2">{{ $srv->items_count }} Items</span>
                                 <span class="badge bg-emerald-soft text-emerald px-2 py-1 rounded-2 ms-1">{{ $srv->pricings_count }} Price Lines</span>

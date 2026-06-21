@@ -44,8 +44,9 @@ Route::prefix('admin')->group(function () {
             Route::post('/service/store','store')->name('admin.services.store');
             Route::get('/service/edit/{id}','edit')->name('admin.services.edit');
             Route::post('/service/update/{id}','update')->name('admin.services.update');
-            Route::delete('/service/delete','destroy')->name('admin.services.delete');
+            Route::delete('/service/delete/{id}','destroy')->name('admin.services.delete');
             Route::get('/check-slug', 'checkSlug')->name('check.slug');
+            Route::delete('/gallery-image/{id}/delete',  'deleteGalleryImage')->name('gallery.image.delete');
         });
 
 
