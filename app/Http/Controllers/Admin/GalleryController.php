@@ -55,9 +55,8 @@ class GalleryController extends Controller
         ]);
 
         $gallery = Gallery::findOrFail($id);
-        // নতুন ছবি আপলোড করলে পুরানো ছবি ডিলেট করে আপডেট হবে
         if ($request->hasFile('image')) {
-            $gallery->image = ImageUpload::upload($gallery->image, 'uploads/gallery', null, null, $gallery->image);
+            $gallery->image = ImageUpload::upload($request->image, 'uploads/gallery', null, null, $gallery->image);
         }
         $gallery->alt_text = $request->alt_text;
         $gallery->serial = $request->serial;
@@ -65,21 +64,28 @@ class GalleryController extends Controller
         return redirect()->back()->with('success', 'Gallery item updated successfully.');
     }
 
-    /**
-     * ৫. ইমেজ স্টোরেজ ও ডাটাবেজ থেকে চিরতরে মুছে ফেলা (Delete/Destroy)
-     */
     public function destroy($id)
     {
         $gallery = Gallery::findOrFail($id);
-
-        // public path থেকে আসল ইমেজ ফাইলটি ডিলিট করা হচ্ছে যেন স্টোরেজ জ্যাম না হয়
-        if (File::exists(public_path($gallery->image))) {
-            File::delete(public_path($gallery->image));
+        if (file_exists($gallery->image)) {
+            unlink($gallery->image);
         }
-
-        // ডাটাবেজ রেকর্ড ডিলিট
         $gallery->delete();
-
         return redirect()->back()->with('success', 'Image removed from gallery permanently.');
+    }
+    public function bulkDelete(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:galleries,id'
+        ]);
+        $items = Gallery::whereIn('id', $request->ids)->get();
+        foreach ($items as $item) {
+            if ($item->image && file_exists($item->image)) {
+                @unlink($item->image);
+            }
+            $item->delete();
+        }
+        return redirect()->back()->with('success', 'Selected gallery items deleted successfully.');
     }
 }

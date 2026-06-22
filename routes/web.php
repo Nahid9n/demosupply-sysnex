@@ -27,7 +27,7 @@ Route::get('/electrolite', [\App\Http\Controllers\HomeController::class,'electro
 Route::get('/water-filter', [\App\Http\Controllers\HomeController::class,'water'])->name('water');
 Route::get('/device', [\App\Http\Controllers\HomeController::class,'device'])->name('device');
 Route::post('/contact-us-submit', [\App\Http\Controllers\HomeController::class,'contactFormSubmit'])->name('contact.submit');
-
+Route::get('/sitemap.xml', [\App\Http\Controllers\SitemapController::class, 'index']);
 
 Route::redirect('/admin', '/admin/login');
 Route::prefix('admin')->group(function () {
@@ -48,13 +48,15 @@ Route::prefix('admin')->group(function () {
             Route::get('/check-slug', 'checkSlug')->name('check.slug');
             Route::delete('/gallery-image/{id}/delete',  'deleteGalleryImage')->name('gallery.image.delete');
         });
-//        Route::controller(\App\Http\Controllers\Admin\FaqController::class)->group(function () {
-//            Route::get('/faqs', 'index')->name('faq.index');
-//            Route::post('/faq-store', 'store')->name('admin.faq.store');
-//            Route::put('/faq-update', 'update')->name('admin.faq.update');
-//            Route::delete('/faq-delete/{id}', 'destroy')->name('admin.faq.delete');
-//            Route::get('/faq-status/{id}/{status}', 'statusUpdate')->name('admin.faq.status.update');
-//        });
+
+        Route::controller(\App\Http\Controllers\Admin\FaqController::class)->group(function () {
+            Route::get('/faqs', 'index')->name('admin.faq.index');
+            Route::post('/faq-store', 'store')->name('admin.faq.store');
+            Route::put('/faq-update/{id}', 'update')->name('admin.faq.update');
+            Route::delete('/faq-delete/{id}', 'destroy')->name('admin.faq.delete');
+            Route::get('/faq-status/{id}/{status}', 'statusUpdate')->name('admin.faq.status.update');
+        });
+
         Route::controller(\App\Http\Controllers\Admin\TestimonialController::class)->group(function () {
             Route::get('/testimonials', 'index')->name('admin.testimonial.index');
             Route::post('/testimonial-store', 'store')->name('admin.testimonial.store');
@@ -63,20 +65,21 @@ Route::prefix('admin')->group(function () {
             Route::get('/testimonial-status/{id}/{status}', 'statusUpdate')->name('admin.testimonial.status.update');
         });
 
-        /*Route::controller(\App\Http\Controllers\Admin\SliderController::class)->group(function () {
-            Route::get('/sliders', 'index')->name('slider.index');
+        Route::controller(\App\Http\Controllers\Admin\SliderController::class)->group(function () {
+            Route::get('/sliders', 'index')->name('admin.slider.index');
             Route::post('/slider-store', 'store')->name('admin.slider.store');
-            Route::put('/slider-update', 'update')->name('admin.slider.update');
+            Route::put('/slider-update/{id}', 'update')->name('admin.slider.update');
             Route::delete('/slider-delete/{id}', 'destroy')->name('admin.slider.delete');
             Route::get('/slider-status/{id}/{status}', 'statusUpdate')->name('admin.slider.status.update');
-        });*/
+        });
 
         Route::controller(\App\Http\Controllers\Admin\GalleryController::class)->group(function () {
             Route::get('/galleries', 'index')->name('admin.gallery.index');
             Route::post('/gallery-store', 'store')->name('admin.gallery.store');
-            Route::put('/gallery-update', 'update')->name('admin.gallery.update');
+            Route::put('/gallery-update/{id}', 'update')->name('admin.gallery.update');
             Route::delete('/gallery-delete/{id}', 'destroy')->name('admin.gallery.delete');
             Route::get('/gallery-status/{id}/{status}', 'statusUpdate')->name('admin.gallery.status.update');
+            Route::delete('/gallery-bulk-delete', 'bulkDelete')->name('admin.gallery.bulkDelete');
         });
 
 
@@ -100,13 +103,20 @@ Route::prefix('admin')->group(function () {
             Route::post('/user/update/{id}','update')->name('admin.user.update');
             Route::post('/user/delete','delete')->name('admin.user.delete');
         });
-        Route::get('/settings', [WebSettingController::class, 'index'])->name('admin.setting');
-        Route::post('/settings-update', [WebSettingController::class, 'settingsUpdate'])->name('admin.setting.update');
+        Route::get('/settings', [WebSettingController::class, 'index'])->name('admin.general.settings');
+        Route::post('/settings-update', [WebSettingController::class, 'settingsUpdate'])->name('admin.settings.update');
         Route::get('/reset-password', [AdminAuthController::class, 'resetPasswordIndex'])->name('admin.reset.password');
         Route::post('/reset-password/update', [AdminAuthController::class, 'resetPasswordUpdate'])->name('admin.reset.password.submit');
         Route::get('/profile', [AdminAuthController::class, 'profile'])->name('admin.profile');
         Route::post('/profile-update', [AdminAuthController::class, 'profileUpdate'])->name('admin.profile.update');
+        Route::get('/about-us', [WebSettingController::class, 'aboutUs'])->name('admin.about.us');
+        Route::post('/about-us/update', [WebSettingController::class, 'updateAboutUs'])->name('admin.about.update');
 
+        Route::get('/seo-manager', [Admin\SeoManagementController::class, 'index'])->name('admin.seo.index');
+        Route::post('/seo-manager/store', [Admin\SeoManagementController::class, 'store'])->name('admin.seo.store_page');
+        Route::get('/seo-manager/edit/{id}', [Admin\SeoManagementController::class, 'editPage'])->name('admin.seo.edit_page');
+        Route::post('/seo-manager/update/{id}', [Admin\SeoManagementController::class, 'updatePage'])->name('admin.seo.update_page');
+        Route::post('/seo-manager/global-update', [Admin\SeoManagementController::class, 'updateGlobal'])->name('admin.seo.global_update');
 
         Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');
     });

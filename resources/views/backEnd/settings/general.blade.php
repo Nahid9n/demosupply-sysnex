@@ -1,5 +1,5 @@
 @extends('backEnd.layout.master')
-@section('title','Setting')
+@section('title','General Setting')
 @section('body')
     <div class="row">
         <div class="col-12">
@@ -10,7 +10,7 @@
     </div>
     <div class="row">
         <div class="col-12">
-            <form action="{{route('admin.setting.update')}}" method="post" enctype="multipart/form-data">
+            <form action="{{route('admin.settings.update')}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="card floating-card bg-transparent mb-1">
                     <div class="card-body d-flex justify-content-end">
@@ -88,3 +88,4 @@
 
     </div>
 @endsection
+

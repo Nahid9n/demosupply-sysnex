@@ -8,7 +8,7 @@
                 <p class="text-muted small mb-0">Manage and view all client reviews and ratings through popup modals.</p>
             </div>
             <div>
-                <button type="button" class="btn btn-primary rounded-3 px-4 py-2 fw-semibold" onclick="openCreateModal()">
+                <button type="button" class="btn btn-secondary rounded-3 px-4 py-2 fw-semibold" onclick="openCreateModal()">
                     <i class="ri-add-line"></i> Add New Testimonial
                 </button>
             </div>
@@ -17,15 +17,15 @@
         <div class="card border-0 shadow-sm rounded-4 overflow-hidden" style="font-size: 14px">
             <div class="table-responsive">
                 <table class="table table-hover align-middle mb-0">
-                    <thead class="bg-primary-subtle border-bottom text-slate-700">
+                    <thead class="bg-primary text-uppercase text-wrap fs-6 fw-bold text-slate-700">
                     <tr>
-                        <th scope="col" class="ps-4 py-3" style="width: 60px;">ID</th>
-                        <th scope="col" class="py-3" style="width: 80px;">Photo</th>
-                        <th scope="col" class="py-3">Client Details</th>
-                        <th scope="col" class="py-3">Review</th>
-                        <th scope="col" class="py-3" style="width: 120px;">Rating</th>
-                        <th scope="col" class="py-3" style="width: 110px;">Status</th>
-                        <th scope="col" class="text-end pe-4 py-3" style="width: 130px;">Actions</th>
+                        <th scope="col" class="ps-4 py-3 text-white" style="width: 60px;">ID</th>
+                        <th scope="col" class="py-3 text-white" style="width: 80px;">Photo</th>
+                        <th scope="col" class="py-3 text-white">Client Details</th>
+                        <th scope="col" class="py-3 text-white">Review</th>
+                        <th scope="col" class="py-3 text-white" style="width: 120px;">Rating</th>
+                        <th scope="col" class="py-3 text-white" style="width: 110px;">Status</th>
+                        <th scope="col" class="text-end pe-4 py-3 text-white" style="width: 130px;">Actions</th>
                     </tr>
                     </thead>
                     <tbody class="border-top-0">

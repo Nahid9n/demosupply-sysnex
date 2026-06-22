@@ -1,15 +1,17 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+use App\Helpers\ImageUpload;
 use App\Http\Controllers\Controller;
 
+use App\Models\AboutSetting;
 use App\Models\WebSetting;
 use Illuminate\Http\Request;
 
 class WebSettingController extends Controller
 {
     public function index(){
-        return view('backEnd.auth.setting');
+        return view('backEnd.settings.general');
     }
     public function settingsUpdate(Request $request){
         $webSetting = WebSetting::first();
@@ -49,5 +51,31 @@ class WebSettingController extends Controller
 
         $webSetting->update($input);
         return back()->with('success','Settings Update Successfully.');
+    }
+
+    public function aboutUs(){
+        $about = AboutSetting::firstOrCreate(['id' => 1]);
+        return view('backEnd.settings.about',compact('about'));
+    }
+    // ডাইনামিক সিঙ্গেল রো আপডেট
+    public function updateAboutUs(Request $request)
+    {
+        $about = AboutSetting::firstOrCreate(['id' => 1]);
+        $data = $request->except(['hero_image', 'story_image']);
+        if ($request->hasFile('hero_image')) {
+            $data['hero_image'] = ImageUpload::upload($request->file('hero_image'),'uploads/settings',null,null,$about->hero_image);
+        }
+        if ($request->hasFile('story_image')) {
+            $data['story_image'] = ImageUpload::upload($request->file('story_image'),'uploads/settings',null,null,$about->story_image);
+        }
+        $about->update($data);
+        return redirect()->back()->with('success', 'About Us settings updated successfully.');
+    }
+
+    // ফ্রন্টএন্ডে ডেটা পাস করার মেথড
+    public function frontView()
+    {
+        $about = AboutSetting::firstOrCreate(['id' => 1]);
+        return view('frontEnd.about', compact('about'));
     }
 }

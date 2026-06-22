@@ -19,7 +19,7 @@ class PermissionSeeder extends Seeder
             'dashboard',
             'role.permission', 'role.permission.create', 'role.permission.store', 'role.permission.edit', 'role.permission.update', 'role.permission.delete',
             'profile',
-            'setting', 'reset.password',
+            'setting', 'reset.password','setting.general','setting.seo.management',
             'user.list', 'user.store','user.update','user.delete',
             'service.list','service.store','service.update','service.delete',
             'testimonial.list','testimonial.store','testimonial.update','testimonial.delete',

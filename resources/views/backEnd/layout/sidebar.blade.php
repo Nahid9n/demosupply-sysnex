@@ -70,22 +70,22 @@
                     </a>
                 </li>
             @endcan
-            {{--@can('faq.list')
+            @can('faq.list')
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('faq.index')}}">
+                    <a class="nav-link" href="{{route('admin.faq.index')}}">
                         <span class="nav-icon"><i class="ri-question-fill"></i></span>
                         <span class="nav-text">Faqs</span>
                     </a>
                 </li>
-            @endcan--}}
-            {{--@can('slider.list')
+            @endcan
+            @can('slider.list')
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('slider.index') }}">
+                    <a class="nav-link" href="{{ route('admin.slider.index') }}">
                         <span class="nav-icon"><i class="ri-slideshow-2-fill"></i></span>
                         <span class="nav-text">Sliders</span>
                     </a>
                 </li>
-            @endcan--}}
+            @endcan
             <li class="nav-item">
                 <a class="nav-link" href="{{route('admin.message')}}">
                     <span class="nav-icon">
@@ -95,16 +95,29 @@
                 </a>
             </li>
 
-            @if (auth()->user()->can('setting'))
-            <li class="nav-item">
-                <a class="nav-link" href="{{route('admin.setting')}}">
-                    <span class="nav-icon">
-                        <i class="ri-settings-2-fill"></i>
-                    </span>
-                    <span class="nav-text">Settings</span>
-                </a>
-            </li>
-            @endif
+            @can('setting')
+                <li class="nav-item">
+                    <a class="nav-link menu-arrow" href="#sidebarSettings" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarDashboards">
+                        <span class="nav-icon"><i class="ri-settings-2-fill"></i></span>
+                        <span class="nav-text"> Settings </span>
+                    </a>
+                    <div class="collapse" id="sidebarSettings">
+                        <ul class="nav sub-navbar-nav">
+                            @can('dashboard')
+                                <li class="sub-nav-item">
+                                    <a class="sub-nav-link" href="{{route('admin.general.settings')}}">General Settings</a>
+                                </li>
+                            @endcan
+                            <li class="sub-nav-item">
+                                <a class="sub-nav-link" href="{{route('admin.about.us')}}">About Us</a>
+                            </li>
+                            <li class="sub-nav-item">
+                                <a class="sub-nav-link" href="{{route('admin.seo.index')}}">Seo Setting</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            @endcan
             @if (auth()->user()->can('user.list'))
             <li class="nav-item">
                 <a class="nav-link" href="{{route('admin.user.index')}}">

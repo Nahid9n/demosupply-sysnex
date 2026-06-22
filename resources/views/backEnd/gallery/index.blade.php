@@ -7,7 +7,11 @@
                 <h4 class="fw-bold text-slate-900 mb-0">Photo Gallery</h4>
                 <p class="text-muted small mb-0">Upload and manage website gallery images with personalized alt texts and serial order.</p>
             </div>
-            <div>
+            <div class="d-flex gap-2">
+                <button type="button" id="bulkDeleteBtn" class="btn btn-danger rounded-3 px-4 py-2 fw-semibold d-none" onclick="bulkDeleteGalleryItems()">
+                    <i class="ri-delete-bin-line"></i> Bulk Delete (<span id="selectedCount">0</span>)
+                </button>
+
                 <button type="button" class="btn btn-primary rounded-3 px-4 py-2 fw-semibold" onclick="openUploadModal()">
                     <i class="ri-upload-cloud-2-line"></i> Upload Images
                 </button>
@@ -16,8 +20,12 @@
 
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
             @forelse($galleries as $gallery)
-                <div class="col">
+                <div class="col" id="gallery-item-{{ $gallery->id }}">
                     <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden position-relative gallery-card">
+
+                        <div class="position-absolute top-0 start-0 m-3 z-3">
+                            <input type="checkbox" class="form-check-input gallery-checkbox shadow-sm" value="{{ $gallery->id }}" onchange="toggleBulkDeleteButton()" style="width: 22px; height: 22px; cursor: pointer;">
+                        </div>
 
                         <div class="position-relative overflow-hidden bg-light cursor-pointer" style="padding-top: 75%;" onclick="openLightbox(this, {{ $loop->index }})">
                             <img src="{{ asset($gallery->image) }}"
@@ -39,12 +47,12 @@
                         <div class="position-absolute top-0 end-0 m-2 opacity-0 gallery-actions transition-all d-flex gap-1">
                             <button type="button" class="btn btn-sm btn-light rounded-circle shadow p-2 line-height-1"
                                     onclick="openEditModal(this, '{{ $gallery->id }}')" title="Edit Meta Data">
-                                <i class="ri-pencil-line text-primary">Edit</i>
+                                Edit
                             </button>
 
                             <button type="button" class="btn btn-sm btn-danger rounded-circle shadow p-2 line-height-1"
                                     onclick="deleteGalleryItem('{{ $gallery->id }}')" title="Delete Image">
-                                <i class="ri-delete-bin-line">Delete</i>
+                                Delete
                             </button>
 
                             <form id="delete-form-{{ $gallery->id }}" action="{{ route('admin.gallery.delete', $gallery->id) }}" method="POST" class="d-none">
@@ -61,6 +69,12 @@
             @endforelse
         </div>
     </div>
+
+    <form id="bulkDeleteForm" action="{{ route('admin.gallery.bulkDelete') }}" method="POST" class="d-none">
+        @csrf
+        @method('DELETE')
+        <div id="bulkDeleteInputs"></div>
+    </form>
 
     <div class="modal fade" id="galleryUploadModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -109,11 +123,12 @@
                     <h5 class="modal-title fw-bold text-slate-800">Edit Image Information</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form id="editGalleryForm" action="" method="POST">
+                <form id="editGalleryForm" action="" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="modal-body p-4">
                         <div class="text-center mb-3">
+                            <input type="file" name="image" >
                             <img src="" id="edit_preview_img" class="img-thumbnail rounded-3" style="max-height: 150px; object-fit: cover;">
                         </div>
                         <div class="mb-3">
@@ -163,6 +178,14 @@
         .transition-all { transition: all 0.3s ease-in-out; }
         .border-dashed { border-style: dashed !important; border-width: 2px !important; border-color: #dee2e6 !important; }
         .cursor-pointer { cursor: pointer; }
+        /* Checkbox-কে হোভার ছাড়াও সবসময় দেখানোর জন্য */
+        .gallery-checkbox {
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+        }
+        .gallery-checkbox:checked, .gallery-card:hover .gallery-checkbox {
+            opacity: 1;
+        }
     </style>
 @endsection
 
@@ -290,7 +313,11 @@
         }
 
         function openLightbox(element, index) {
-            cacheGalleryImages(); // কারেন্ট ডমের সব ইমেজ অ্যারেতে লোড করা হলো
+            // যদি ক্লিক করা আইটেমটি চেকবক্স না হয়, তবেই লাইটবক্স খুলবে
+            if (event.target.classList.contains('form-check-input')) {
+                return;
+            }
+            cacheGalleryImages();
             currentImageIndex = index;
             updateLightboxContent();
             lightboxModal.show();
@@ -299,7 +326,6 @@
         function changeLightboxImage(direction) {
             currentImageIndex += direction;
 
-            // Loop controls
             if (currentImageIndex >= allGalleryImages.length) currentImageIndex = 0;
             if (currentImageIndex < 0) currentImageIndex = allGalleryImages.length - 1;
 
@@ -314,7 +340,6 @@
             }
         }
 
-        // Keyboard support for Lightbox
         document.addEventListener('keydown', function(e) {
             const lightboxEl = document.getElementById('lightboxModal');
             if (lightboxEl.classList.contains('show')) {
@@ -335,6 +360,55 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     document.getElementById('delete-form-' + id).submit();
+                }
+            });
+        }
+
+        // ==========================================
+        // BULK DELETE LOGIC ENGINE
+        // ==========================================
+
+        function toggleBulkDeleteButton() {
+            const checkedBoxes = document.querySelectorAll('.gallery-checkbox:checked');
+            const bulkDeleteBtn = document.getElementById('bulkDeleteBtn');
+            const selectedCountSpan = document.getElementById('selectedCount');
+
+            if (checkedBoxes.length > 0) {
+                bulkDeleteBtn.classList.remove('d-none');
+                selectedCountSpan.innerText = checkedBoxes.length;
+            } else {
+                bulkDeleteBtn.classList.add('d-none');
+                selectedCountSpan.innerText = '0';
+            }
+        }
+
+        function bulkDeleteGalleryItems() {
+            const checkedBoxes = document.querySelectorAll('.gallery-checkbox:checked');
+            if (checkedBoxes.length === 0) return;
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: `You are about to delete ${checkedBoxes.length} selected images!`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete all!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const inputsContainer = document.getElementById('bulkDeleteInputs');
+                    inputsContainer.innerHTML = ''; // Clear previous inputs
+
+                    // Append selected IDs to the hidden form
+                    checkedBoxes.forEach(checkbox => {
+                        const input = document.createElement('input');
+                        input.type = 'hidden';
+                        input.name = 'ids[]';
+                        input.value = checkbox.value;
+                        inputsContainer.appendChild(input);
+                    });
+
+                    // Submit the bulk delete form
+                    document.getElementById('bulkDeleteForm').submit();
                 }
             });
         }

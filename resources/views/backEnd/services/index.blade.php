@@ -4,7 +4,7 @@
     <div class="py-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div><h4 class="fw-bold text-slate-900 mb-0">Service Lists</h4></div>
-            <a href="{{ route('admin.services.create') }}" class="btn btn-primary rounded-3 px-4 py-2 fw-semibold">
+            <a href="{{ route('admin.services.create') }}" class="btn btn-secondary rounded-3 px-4 py-2 fw-semibold">
                 <i class="ri-add-line me-1"></i> Add New Service
             </a>
         </div>
@@ -13,14 +13,14 @@
             <div class="table-responsive">
                 <table class="table align-middle mb-0">
                     <thead class="bg-primary text-uppercase text-wrap fs-6 fw-bold text-slate-700">
-                    <tr>
-                        <th class="ps-4 py-3 text-white">Service</th>
-                        <th class="text-white">Slug</th>
-                        <th class="text-white">Service Included / Prices</th>
-                        <th class="text-white">Gallery</th>
-                        <th class="text-white">Status</th>
-                        <th class="text-end pe-4 text-white">Actions</th>
-                    </tr>
+                        <tr>
+                            <th class="ps-4 py-3 text-white">Service</th>
+                            <th class="text-white">Slug</th>
+                            <th class="text-white">Service Included / Prices</th>
+                            <th class="text-white">Gallery</th>
+                            <th class="text-white">Status</th>
+                            <th class="text-end pe-4 text-white">Actions</th>
+                        </tr>
                     </thead>
                     <tbody class="fs-5">
                     @forelse($services as $srv)
