@@ -23,6 +23,8 @@ Route::get('/contact-us', [\App\Http\Controllers\HomeController::class,'contact'
 Route::get('/about-us', [\App\Http\Controllers\HomeController::class,'about'])->name('about');
 Route::get('/service', [\App\Http\Controllers\HomeController::class,'services'])->name('services');
 Route::get('/service/{slug}', [\App\Http\Controllers\HomeController::class,'serviceDetails'])->name('service.details');
+Route::get('/article', [\App\Http\Controllers\HomeController::class,'articles'])->name('articles');
+Route::get('/article/{slug}', [\App\Http\Controllers\HomeController::class,'articlesDetails'])->name('article.details');
 Route::get('/electrolite', [\App\Http\Controllers\HomeController::class,'electrolite'])->name('electrolite');
 Route::get('/water-filter', [\App\Http\Controllers\HomeController::class,'water'])->name('water');
 Route::get('/device', [\App\Http\Controllers\HomeController::class,'device'])->name('device');
@@ -56,6 +58,22 @@ Route::prefix('admin')->group(function () {
             Route::delete('/faq-delete/{id}', 'destroy')->name('admin.faq.delete');
             Route::get('/faq-status/{id}/{status}', 'statusUpdate')->name('admin.faq.status.update');
         });
+        Route::controller(\App\Http\Controllers\Admin\ArticleCategoryController::class)->group(function () {
+            Route::get('/article-categories', 'index')->name('admin.article.category.index');
+            Route::post('/article-category-store', 'store')->name('admin.article.category.store');
+            Route::put('/article-category-update/{id}', 'update')->name('admin.article.category.update');
+            Route::delete('/article-category-delete/{id}', 'destroy')->name('admin.article.category.delete');
+            Route::get('/article-category-status/{id}/{status}', 'statusUpdate')->name('admin.article.category.status.update');
+        });
+        Route::controller(\App\Http\Controllers\Admin\ArticleController::class)->group(function () {
+            Route::get('/article', 'index')->name('admin.article.index');
+            Route::get('/article-create', 'create')->name('admin.article.create');
+            Route::post('/article-store', 'store')->name('admin.article.store');
+            Route::get('/article-edit/{id}', 'edit')->name('admin.article.edit');
+            Route::put('/article-update/{id}', 'update')->name('admin.article.update');
+            Route::delete('/article-delete/{id}', 'destroy')->name('admin.article.delete');
+            Route::get('/article-status/{id}/{status}', 'statusUpdate')->name('admin.article.category.status.update');
+        });
 
         Route::controller(\App\Http\Controllers\Admin\TestimonialController::class)->group(function () {
             Route::get('/testimonials', 'index')->name('admin.testimonial.index');
@@ -82,8 +100,6 @@ Route::prefix('admin')->group(function () {
             Route::delete('/gallery-bulk-delete', 'bulkDelete')->name('admin.gallery.bulkDelete');
         });
 
-
-
         Route::get('/role-permission', [RolePermissionController::class,'index'])->name('admin.role.permission');
         Route::get('/role-permission/create', [RolePermissionController::class,'create'])->name('admin.role.permission.create');
         Route::post('/role-permission/store', [RolePermissionController::class,'store'])->name('admin.role.permission.store');
@@ -95,7 +111,6 @@ Route::prefix('admin')->group(function () {
         Route::get('/messages', [\App\Http\Controllers\MessageController::class, 'index'])->name('admin.message');
         Route::post('/message-read', [\App\Http\Controllers\MessageController::class, 'read'])->name('admin.message.read');
         Route::post('/message-delete', [\App\Http\Controllers\MessageController::class, 'delete'])->name('admin.message.delete');
-
 
         Route::controller(\App\Http\Controllers\Admin\UserController::class)->group(function (){
             Route::get('/users','index')->name('admin.user.index');

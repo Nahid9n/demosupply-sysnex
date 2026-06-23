@@ -24,10 +24,7 @@
                     </ul>
                 </li>
                 <!-- Services Dropdown End -->
-
-                <li class="nav-item"><a class="nav-link {{ request()->is('device') ? 'active' : '' }}" href="{{route('device')}}">Device</a></li>
-                <li class="nav-item"><a class="nav-link {{ request()->is('water-filter') ? 'active' : '' }}" href="{{route('water')}}">Water Filter</a></li>
-                <li class="nav-item"><a class="nav-link {{ request()->is('contact-us') ? 'active' : '' }}" href="{{route('contact')}}">Contact Us</a></li>
+                <li class="nav-item"><a class="nav-link {{ request()->is('article') ? 'active' : '' }}" href="{{route('articles')}}">Articles</a></li>
                 <li class="nav-item ms-lg-3 mt-2 mt-lg-0"><a class="btn btn-brand btn-sm" href="{{route('contact')}}">Get a Quote</a></li>
             </ul>
         </div>

@@ -4,16 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Mail\ContactMessageMail;
 use App\Mail\SenderConfirmationMail;
+use App\Models\Article;
 use App\Models\Message;
 use App\Models\Service;
+use App\Models\Slider;
+use App\Models\Testimonial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
 class HomeController extends Controller
 {
     public function index(){
-
-        return view('frontEnd.home.index');
+        $sliders = Slider::orderBy('serial','asc')->where('status',1)->get();
+        $services = Service::with('items')->latest()->where('status',1)->get()->take(6);
+        $testimonials = Testimonial::latest()->where('status',1)->get();
+        $articles = Article::latest()->where('status',1)->get()->take(3);
+        return view('frontEnd.home.index',compact('sliders','services','testimonials','articles'));
     }
     public function services(){
         return view('frontEnd.services.index');
@@ -22,6 +28,14 @@ class HomeController extends Controller
         $service = Service::where('slug',$slug)->with('seo')->first();
         $seo = $service->seo;
         return view('frontEnd.services.details',compact('service','seo'));
+    }
+    public function articles(){
+        $articles = Article::latest()->where('status',1)->get();
+        return view('frontEnd.articles.index',compact('articles'));
+    }
+    public function articlesDetails($slug){
+        $article = Article::where('slug',$slug)->with('seo')->first();
+        return view('frontEnd.articles.details',compact('article'));
     }
     public function about(){
         return view('frontEnd.about-us.index');

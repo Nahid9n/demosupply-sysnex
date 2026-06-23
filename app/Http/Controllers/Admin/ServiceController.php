@@ -297,13 +297,16 @@ class ServiceController extends Controller
         if ($service->hero_image && file_exists(public_path($service->hero_image))) {
             @unlink(public_path($service->hero_image));
         }
-
         foreach ($service->gallery as $img) {
             if ($img->image_path && file_exists(public_path($img->image_path))) {
                 @unlink(public_path($img->image_path));
             }
             $img->delete();
         }
+        if ($service->seo) {
+            $service->seo()->delete();
+        }
+
         $service->delete();
         return redirect()->route('admin.services.index')->with('success', 'Service purged.');
     }

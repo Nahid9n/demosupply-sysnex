@@ -6,84 +6,32 @@
     <!-- ================= PREMIUM CAROUSEL HERO MODULE ================= -->
     <section id="hero-owl-wrapper" class="position-relative overflow-hidden w-100 py-5" style="">
         <div class="owl-carousel owl-theme premium-hero-slider">
+            @foreach($sliders as $slider)
             <div class="item hero-slide-item">
-                <div class="carousel-bg" style="background-image: linear-gradient(to right, rgba(0,0,0,0.88) 40%, rgba(0,0,0,0.4)), url('{{ asset('banner1.jpg') }}');"></div>
+                <div class="carousel-bg" style="background-image: linear-gradient(to right, rgba(0,0,0,0.88) 40%, rgba(0,0,0,0.4)), url('{{ asset($slider->image) }}');"></div>
                 <div class="container hero-container position-relative">
                     <div class="row w-100 m-0">
                         <div class="col-lg-8 p-0 text-start text-white animate-content-owl">
                         <span class="chip mb-2 bg-brand-light text-white px-3 py-1.5 rounded-pill fs-xs fw-semibold border border-secondary shadow-sm d-inline-block">
-                            <i class="fa-solid fa-sparkles text-warning me-2"></i> Corporate Sanitization
+                            <i class="fa fa-spark text-warning me-2"></i> {{$slider->heading_top}}
                         </span>
                             <h1 class="fw-black mb-2 tracking-tight text-white hero-title">
-                                Premium Corporate <br class="d-none d-sm-block">
-                                <span class="text-gradient-cyan">Office Cleaning</span>
+                                {{ $slider->heading_one }}
                             </h1>
                             <p class="lead text-white-50 mb-4 hero-desc">
-                                Hospital-grade disinfection, high-frequency deep sanitization, and eco-conscious cleaning protocols mapped out for corporate spaces.
+                                {!! $slider->description !!}
                             </p>
                             <div class="d-flex flex-column flex-sm-row gap-2 mt-3 hero-btn-group">
-                                <a href="#core-services" class="btn btn-brand py-2.5 px-4 fw-semibold shadow-lg">Schedule Deep Clean</a>
-                                <a href="{{route('contact')}}" class="btn btn-outline-light rounded-pill d-flex align-items-center justify-content-center px-4 py-2.5 fw-medium fs-7">
-                                    Custom Contract <i class="fa-solid fa-arrow-right ms-2"></i>
+                                <a href="{{$slider->button_one_url ? $slider->button_one_url : '#core-services'}}" class="btn btn-brand py-2.5 px-4 fw-semibold shadow-lg">{{ $slider->button_one ?? 'Hire Us' }}</a>
+                                <a href="{{ $slider->button_two_url }}" class="btn btn-outline-light rounded-pill d-flex align-items-center justify-content-center px-4 py-2.5 fw-medium fs-7">
+                                    {{ $slider->button_two ?? 'Contact Us'}} <i class="fa-solid fa-arrow-right ms-2"></i>
                                 </a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="item hero-slide-item">
-                <div class="carousel-bg" style="background-image: linear-gradient(to right, rgba(0,0,0,0.88) 40%, rgba(0,0,0,0.4)), url('{{ asset('banner2.jpg') }}');"></div>
-                <div class="container hero-container position-relative">
-                    <div class="row w-100 m-0">
-                        <div class="col-lg-8 p-0 text-start text-white animate-content-owl">
-                        <span class="chip mb-2 bg-brand-light text-white px-3 py-2 rounded-pill fs-xs fw-semibold border border-secondary shadow-sm d-inline-block">
-                            <i class="fa-solid fa-plug-circle-bolt text-warning me-2"></i> Certified Grid Lines
-                        </span>
-                            <h1 class="display-3 fw-black mb-2 tracking-tight text-white hero-title">
-                                Certified Electrical <br class="d-none d-sm-block">
-                                <span class="text-gradient-cyan">Engineering & Faults</span>
-                            </h1>
-                            <p class="lead text-white-50 mb-4 hero-desc">
-                                Emergency diagnostic trip monitoring, distribution control board installations, and smart load-balancing setups backed by safety codes.
-                            </p>
-                            <div class="d-flex flex-column flex-sm-row gap-2 mt-3 hero-btn-group">
-                                <a href="#core-services" class="btn btn-brand py-2.5 px-4 fw-semibold shadow-lg">Request Electrician</a>
-                                <a href="{{route('contact')}}" class="btn btn-outline-light rounded-pill d-flex align-items-center justify-content-center px-4 py-2.5 fw-medium fs-7">
-                                    Safety Audit Setup <i class="fa-solid fa-arrow-right ms-2"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="item hero-slide-item">
-                <div class="carousel-bg" style="background-image: linear-gradient(to right, rgba(0,0,0,0.88) 40%, rgba(0,0,0,0.4)), url('{{ asset('banner3.jpg') }}');"></div>
-                <div class="container hero-container position-relative">
-                    <div class="row w-100 m-0">
-                        <div class="col-lg-8 p-0 text-start text-white animate-content-owl">
-                        <span class="chip mb-3 bg-brand-light text-white px-3 py-2 rounded-pill fs-xs fw-semibold border border-secondary shadow-sm d-inline-block">
-                            <i class="fa-solid fa-screwdriver-wrench text-warning me-2"></i> Restoration Protocols
-                        </span>
-                            <h1 class="display-3 fw-black mb-2 tracking-tight text-white hero-title">
-                                High-Precision Home <br class="d-none d-sm-block">
-                                <span class="text-gradient-cyan">Appliance Diagnostics</span>
-                            </h1>
-                            <p class="lead text-white-50 mb-4 hero-desc">
-                                Dynamic thermodynamic profiling, logic board recalibration, and performance tuning for high-end HVAC cooling units and smart arrays.
-                            </p>
-                            <div class="d-flex flex-column flex-sm-row gap-2 mt-3 hero-btn-group">
-                                <a href="#core-services" class="btn btn-brand py-3 px-5 fw-semibold shadow-lg">Book Appliance Audit</a>
-                                <a href="{{route('contact')}}" class="btn btn-outline-light rounded-pill d-flex align-items-center justify-content-center px-4 py-3 fw-medium fs-7">
-                                    Check OEM Coverage <i class="fa-solid fa-arrow-right ms-2"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+            @endforeach
         </div>
     </section>
 
@@ -158,71 +106,17 @@
             </div>
 
             <div class="row g-4 justify-content-center">
+
                 <!-- SERVICE CARD 1: OFFICE CLEANING -->
-                <div class="col-md-6 col-lg-4 reveal">
-                    <div class="card h-100 border-0 shadow-sm p-4 rounded-4 text-start bg-white service-premium-card">
-                        <div class="feature-icon bg-brand-soft text-brand mb-4">
-                            <i class="fa-solid fa-building-circle-check"></i>
-                        </div>
-                        <h4 class="fw-bold text-dark mb-3">Corporate & Office Cleaning</h4>
-                        <p class="text-muted-2 small flex-grow-1 mb-3">
-                            Hospital-grade disinfection, smart workstation optimization, and high-frequency space sanitization engineered to maximize workspace safety and productivity logs.
-                        </p>
-                        <hr class="my-3 opacity-5">
-                        <ul class="list-unstyled mb-4 small text-dark fw-medium">
-                            <li class="mb-2"><i class="fa-solid fa-circle-check text-success me-2"></i> Contractual & Deep Sanitization</li>
-                            <li class="mb-2"><i class="fa-solid fa-circle-check text-success me-2"></i> HEPA Multi-Stage Filtration Airing</li>
-                        </ul>
-                        <a class="btn btn-outline-brand btn-sm w-100 py-2.5 fw-semibold" href="#">
-                            Explore Scope & Pricing <i class="fa-solid fa-chevron-right ms-1 small"></i>
-                        </a>
+                @foreach($services as $service)
+                    <div class="col-md-6 col-lg-4 reveal mb-4">
+                        @include('frontEnd.component.serviceCard',[ 'service' => $service ])
                     </div>
-                </div>
-
-                <!-- SERVICE CARD 2: ELECTRICAL ENGINEERING -->
-                <div class="col-md-6 col-lg-4 reveal">
-                    <div class="card h-100 border-0 shadow-sm p-4 rounded-4 text-start bg-white service-premium-card feature-active-border">
-                        <div class="feature-icon bg-warning-soft text-warning mb-4">
-                            <i class="fa-solid fa-plug-circle-bolt"></i>
-                        </div>
-                        <h4 class="fw-bold text-dark mb-3">Certified Electrical Work</h4>
-                        <p class="text-muted-2 small flex-grow-1 mb-3">
-                            Emergency power trip diagnostics, heavy-duty distribution board (DB) upgrades, systemic home rewiring, and smart load-balancing circuits built under safety compliance.
-                        </p>
-                        <hr class="my-3 opacity-5">
-                        <ul class="list-unstyled mb-4 small text-dark fw-medium">
-                            <li class="mb-2"><i class="fa-solid fa-circle-check text-success me-2"></i> Fault Isolation & Dynamic Repair</li>
-                            <li class="mb-2"><i class="fa-solid fa-circle-check text-success me-2"></i> 24/7 Crisis Dispatch Line</li>
-                        </ul>
-                        <a class="btn btn-brand btn-sm w-100 py-2.5 fw-semibold" href="#">
-                            Explore Scope & Pricing <i class="fa-solid fa-chevron-right ms-1 small"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- SERVICE CARD 3: HOME APPLIANCE SERVICES -->
-                <div class="col-md-6 col-lg-4 reveal">
-                    <div class="card h-100 border-0 shadow-sm p-4 rounded-4 text-start bg-white service-premium-card">
-                        <div class="feature-icon bg-cyan-soft text-cyan mb-4">
-                            <i class="fa-solid fa-laptop-house"></i>
-                        </div>
-                        <h4 class="fw-bold text-dark mb-3">Home Appliance Engineering</h4>
-                        <p class="text-muted-2 small flex-grow-1 mb-3">
-                            High-precision alignment, thermodynamic profiling, and diagnostic restorations for advanced smart refrigeration loops, HVAC air conditioners, and laundry machinery.
-                        </p>
-                        <hr class="my-3 opacity-5">
-                        <ul class="list-unstyled mb-4 small text-dark fw-medium">
-                            <li class="mb-2"><i class="fa-solid fa-circle-check text-success me-2"></i> OEM Factory Components Used</li>
-                            <li class="mb-2"><i class="fa-solid fa-circle-check text-success me-2"></i> Post-Repair Performance Metrics</li>
-                        </ul>
-                        <a class="btn btn-outline-brand btn-sm w-100 py-2.5 fw-semibold" href="#">
-                            Explore Scope & Pricing <i class="fa-solid fa-chevron-right ms-1 small"></i>
-                        </a>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>
+
 
     <!-- ================= ADVANCED CORPORATE ADVANTAGE SECTION ================= -->
     <section class="py-5 position-relative overflow-hidden" style="background-color: #ffffff;">
@@ -303,37 +197,96 @@
     </section>
 
     <!-- ================= TESTIMONIAL AUDITS ================= -->
-    <section class="py-5 bg-soft border-top border-bottom">
+    <section class="py-5 bg-soft border-top border-bottom overflow-hidden">
         <div class="container py-3">
             <div class="text-center mb-5 reveal">
                 <span class="eyebrow text-brand fw-bold fs-7">Client Audits</span>
                 <h2 class="section-title fw-bold mt-1 text-dark">Enterprise Case Studies</h2>
             </div>
+
+            <div class="infinite-ticker-container">
+                <div class="infinite-ticker-track" id="tickerTrack">
+                    @foreach($testimonials as $testimonial)
+                        <div class="ticker-item">
+                            <div class="card p-4 rounded-4 border-0 shadow-sm text-start h-100 bg-white d-flex flex-column">
+                                <div class="text-warning mb-3 small">
+                                    @for($i = 1; $i <= 5; $i++)
+                                        @if($i <= ($testimonial->rating ?? 5))
+                                            {{-- একটিভ বা ভরাট স্টার --}}
+                                            <i class="fa-solid fa-star"></i>
+                                        @else
+                                            {{-- ইন-একটিভ বা খালি স্টার --}}
+                                            <i class="fa-regular fa-star text-muted opacity-50"></i>
+                                        @endif
+                                    @endfor
+                                </div>
+                                <p class="text-secondary small flex-grow-1 mb-3" style="line-height: 1.6;">
+                                    "{!! strip_tags($testimonial->review ?? $testimonial->review) !!}"
+                                </p>
+                                <hr class="my-3 opacity-25">
+                                <div class="mt-auto d-flex align-items-center gap-3">
+                                    <div class="flex-shrink-0">
+                                        @if(!empty($testimonial->image) && file_exists($testimonial->image))
+                                            <img class="rounded-circle object-cover shadow-sm"
+                                                 src="{{ asset($testimonial->image) }}"
+                                                 alt="{{ $testimonial->name }}"
+                                                 style="width: 48px; height: 48px; object-fit: cover; border: 2px solid #fff;">
+                                        @else
+                                            <div class="rounded-circle d-flex align-items-center justify-content-center fw-bold text-white bg-brand-soft text-brand shadow-sm"
+                                                 style="width: 48px; height: 48px; font-size: 0.95rem; background-color: rgba(var(--bs-primary-rgb), 0.1); border: 2px solid #fff;">
+                                                {{ strtoupper(substr($testimonial->name, 0, 1)) }}
+                                            </div>
+                                        @endif
+                                    </div>
+
+                                    <div class="user-info">
+                                        <strong class="text-dark d-block mb-0" style="font-size: 0.95rem; line-height: 1.2;">{{ $testimonial->name }}</strong>
+                                        <span class="text-muted fs-7 d-block mt-0.5" style="font-size: 0.8rem;">{{ $testimonial->designation ?? 'Verified Client' }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ================= Latest Articles ================= -->
+    <section class="py-5">
+        <div class="container">
+            <!-- Filter / Top Bar (Optional but gives a premium feel) -->
+            <div class="d-flex flex-wrap justify-content-between align-items-center mb-5 pb-2 border-bottom reveal">
+                <div>
+                    <h3 class="fw-bold mb-1" style="color: #1a1a1a;">Latest Articles</h3>
+                </div>
+                <div class="mt-3 mt-md-0">
+                    <a href="#" class="btn btn-brand-soft btn-sm px-3 py-1.5 rounded-pill fw-medium text-decoration-none small transition-all">
+                        View All <i class="fa-solid fa-chevron-right ms-1 opacity-75" style="font-size: 0.7rem;"></i>
+                    </a>
+                </div>
+            </div>
+            <style>
+                .btn-brand-soft {
+                    background-color: rgba(var(--bs-primary-rgb), 0.1);
+                    color: var(--brand-color, #5e35b1);
+                }
+                .btn-brand-soft:hover {
+                    background-color: var(--brand-color, #5e35b1);
+                    color: #fff;
+                }
+            </style>
+
+            <!-- Blog Grid -->
             <div class="row g-4">
-                <div class="col-md-4 reveal">
-                    <div class="card p-4 rounded-4 border-0 shadow-xs text-start h-100 bg-white">
-                        <div class="text-warning mb-3 small"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                        <p class="text-muted-2 small flex-grow-1">"The contractual office cleaning protocol implemented across our 4 floors has been impeccable. Absolute focus on subtle detail handling."</p>
-                        <hr class="my-3 opacity-5">
-                        <strong class="text-dark d-block">Marcus Thorne</strong><span class="text-muted-2 fs-7">Operations Director, Tier-1 Spaces</span>
-                    </div>
+                <!-- Blog Post 1 -->
+                @foreach($articles as $article)
+                <div class="col-md-6 col-lg-4 reveal">
+                    @include('frontEnd.component.articleCard',[ 'article' => $article ])
                 </div>
-                <div class="col-md-4 reveal">
-                    <div class="card p-4 rounded-4 border-0 shadow-xs text-start h-100 bg-white">
-                        <div class="text-warning mb-3 small"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                        <p class="text-muted-2 small flex-grow-1">"We faced a complex power-trip issue in our main processing laboratory. AquaNova field crews isolated and rewired the loop in 90 minutes flat."</p>
-                        <hr class="my-3 opacity-5">
-                        <strong class="text-dark d-block">Elena Rostova</strong><span class="text-muted-2 fs-7">Senior Site Lead, Vertex Lab</span>
-                    </div>
-                </div>
-                <div class="col-md-4 reveal">
-                    <div class="card p-4 rounded-4 border-0 shadow-xs text-start h-100 bg-white">
-                        <div class="text-warning mb-3 small"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                        <p class="text-muted-2 small flex-grow-1">"Flawless home appliance restoration. They repaired our advanced HVAC unit and gave us a comprehensive calibration map."</p>
-                        <hr class="my-3 opacity-5">
-                        <strong class="text-dark d-block">Dr. Amit Patel</strong><span class="text-muted-2 fs-7">Residential Administrator</span>
-                    </div>
-                </div>
+                @endforeach
+
             </div>
         </div>
     </section>
@@ -377,7 +330,7 @@
         .service-premium-card:hover { transform: translateY(-7px); box-shadow: 0 1.5rem 4rem rgba(0,0,0,.07) !important; border-color: transparent !important; }
         .feature-active-border { border-top: 4px solid #0f4c81 !important; }
 
-        .feature-icon { width: 60px; height: 60px; font-size: 24px; display: flex; align-items: center; justify-content: center; border-radius: 14px; }
+        .feature-icon { font-size: 24px; display: flex; align-items: center; justify-content: center; border-radius: 14px; }
         .shadow-xs { box-shadow: 0 4px 12px rgba(0,0,0,.015); }
         .fs-7 { font-size: 0.85rem !important; }
     </style>
@@ -582,6 +535,99 @@
             background: linear-gradient(135deg, #0f4c81, #0ea5e9);
         }
     </style>
+    <style>
+        /* স্মুথ কার্ড হোভার অ্যানিমেশন */
+        .service-premium-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .service-premium-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.12) !important;
+        }
+
+        /* বাটন হোভার ইফেক্ট */
+        .hover-btn {
+            transition: all 0.2s ease-in-out;
+        }
+        .hover-btn:hover i {
+            transform: translateX(4px);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        /* টেক্সট লিমিট করার জন্য মাল্টিলাইন ট্রাঙ্কেশন */
+        .text-truncate-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .text-truncate-1 {
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        /* ১. ইমেজ কন্টেইনার ফ্রেম (ইমেজের বাইরের অংশ লক রাখবে) */
+        .feature-image-wrapper {
+            height: 180px;
+            overflow: hidden; /* ইমেজ বড় হলেও বাইরে যাবে না */
+            border-radius: 12px; /* রাউন্ডেড কর্নার */
+            position: relative;
+        }
+
+        /* ২. ডিফল্ট ইমেজ স্টাইল */
+        .feature-image-wrapper img {
+            width: 100%;
+            hight: 100%;
+            object-fit: cover;
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1); /* স্মুথ ট্রানজিশন */
+        }
+
+        /* 🚀 ৩. কার্ড বা ইমেজের ওপর মাউস নিলে স্কেল আপ হবে */
+        .service-premium-card:hover .feature-image-wrapper img {
+            transform: scale(1.1); /* ১০% জুম হবে, আপনার পছন্দমত ১.১৫ বা ১.২ করতে পারেন */
+        }
+    </style>
+
+    <style>
+        /* কন্টেইনার স্ক্রোলবক্স */
+        .infinite-ticker-container {
+            overflow: hidden;
+            width: 100%;
+            position: relative;
+            cursor: grab;
+            padding: 10px 0;
+        }
+        .infinite-ticker-container:active {
+            cursor: grabbing;
+        }
+
+        /* মেইন ট্র্যাক যা অবিরত ঘুরবে */
+        .infinite-ticker-track {
+            display: flex;
+            gap: 24px;
+            width: max-content;
+            will-change: transform;
+        }
+
+        /* প্রতিটা কার্ডের সাইজ (ডেস্কটপে ৩টা দেখানোর জন্য উইডথ সেট করা) */
+        .ticker-item {
+            width: 380px; /* স্ক্রিন অনুযায়ী অ্যাডজাস্ট করে নিতে পারেন */
+            flex-shrink: 0;
+            user-select: none;
+        }
+
+        @media (max-width: 768px) {
+            .ticker-item {
+                width: 290px; /* মোবাইলের জন্য একটু ছোট */
+            }
+        }
+        .bg-brand-soft {
+            background-color: #f0ebfa !important; /* হালকা ব্র্যান্ড কালার */
+            color: #5e35b1 !important; /* গাঢ় ব্র্যান্ড কালার */
+        }
+    </style>
 @endpush
 @push('js')
     @push('js')
@@ -602,6 +648,125 @@
                     dots: true,
                     mouseDrag: true,
                     touchDrag: true
+                });
+            });
+            $(document).ready(function() {
+                $(".premium-client-testimonial").owlCarousel({
+                    loop: true,
+                    autoplay: true,
+                    autoplayTimeout: 0,        // 🚀 ০ দেওয়ার মানে কোনো থামাথামি (delay) থাকবে না
+                    slideTransition: 'linear', // 🚀 অ্যানিমেশন একদম সমান গতিতে (Linear) চলবে
+                    autoplaySpeed: 8000,       // 🚀 স্লাইড স্পিড (মিলিসেকেন্ডে), যত বেশি দেবেন তত আস্তে ও স্মুথলি চলবে
+                    smartSpeed: 8000,
+                    nav: false,
+                    dots: false,               // ❌ ডটস বন্ধ রাখতে হবে, কারণ ডটস থাকলে লাস্ট আইটেম চেনা যায়
+                    margin: 24,
+                    mouseDrag: true,
+                    touchDrag: true,
+                    responsive: {
+                        0: {
+                            items: 1
+                        },
+                        768: {
+                            items: 2
+                        },
+                        992: {
+                            items: 3
+                        }
+                    }
+                });
+            });
+        </script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const track = document.getElementById("tickerTrack");
+                const container = document.querySelector(".infinite-ticker-container");
+                if (!track || !container) return;
+
+                // ১. ট্রু ইনফিনিট লুপের জন্য আইটেমগুলো ক্লোন করা (ডাবল করা)
+                const items = Array.from(track.children);
+                items.forEach(item => {
+                    const clone = item.cloneNode(true);
+                    track.appendChild(clone);
+                });
+
+                let speed = 1; // অটো-প্লে স্পিড (বাড়িয়ে কমিয়ে স্পিড কন্ট্রোল করতে পারবেন)
+                let currentX = 0;
+                let isDragging = false;
+                let startX, scrollLeft;
+                let animationFrameId;
+
+                // ২. অটো-প্লে অ্যানিমেশন ফাংশন
+                function step() {
+                    if (!isDragging) {
+                        currentX -= speed;
+
+                        // যদি অর্ধেক ট্র্যাকে চলে যায় (অর্থাৎ অরিজিনাল আইটেম শেষ), রিসেট করো ০ তে
+                        const halfWidth = track.scrollWidth / 2;
+                        if (Math.abs(currentX) >= halfWidth) {
+                            currentX = 0;
+                        }
+                        track.style.transform = `translateX(${currentX}px)`;
+                    }
+                    animationFrameId = requestAnimationFrame(step);
+                }
+
+                // অটো-প্লে শুরু
+                animationFrameId = requestAnimationFrame(step);
+
+                // ৩. মাউস দিয়ে ড্র্যাগ করার লজিক (যাতে লাস্ট আইটেম কখনোই না বোঝা যায়)
+                container.addEventListener("mousedown", (e) => {
+                    isDragging = true;
+                    startX = e.pageX - currentX;
+                    cancelAnimationFrame(animationFrameId);
+                });
+
+                window.addEventListener("mouseup", () => {
+                    if (!isDragging) return;
+                    isDragging = false;
+                    animationFrameId = requestAnimationFrame(step);
+                });
+
+                container.addEventListener("mousemove", (e) => {
+                    if (!isDragging) return;
+                    e.preventDefault();
+                    const x = e.pageX;
+                    currentX = x - startX;
+
+                    const halfWidth = track.scrollWidth / 2;
+                    // ড্র্যাগ করে ডান বা বামে সীমানা পার হলে পজিশন রিসেট
+                    if (currentX > 0) {
+                        currentX = -halfWidth;
+                        startX = x - currentX;
+                    } else if (Math.abs(currentX) >= halfWidth) {
+                        currentX = 0;
+                        startX = x - currentX;
+                    }
+
+                    track.style.transform = `translateX(${currentX}px)`;
+                });
+
+                // টাচ স্ক্রিন (মোবাইল) সাপোর্ট
+                container.addEventListener("touchstart", (e) => {
+                    isDragging = true;
+                    startX = e.touches[0].pageX - currentX;
+                    cancelAnimationFrame(animationFrameId);
+                });
+
+                window.addEventListener("touchend", () => {
+                    if (!isDragging) return;
+                    isDragging = false;
+                    animationFrameId = requestAnimationFrame(step);
+                });
+
+                container.addEventListener("touchmove", (e) => {
+                    if (!isDragging) return;
+                    const x = e.touches[0].pageX;
+                    currentX = x - startX;
+                    const halfWidth = track.scrollWidth / 2;
+                    if (currentX > 0) { currentX = -halfWidth; startX = x - currentX; }
+                    else if (Math.abs(currentX) >= halfWidth) { currentX = 0; startX = x - currentX; }
+                    track.style.transform = `translateX(${currentX}px)`;
                 });
             });
         </script>

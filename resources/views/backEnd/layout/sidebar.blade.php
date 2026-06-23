@@ -87,6 +87,29 @@
                 </a>
             </li>
 
+            @canany(['article.list','article.category.list'])
+                <li class="nav-item">
+                    <a class="nav-link menu-arrow" href="#sidebarArticle" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarDashboards">
+                        <span class="nav-icon"><i class="ri-blogger-fill"></i></span>
+                        <span class="nav-text"> Articles </span>
+                    </a>
+                    <div class="collapse" id="sidebarArticle">
+                        <ul class="nav sub-navbar-nav">
+                            @can('article.list')
+                                <li class="sub-nav-item">
+                                    <a class="sub-nav-link" href="{{route('admin.article.index')}}">Articles</a>
+                                </li>
+                            @endcan
+                                @can('article.category.list')
+                            <li class="sub-nav-item">
+                                <a class="sub-nav-link" href="{{route('admin.article.category.index')}}">Category</a>
+                            </li>
+                                @endcan
+                        </ul>
+                    </div>
+                </li>
+            @endcan
+
             @can('setting')
                 <li class="nav-item">
                     <a class="nav-link menu-arrow" href="#sidebarSettings" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarDashboards">

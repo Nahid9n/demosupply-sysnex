@@ -26,6 +26,8 @@ class PermissionSeeder extends Seeder
             'gallery.list','gallery.store','gallery.update','gallery.delete',
             'faq.list','faq.store','faq.update','faq.delete',
             'slider.list','slider.store','slider.update','slider.delete',
+            'article.list','article.store','article.update','article.delete',
+            'article.category.list','article.category.store','article.category.update','article.category.delete',
         ];
 
         // Create Permissions

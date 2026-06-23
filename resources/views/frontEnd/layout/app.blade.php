@@ -17,7 +17,40 @@
     <link rel="stylesheet" href="{{asset('/')}}Frontend/css/styles.css">
     @yield('css')
     @stack('css')
-
+<!-- Custom Style for Premium Look (নিচের ডিজাইনগুলো সুন্দর দেখানোর জন্য) -->
+    <style>
+        .premium-blog-card {
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            background: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.04) !important;
+        }
+        .premium-blog-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(15, 76, 129, 0.08) !important;
+        }
+        .img-zoom-container {
+            overflow: hidden;
+            position: relative;
+        }
+        .img-zoom-container img {
+            transition: transform 0.6s ease;
+        }
+        .premium-blog-card:hover .img-zoom-container img {
+            transform: scale(1.06);
+        }
+        .hover-brand {
+            transition: color 0.3s ease;
+        }
+        .premium-blog-card:hover .hover-brand {
+            color: #0f4c81 !important; /* বা আপনার থিম কালার */
+        }
+        .btn-arrow-icon i {
+            transition: transform 0.3s ease;
+        }
+        .premium-blog-card:hover .btn-arrow-icon i {
+            transform: translateX(5px);
+        }
+    </style>
 </head>
 <body>
 
