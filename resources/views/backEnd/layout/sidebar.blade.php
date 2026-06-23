@@ -30,22 +30,14 @@
         </div>
         <ul class="navbar-nav" id="navbar-nav">
             <li class="menu-title">Menu</li>
-            <li class="nav-item">
-                <a class="nav-link menu-arrow" href="#sidebarDashboards" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarDashboards">
-                    <span class="nav-icon"><i class="ri-dashboard-2-line"></i></span>
-                    <span class="nav-text"> Dashboard</span>
-                </a>
-                <div class="collapse" id="sidebarDashboards">
-                    <ul class="nav sub-navbar-nav">
-                        @if (auth()->user()->can('dashboard'))
-                        <li class="sub-nav-item">
-                            <a class="sub-nav-link" href="{{route('admin.dashboard')}}">Dashboard</a>
-                        </li>
-                        @endif
-                    </ul>
-                </div>
-            </li>
-
+            @can('dashboard')
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route('admin.dashboard')}}">
+                        <span class="nav-icon"><i class="ri-dashboard-2-line"></i></span>
+                        <span class="nav-text">Dashboard</span>
+                    </a>
+                </li>
+            @endcan
             @can('service.list')
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('admin.services.index')}}">

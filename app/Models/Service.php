@@ -25,4 +25,8 @@ class Service extends Model
     {
         return $this->hasMany(ServiceGallery::class, 'service_id');
     }
+    public function seo()
+    {
+        return $this->morphOne(SeoManagement::class, 'model', 'model_type', 'model_id');
+    }
 }

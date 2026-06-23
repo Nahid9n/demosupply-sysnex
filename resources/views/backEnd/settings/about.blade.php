@@ -1,9 +1,9 @@
 @extends('backEnd.layout.master')
 @section('title', 'Edit About Us Settings')
 @section('body')
-    <div class="py-4">
+    <div class="">
         <div class="mb-4">
-            <h4 class="fw-bold text-slate-900 mb-1"> About Us</h4>
+            <h3 class="fw-bold text-dark mb-1"> About Us</h3>
             <p class="text-muted small">Update all dynamic About Us web Bbuilder.</p>
         </div>
         <form action="{{ route('admin.about.update') }}" method="POST" enctype="multipart/form-data">

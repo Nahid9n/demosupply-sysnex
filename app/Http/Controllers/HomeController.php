@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\ContactMessageMail;
 use App\Mail\SenderConfirmationMail;
 use App\Models\Message;
+use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -18,7 +19,9 @@ class HomeController extends Controller
         return view('frontEnd.services.index');
     }
     public function serviceDetails($slug){
-        return view('frontEnd.services.details');
+        $service = Service::where('slug',$slug)->with('seo')->first();
+        $seo = $service->seo;
+        return view('frontEnd.services.details',compact('service','seo'));
     }
     public function about(){
         return view('frontEnd.about-us.index');

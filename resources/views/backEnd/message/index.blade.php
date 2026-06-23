@@ -2,32 +2,31 @@
 @section('title', 'Contact Messages')
 @section('body')
     <div class="row">
-        <div class="col-12">
-            <div class="page-title-box">
-                <h4 class="mb-0 fw-semibold">Contact Messages</h4>
-            </div>
-        </div>
-    </div>
-
-    <div class="row mt-3">
         <div class="col-xl-12">
-            <div class="card">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h4 class="fw-bold text-slate-900 mb-0">Contact Messages</h4>
+                    <p class="text-muted small mb-0">Manage client messages</p>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
                 <div class="card-body p-0">
                     <div class="table-responsive">
-                        <table id="messageTable" class="table align-middle text-nowrap table-hover table-centered mb-0">
-                            <thead class="bg-light-subtle">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="bg-primary text-uppercase text-wrap fs-6 fw-bold text-slate-700">
                             <tr>
-                                <th>SL</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Phone</th>
-                                <th>Interest</th>
-                                <th>Date</th>
-                                <th>Action</th>
+                                <th class="text-white">SL</th>
+                                <th class="text-white">Name</th>
+                                <th class="text-white">Email</th>
+                                <th class="text-white">Phone</th>
+                                <th class="text-white">Interest</th>
+                                <th class="text-white">Date</th>
+                                <th class="text-white">Action</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            @foreach ($messages as $item)
+                            <tbody class="border-top-0">
+                                @forelse ($messages as $item)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->name }}</td>
@@ -61,7 +60,13 @@
                                         </div>
                                     </td>
                                 </tr>
-                            @endforeach
+                                @empty
+                                    <tr>
+                                        <td colspan="6" class="text-center py-5 text-muted">
+                                            <p class="mb-0 fw-semibold">No message yet.</p>
+                                        </td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>

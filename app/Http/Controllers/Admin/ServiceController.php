@@ -30,12 +30,21 @@ class ServiceController extends Controller
             'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
 
+        // ডাইনামিক ইউনিক স্লাগ জেনারেশন
+        $slug = Str::slug($request->service_name);
+        $originalSlug = $slug;
+        $count = 1;
+        while (Service::where('slug', $slug)->exists()) {
+            $slug = $originalSlug . '-' . $count;
+            $count++;
+        }
+
         $heroPath = null;
         if ($request->hasFile('cover_image')) {
             $heroPath = ImageUpload::upload($request->file('cover_image'), 'uploads/service/cover');
         }
 
-        // FAQs Mapping from clean names
+        // FAQs Mapping
         $faqs = [];
         if ($request->has('questions')) {
             foreach ($request->questions as $key => $question) {
@@ -50,7 +59,7 @@ class ServiceController extends Controller
 
         $service = Service::create([
             'name' => $request->service_name,
-            'slug' => Str::slug($request->service_name),
+            'slug' => $slug, // ইউনিক স্লাগটি এখানে সেভ হবে
             'icon_class' => $request->sidebar_icon ?? 'fa-solid fa-bolt',
             'phone' => $request->phone_number,
             'whatsApp' => $request->whatsapp_number,
@@ -70,6 +79,23 @@ class ServiceController extends Controller
             'faqs' => $faqs
         ]);
 
+        $service->seo()->updateOrCreate(
+            [
+                'model_type' => Service::class,
+                'model_id'   => $service->id,
+            ],
+            [
+                'page_name'        => $service->name . ' - Service Page',
+                'page_slug'        => $service->slug, // এসইও হাবের জন্য ট্র্যাকিং স্লাগ
+                'meta_title'       => $request->meta_title ?? $request->seo_title ?? $service->name,
+                'meta_description' => $request->meta_description ?? $request->seo_description,
+                'meta_keywords'    => $request->meta_keywords,
+                'canonical_url'    => $request->canonical_url,
+                'schema_script'    => $request->schema_script,
+                'datalayer_json'   => $request->datalayer_json,
+                'meta_robots'      => 'index, follow',
+            ]
+        );
 
         // Sub-Items
         if ($request->has('item_titles')) {
@@ -121,13 +147,25 @@ class ServiceController extends Controller
     public function update(Request $request, $id)
     {
         $service = Service::find($id);
+
         $request->validate([
             'service_name' => 'required|string|max:255',
             'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
 
+        // ডাইনামিক ইউনিক স্লাগ জেনারেশন (নিজেকে বাদ দিয়ে চেক করবে)
+        $slug = Str::slug($request->service_name);
+        $originalSlug = $slug;
+        $count = 1;
+        while (Service::where('slug', $slug)->where('id', '!=', $id)->exists()) {
+            $slug = $originalSlug . '-' . $count;
+            $count++;
+        }
+
+        // ইমেজ আপলোড
+        $hero_image_path = $service->hero_image;
         if ($request->hasFile('cover_image')) {
-            $service->hero_image = ImageUpload::upload(
+            $hero_image_path = ImageUpload::upload(
                 $request->file('cover_image'),
                 'uploads/service/cover',
                 null,
@@ -148,9 +186,11 @@ class ServiceController extends Controller
             }
         }
 
+        // সার্ভিস টেবিল আপডেট
         $service->update([
             'name' => $request->service_name,
-            'slug' => Str::slug($request->service_name),
+            'slug' => $slug, // জেনারেট হওয়া ইউনিক স্লাগ
+            'hero_image' => $hero_image_path,
             'icon_class' => $request->sidebar_icon,
             'phone' => $request->phone_number,
             'whatsApp' => $request->whatsapp_number,
@@ -169,6 +209,25 @@ class ServiceController extends Controller
             'faqs' => $faqs
         ]);
 
+        $service->seo()->updateOrCreate(
+            [
+                'model_type' => Service::class,
+                'model_id'   => $service->id,
+            ],
+            [
+                'page_name'        => $service->name . ' - Service Page',
+                'page_slug'        => $service->slug, // এসইও হাব আপডেট
+                'meta_title'       => $request->meta_title ?? $request->seo_title ?? $service->name,
+                'meta_description' => $request->meta_description ?? $request->seo_description,
+                'meta_keywords'    => $request->meta_keywords,
+                'canonical_url'    => $request->canonical_url,
+                'schema_script'    => $request->schema_script,
+                'datalayer_json'   => $request->datalayer_json,
+                'meta_robots'      => 'index, follow',
+            ]
+        );
+
+        // সার্ভিস আইটেম প্রসেস
         $service->items()->delete();
         if ($request->has('item_titles')) {
             foreach ($request->item_titles as $key => $title) {
@@ -182,6 +241,7 @@ class ServiceController extends Controller
             }
         }
 
+        // প্রাইসিং প্রসেস
         $service->pricings()->delete();
         if ($request->has('rates_titles')) {
             foreach ($request->rates_titles as $key => $title) {
@@ -195,6 +255,7 @@ class ServiceController extends Controller
             }
         }
 
+        // গ্যালারি পোর্টফোলিও প্রসেস
         if ($request->hasFile('portfolio_images')) {
             foreach ($request->file('portfolio_images') as $key => $file) {
                 $path = ImageUpload::upload($file, 'uploads/service/gallery', null, null);
@@ -206,7 +267,7 @@ class ServiceController extends Controller
             }
         }
 
-        return redirect()->route('admin.services.index')->with('success', 'Service updated successfully.');
+        return redirect()->route('admin.services.index')->with('success', 'Service and SEO updated successfully.');
     }
     public function deleteGalleryImage($id)
     {

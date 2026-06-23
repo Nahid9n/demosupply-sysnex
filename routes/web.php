@@ -113,7 +113,7 @@ Route::prefix('admin')->group(function () {
         Route::post('/about-us/update', [WebSettingController::class, 'updateAboutUs'])->name('admin.about.update');
 
         Route::get('/seo-manager', [Admin\SeoManagementController::class, 'index'])->name('admin.seo.index');
-        Route::post('/seo-manager/store', [Admin\SeoManagementController::class, 'store'])->name('admin.seo.store_page');
+        Route::post('/seo-manager/store', [Admin\SeoManagementController::class, 'storeCustomPage'])->name('admin.seo.store_page');
         Route::get('/seo-manager/edit/{id}', [Admin\SeoManagementController::class, 'editPage'])->name('admin.seo.edit_page');
         Route::post('/seo-manager/update/{id}', [Admin\SeoManagementController::class, 'updatePage'])->name('admin.seo.update_page');
         Route::post('/seo-manager/global-update', [Admin\SeoManagementController::class, 'updateGlobal'])->name('admin.seo.global_update');

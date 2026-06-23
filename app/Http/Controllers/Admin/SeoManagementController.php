@@ -6,14 +6,15 @@ use App\Helpers\ImageUpload;
 use App\Models\SeoGlobal;
 use App\Models\SeoManagement;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class SeoManagementController extends Controller
 {
     // সব পেজের লিস্ট (অ্যাডমিন ড্যাশবোর্ড)
     public function index()
     {
-        $pages = SeoManagement::whereNotNull('page_slug')->get(); // স্ট্যাটিক পেজসমূহ
-        $global = SeoGlobal::firstOrCreate(['id' => 1]);
+        $pages = \App\Models\SeoManagement::orderBy('id', 'desc')->paginate(2);
+        $global = \App\Models\SeoGlobal::firstOrCreate(['id' => 1]);
         return view('backEnd.seo.index', compact('pages', 'global'));
     }
 
@@ -21,7 +22,7 @@ class SeoManagementController extends Controller
     public function editPage($id)
     {
         $page = SeoManagement::findOrFail($id);
-        return view('backEnd.seo.edit_page', compact('page'));
+        return view('backEnd.seo.edit', compact('page'));
     }
 
     // পেজ এসইও আপডেট
@@ -51,5 +52,22 @@ class SeoManagementController extends Controller
         File::put(public_path('robots.txt'), $request->robots_txt);
 
         return redirect()->back()->with('success', 'Global SEO & Robots.txt updated successfully.');
+    }
+
+    public function storeCustomPage(Request $request)
+    {
+        $request->validate([
+            'page_name' => 'required|string|max:255',
+            'page_slug' => 'required|string|unique:seo_management,page_slug|max:255',
+        ]);
+
+        $slug = Str::slug($request->page_slug);
+        SeoManagement::create([
+            'page_name'   => $request->page_name,
+            'page_slug'   => $slug,
+            'meta_robots' => 'index, follow',
+        ]);
+
+        return redirect()->back()->with('success', 'New Custom Page layout registered successfully!');
     }
 }

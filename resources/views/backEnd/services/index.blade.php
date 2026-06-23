@@ -1,7 +1,7 @@
 @extends('backEnd.layout.master')
 @section('title','Services')
 @section('body')
-    <div class="py-4">
+    <div class="">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div><h4 class="fw-bold text-slate-900 mb-0">Service Lists</h4></div>
             <a href="{{ route('admin.services.create') }}" class="btn btn-secondary rounded-3 px-4 py-2 fw-semibold">

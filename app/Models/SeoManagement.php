@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class SeoManagement extends Model
 {
-    use HasFactory;
     protected $guarded = [];
 
     public function seoable()

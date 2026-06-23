@@ -1,17 +1,17 @@
 @extends('backEnd.layout.master')
 @section('title', 'SEO Management Hub')
 @section('body')
-    <div class="container-fluid py-4">
+    <div class="">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
-                <h3 class="fw-bold text-dark">SEO Control Room</h3>
+                <h3 class="fw-bold text-dark">SEO Management</h3>
                 <p class="text-muted mb-0">Manage Technical SEO, Crawling Controls, Robots.txt, Tracking Pixels and Page Meta Snippets.</p>
             </div>
             <a href="{{ url('sitemap.xml') }}" target="_blank" class="btn btn-outline-primary fw-semibold"><i class="ri-node-tree"></i> Live Sitemap.xml</a>
         </div>
 
         @if(session('success'))
-            <div class="alert alert-success border-0 shadow-sm mb-4">{{ session('success') }}</div>
+            <div class="alert alert-success border-0 shadow-lg mb-4">{{ session('success') }}</div>
         @endif
 
         <div class="row g-4">
@@ -19,8 +19,8 @@
             <div class="col-lg-5">
                 <form action="{{ route('admin.seo.global_update') }}" method="POST">
                     @csrf
-                    <div class="card border-0 shadow-sm rounded-4 mb-4">
-                        <div class="card-header bg-dark text-white p-3 fw-bold rounded-top-4">
+                    <div class="card border-0 shadow-lg rounded-4 mb-4">
+                        <div class="card-header bg-secondary text-white p-3 fw-bold rounded-top-4">
                             <i class="ri-settings-5-line"></i> Global Crawling & Script Setup
                         </div>
                         <div class="card-body p-4">
@@ -50,7 +50,7 @@
             <div class="col-lg-7">
 
                 <!-- ১. নতুন পেজ যুক্ত করার উইজেট (Add New Page Widget) -->
-                <div class="card border-0 shadow-sm rounded-4 mb-4">
+                <div class="card border-0 shadow-lg rounded-4 mb-4">
                     <div class="card-header bg-secondary text-white p-3 fw-bold rounded-top-4">
                         <i class="ri-add-circle-line"></i> Register New Custom Static Page
                     </div>
@@ -73,14 +73,14 @@
                             </div>
                         </div>
                         <div class="card-footer bg-light p-2 text-end border-top">
-                            <button type="submit" class="btn btn-sm btn-dark fw-bold px-3 rounded-2">Initialize Page Node</button>
+                            <button type="submit" class="btn btn-sm btn-dark fw-bold px-3 rounded-2">Save</button>
                         </div>
                     </form>
                 </div>
 
                 <!-- ২. আপনার মেইন মেটা আর্কিটেকচার টেবিল -->
-                <div class="card border-0 shadow-sm rounded-4">
-                    <div class="card-header bg-primary text-white p-3 fw-bold rounded-top-4">
+                <div class="card border-0 shadow-lg rounded-4">
+                    <div class="card-header bg-secondary text-white p-3 fw-bold rounded-top-4">
                         <i class="ri-file-search-line"></i> Page-Specific Meta & Schema Architecture
                     </div>
                     <div class="card-body p-0">
@@ -98,14 +98,27 @@
                                 @foreach($pages as $page)
                                     <tr>
                                         <td class="ps-4">
-                                            <div class="fw-bold text-dark">{{ $page->page_name }}</div>
-                                            <small class="text-muted text-truncate d-block" style="max-width: 250px;">{{ $page->meta_title ?? 'Title not set yet' }}</small>
+                                            <div class="fw-bold text-dark">
+                                                {{ $page->page_name }}
+                                                @if($page->model_type)
+                                                    <span class="badge bg-info-subtle text-info sm-badge" style="font-size: 10px;">Dynamic</span>
+                                                @else
+                                                    <span class="badge bg-secondary-subtle text-secondary sm-badge" style="font-size: 10px;">Static</span>
+                                                @endif
+                                            </div>
+                                            <small class="text-muted text-truncate d-block" style="max-width: 250px;">
+                                                {{ $page->meta_title ?? 'Title not set yet' }}
+                                            </small>
                                         </td>
-                                        <td><span class="badge bg-light text-dark font-monospace">/{{ $page->page_slug }}</span></td>
                                         <td>
-                                        <span class="badge {{ $page->meta_robots == 'index, follow' ? 'bg-success-subtle text-success' : 'bg-danger-subtle text-danger' }}">
-                                            {{ $page->meta_robots }}
-                                        </span>
+                                            <span class="badge bg-light text-dark font-monospace">
+                                                /{{ $page->page_slug ?? $page->seoable?->slug ?? 'dynamic-route' }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="badge {{ $page->meta_robots == 'index, follow' ? 'bg-success-subtle text-success' : 'bg-danger-subtle text-danger' }}">
+                                                {{ $page->meta_robots }}
+                                            </span>
                                         </td>
                                         <td class="text-center pe-4">
                                             <a href="{{ route('admin.seo.edit_page', $page->id) }}" class="btn btn-sm btn-primary rounded-2 px-3 fw-semibold">
@@ -116,6 +129,9 @@
                                 @endforeach
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="p-2">
+                            {{$pages->links('backEnd.layout.paginate')}}
                         </div>
                     </div>
                 </div>
