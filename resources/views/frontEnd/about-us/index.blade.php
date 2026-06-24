@@ -1,12 +1,11 @@
 @extends('frontEnd.layout.app')
 @section('title', 'About Us')
 @section('body')
-
     <!-- Premium Hero Section -->
-    <section class="product-hero position-relative overflow-hidden py-5 d-flex align-items-center" style="min-height: 75vh;">
+    <section class="product-hero position-relative overflow-hidden mt-lg-0 mt-5 py-5 d-flex align-items-center" style="min-height: 75vh;">
         <div class="container position-relative" style="z-index: 2;">
             <div class="row align-items-center g-5">
-                <div class="col-lg-6 reveal">
+                <div class="col-lg-6 order-2 order-lg-1 reveal">
                     <span class="eyebrow text-warning mb-2 d-inline-block">Elite Craftsmanship</span>
                     <h1 class="display-4 fw-bold mb-4 text-dark" style="line-height: 1.2;">
                         Engineering Trust Through <span class="text-brand">Quality & Innovation</span>
@@ -19,10 +18,10 @@
                         <a href="#story" class="btn btn-outline-brand">Our Blueprint</a>
                     </div>
                 </div>
-                <div class="col-lg-6 reveal text-center">
-                    <div class="position-relative d-inline-block">
+                <div class="col-lg-6 order-1 order-lg-2 reveal text-center">
+                    <div class="position-relative d-inline-block pt-3 pt-lg-0">
                         <!-- Premium image frame effect -->
-                        <div class="position-absolute translate-middle start-0 top-100 bg-warning rounded-4 shadow-lg d-none d-md-block" style="width: 120px; height: 120px; z-index: -1; transform: translate(-30px, -30px) !important;"></div>
+                        <div class="position-absolute translate-middle  start-0 top-100 bg-warning rounded-4 shadow-lg d-none d-md-block" style="width: 120px; height: 120px; z-index: -1; transform: translate(-30px, -30px) !important;"></div>
                         <img src="https://images.unsplash.com/photo-1497366412874-3415097a27e7?auto=format&fit=crop&w=1200&q=80"
                              class="img-fluid rounded-4 shadow-lg border border-4 border-white"
                              alt="AquaNova Headquarters" style="max-height: 450px; object-fit: cover;">

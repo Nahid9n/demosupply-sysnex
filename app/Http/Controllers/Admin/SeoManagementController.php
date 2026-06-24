@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+use App\Helpers\SeoHelper;
 use App\Http\Controllers\Controller;
 use App\Helpers\ImageUpload;
 use App\Models\SeoGlobal;
@@ -13,7 +14,7 @@ class SeoManagementController extends Controller
     // সব পেজের লিস্ট (অ্যাডমিন ড্যাশবোর্ড)
     public function index()
     {
-        $pages = \App\Models\SeoManagement::orderBy('id', 'desc')->paginate(2);
+        $pages = \App\Models\SeoManagement::orderBy('id', 'desc')->paginate(20);
         $global = \App\Models\SeoGlobal::firstOrCreate(['id' => 1]);
         return view('backEnd.seo.index', compact('pages', 'global'));
     }
@@ -60,13 +61,7 @@ class SeoManagementController extends Controller
             'page_name' => 'required|string|max:255',
             'page_slug' => 'required|string|unique:seo_management,page_slug|max:255',
         ]);
-
-        $slug = Str::slug($request->page_slug);
-        SeoManagement::create([
-            'page_name'   => $request->page_name,
-            'page_slug'   => $slug,
-            'meta_robots' => 'index, follow',
-        ]);
+        SeoHelper::generateAutoSeo(null, $request, 'Custom');
 
         return redirect()->back()->with('success', 'New Custom Page layout registered successfully!');
     }

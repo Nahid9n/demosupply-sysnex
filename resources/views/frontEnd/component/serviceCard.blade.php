@@ -27,10 +27,10 @@
     </ul>
 
     <div class="mt-auto">
-        <div class="btn btn-outline-brand btn-sm w-100 py-2.5 fw-semibold d-flex align-items-center justify-content-center gap-1 transition-all hover-btn">
+        <a href="{{route('service.details',$service->slug)}}" class="btn btn-outline-brand btn-sm w-100 py-2.5 fw-semibold d-flex align-items-center justify-content-center gap-1 transition-all hover-btn">
             <span>Explore Service</span>
             <i class="fa-solid fa-arrow-right small"></i>
-        </div>
+        </a>
     </div>
 
 </div>

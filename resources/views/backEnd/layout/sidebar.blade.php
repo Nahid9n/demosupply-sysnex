@@ -126,9 +126,6 @@
                             <li class="sub-nav-item">
                                 <a class="sub-nav-link" href="{{route('admin.about.us')}}">About Us</a>
                             </li>
-                            <li class="sub-nav-item">
-                                <a class="sub-nav-link" href="{{route('admin.seo.index')}}">Seo Setting</a>
-                            </li>
                         </ul>
                     </div>
                 </li>
@@ -140,6 +137,16 @@
                         <i class="ri-user-2-fill"></i>
                     </span>
                     <span class="nav-text">Users</span>
+                </a>
+            </li>
+            @endif
+            @if (auth()->user()->can('seo.list'))
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('admin.seo.index')}}">
+                    <span class="nav-icon">
+                        <i class="ri-search-2-line"></i>
+                    </span>
+                    <span class="nav-text">Seo Management</span>
                 </a>
             </li>
             @endif

@@ -50,7 +50,7 @@
                     <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
                         <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2">
                             <h5 class="fw-bold text-slate-800 mb-0">Service Included</h5>
-                            <button type="button" onclick="addInclusionRow()" class="btn btn-sm btn-outline-primary rounded-pill px-3"><i class="ri-add-line"></i> + Add Feature</button>
+                            <button type="button" onclick="addInclusionRow()" class="btn btn-sm btn-outline-primary rounded-pill px-3"><i class="ri-add-line"></i>  Add Feature</button>
                         </div>
                         <div class="mb-3">
                             <label class="form-label fw-semibold text-slate-700">Section Title</label>
@@ -78,7 +78,7 @@
                     <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
                         <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2">
                             <h5 class="fw-bold text-slate-800 mb-0">Rates & Pricing Table</h5>
-                            <button type="button" onclick="addPriceRow()" class="btn btn-sm btn-outline-primary rounded-pill px-3"><i class="ri-add-line"></i> + Add Rate Line</button>
+                            <button type="button" onclick="addPriceRow()" class="btn btn-sm btn-outline-primary rounded-pill px-3"><i class="ri-add-line"></i> Add Rate Line</button>
                         </div>
                         <div class="mb-3">
                             <label class="form-label fw-semibold text-slate-700">Section Title</label>
@@ -106,7 +106,7 @@
                     <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
                         <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2">
                             <h5 class="fw-bold text-slate-800 mb-0">Frequently Asked Questions (FAQs)</h5>
-                            <button type="button" onclick="addFaqRow()" class="btn btn-sm btn-outline-primary rounded-pill px-3"><i class="ri-add-line"></i> + Add FAQ</button>
+                            <button type="button" onclick="addFaqRow()" class="btn btn-sm btn-outline-primary rounded-pill px-3"><i class="ri-add-line"></i> Add FAQ</button>
                         </div>
                         <div class="mb-3">
                             <label class="form-label fw-semibold text-slate-700">Section Title</label>
@@ -208,11 +208,11 @@
                         <h5 class="fw-bold text-slate-800 mb-3 border-bottom pb-2">SEO Configurations</h5>
                         <div class="mb-2">
                             <label class="form-label fw-semibold text-slate-700">Meta Title</label>
-                            <input type="text" name="seo_title" class="form-control" value="{{ $service->meta_title }}" placeholder="Enter SEO Meta Title">
+                            <input type="text" name="meta_title" class="form-control" value="{{ $service->meta_title }}" placeholder="Enter SEO Meta Title">
                         </div>
                         <div>
                             <label class="form-label fw-semibold text-slate-700">Meta Description</label>
-                            <textarea name="seo_description" class="form-control" rows="3" placeholder="Enter SEO Meta Description String..."></textarea>
+                            <textarea name="meta_description" class="form-control" rows="3" placeholder="Enter SEO Meta Description String...">{{ $service->seo_description }}</textarea>
                         </div>
                     </div>
                 </div>

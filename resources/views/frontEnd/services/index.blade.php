@@ -32,41 +32,11 @@
             </div>
 
             <div class="row g-4 justify-content-center">
-                <!-- Service 1: Electrolite -->
+                @foreach($services as $service)
                 <div class="col-md-6 col-lg-4 reveal">
-                    <div class="card h-100 border-0 shadow-sm rounded-4 p-4 feature-card text-start">
-                        <div class="feature-icon mb-3" style="background: rgba(15, 76, 129, 0.1); color: #0f4c81; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; rounded-radius: 12px; font-size: 24px;">
-                            <i class="fa-solid fa-bolt"></i>
-                        </div>
-                        <h4 class="fw-bold mb-2">Electrolite System</h4>
-                        <p class="text-muted-2 flex-grow-1">Advanced multi-sensor electrolyte profiling to monitor and optimize your body's essential mineral balance seamlessly.</p>
-                        <a href="{{route('electrolite')}}" class="btn btn-outline-brand btn-sm mt-3 w-100">Explore Service <i class="fa-solid fa-arrow-right ms-1"></i></a>
-                    </div>
+                    @include('frontEnd.component.serviceCard',[ 'service' => $service ])
                 </div>
-
-                <!-- Service 2: Device Tracking -->
-                <div class="col-md-6 col-lg-4 reveal">
-                    <div class="card h-100 border-0 shadow-sm rounded-4 p-4 feature-card text-start">
-                        <div class="feature-icon mb-3" style="background: rgba(15, 76, 129, 0.1); color: #0f4c81; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; rounded-radius: 12px; font-size: 24px;">
-                            <i class="fa-solid fa-microchip"></i>
-                        </div>
-                        <h4 class="fw-bold mb-2">Smart Devices</h4>
-                        <p class="text-muted-2 flex-grow-1">Beautifully designed wellness tech pairing with your phone to track water quality, temperature, and daily volume goals.</p>
-                        <a href="{{route('device')}}" class="btn btn-outline-brand btn-sm mt-3 w-100">Explore Device <i class="fa-solid fa-arrow-right ms-1"></i></a>
-                    </div>
-                </div>
-
-                <!-- Service 3: Water Filtration -->
-                <div class="col-md-6 col-lg-4 reveal">
-                    <div class="card h-100 border-0 shadow-sm rounded-4 p-4 feature-card text-start">
-                        <div class="feature-icon mb-3" style="background: rgba(15, 76, 129, 0.1); color: #0f4c81; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; rounded-radius: 12px; font-size: 24px;">
-                            <i class="fa-solid fa-filter"></i>
-                        </div>
-                        <h4 class="fw-bold mb-2">Water Filtration</h4>
-                        <p class="text-muted-2 flex-grow-1">Premium structural water filters that remove heavy metals and microplastics while keeping healthy essentials intact.</p>
-                        <a href="{{route('water')}}" class="btn btn-outline-brand btn-sm mt-3 w-100">Explore Filtration <i class="fa-solid fa-arrow-right ms-1"></i></a>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>

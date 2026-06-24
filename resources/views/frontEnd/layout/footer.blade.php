@@ -3,9 +3,13 @@
         <div class="row g-4">
             <div class="col-lg-4">
                 <a class="navbar-brand d-flex align-items-center text-white mb-3" href="{{route('home')}}" style="font-family:Poppins;font-weight:800;font-size:1.4rem;text-decoration:none">
-                    <span class="logo-mark"><i class="fa-solid fa-droplet"></i></span> AquaNova
+                    <span class="logo-mark">
+                        <i class="fa-solid fa-droplet"></i></span>
+                    {{ $web_setting->company_name }}
                 </a>
-                <p class="text-muted-2" style="color:#94a3b8">Smart solutions for modern living — premium Electrolite, Devices and Water Filters engineered for healthier homes.</p>
+                <p class="text-muted-2" style="color:#94a3b8">
+                    Smart solutions for modern living — premium Electrolite, Devices and Water Filters engineered for healthier homes.
+                </p>
                 <div class="d-flex gap-3 mt-3">
                     <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
                     <a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
@@ -21,24 +25,27 @@
                     <li class="mb-2"><a href="{{route('about')}}">About</a></li>
                 </ul>
             </div>
-            <div class="col-6 col-lg-2">
-                <h5>Products</h5>
+            @php
+                $services = \App\Models\Service::where('status',1)->latest()->get()->take(5)
+            @endphp
+            <div class="col-6 col-lg-3">
+                <h5>Services</h5>
                 <ul class="list-unstyled">
-                    <li class="mb-2"><a href="{{route('electrolite')}}">Electrolite</a></li>
-                    <li class="mb-2"><a href="{{route('device')}}">Device</a></li>
-                    <li class="mb-2"><a href="{{route('water')}}">Water Filter</a></li>
+                    @foreach($services as $service)
+                    <li class="mb-2"><a href="{{route('service.details',$service->slug)}}">{{$service->name}}</a></li>
+                    @endforeach
                 </ul>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-3">
                 <h5>Get in touch</h5>
-                <p class="mb-1"><i class="fa-solid fa-location-dot me-2 text-brand"></i> 221B Innovation Ave, Suite 500</p>
-                <p class="mb-1"><i class="fa-solid fa-envelope me-2 text-brand"></i> hello@aquanova.com</p>
-                <p class="mb-1"><i class="fa-solid fa-phone me-2 text-brand"></i> +1 (555) 010-2030</p>
+                <p class="mb-1"><i class="fa-solid fa-location-dot me-2 text-brand"></i> {{$web_setting->address}}</p>
+                <p class="mb-1"><i class="fa-solid fa-envelope me-2 text-brand"></i>  {{$web_setting->email}}</p>
+                <p class="mb-1"><i class="fa-solid fa-phone me-2 text-brand"></i>  {{$web_setting->phone}}</p>
             </div>
         </div>
         <div class="footer-bottom d-flex flex-column flex-md-row justify-content-between">
-            <span>&copy; 2026 AquaNova. All rights reserved.</span>
-            <span>Built with Bootstrap 5 &middot; Designed for modern living</span>
+            <span>&copy; 2026 {{env('APP_NAME')}}. All rights reserved.</span>
+            <span>Designed & Developed By <a target="_blank" href="https://sysnexsoft.com/">sysnexsoft.com</a></span>
         </div>
     </div>
 </footer>

@@ -1,0 +1,313 @@
+
+    /* ================= PRESTIGE CUSTOM INTERFACE DESIGN SYSTEM ================= */
+.text-brand { color: #0f4c81 !important; }
+.text-cyan { color: #00aeef !important; }
+.bg-brand-light { background-color: rgba(15, 76, 129, 0.85) !important; }
+
+/* Soft Background Gradients for Icons */
+.bg-brand-soft { background-color: rgba(15, 76, 129, 0.07) !important; }
+.bg-warning-soft { background-color: rgba(255, 193, 7, 0.09) !important; }
+.bg-cyan-soft { background-color: rgba(0, 174, 239, 0.07) !important; }
+
+/* Buttons Styling */
+.btn-brand { background-color: #0f4c81 !important; color: #fff !important; font-weight: 600; border-radius: 50px; padding: 12px 32px; transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1); border: 0; }
+.btn-brand:hover { background-color: #0c3d68 !important; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(15, 76, 129, 0.25) !important; }
+.btn-outline-brand { border: 2px solid #0f4c81 !important; color: #0f4c81 !important; border-radius: 50px; font-weight: 600; transition: all 0.2s; }
+.btn-outline-brand:hover { background-color: #0f4c81 !important; color: #fff !important; }
+
+/* Premium Premium Service Cards Grid Interaction Mapping */
+.service-premium-card { transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); border: 1px solid rgba(0,0,0,.04) !important; }
+.service-premium-card:hover { transform: translateY(-7px); box-shadow: 0 1.5rem 4rem rgba(0,0,0,.07) !important; border-color: transparent !important; }
+.feature-active-border { border-top: 4px solid #0f4c81 !important; }
+
+.feature-icon { font-size: 24px; display: flex; align-items: center; justify-content: center; border-radius: 14px; }
+.shadow-xs { box-shadow: 0 4px 12px rgba(0,0,0,.015); }
+.fs-7 { font-size: 0.85rem !important; }
+
+      /* ================= FULL RESPONSIVE HERO CORE ENGINE ================= */
+  .hero-slide-item {
+      min-height: 80vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+  }
+.hero-container {
+    z-index: 3;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+.carousel-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+}
+.hero-title {
+    font-size: calc(1.8rem + 1.5vw);
+    line-height: 1.2;
+}
+.hero-desc {
+    font-size: 1.1rem;
+    max-width: 680px;
+    opacity: 0.8;
+}
+.fs-xs {
+    font-size: 0.75rem !important;
+}
+
+/* Custom Navigation Dots Dynamic Alignment */
+.premium-hero-slider .owl-dots {
+    position: absolute;
+    bottom: 25px;
+    width: 100%;
+    text-align: center;
+    z-index: 10;
+}
+.premium-hero-slider .owl-dot span {
+    width: 10px !important;
+    height: 10px !important;
+    background: rgba(255, 255, 255, 0.35) !important;
+    border-radius: 50%;
+    display: inline-block;
+    margin: 0 5px;
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.premium-hero-slider .owl-dot.active span {
+    background: #00aeef !important;
+    width: 26px !important;
+    border-radius: 6px !important;
+}
+
+/* ================= MOBILE MEDIA BREAKPOINTS (CRITICAL SETUP) ================= */
+@media (max-width: 767.98px) {
+    .hero-slide-item, .hero-container {
+        min-height: 70vh !important;
+    }
+    .hero-title {
+        font-size: 1.85rem !important;
+        font-weight: 800 !important;
+        margin-bottom: 12px !important;
+    }
+    .hero-desc {
+        font-size: 0.9rem !important;
+        line-height: 1.45 !important;
+        margin-bottom: 20px !important;
+    }
+    .hero-btn-group .btn {
+        width: 100% !important; /* Mobile matching fluid block buttons */
+        text-align: center;
+        padding: 11px 20px !important;
+        font-size: 0.9rem !important;
+    }
+    .premium-hero-slider .owl-dots {
+        bottom: 15px !important;
+    }
+}
+
+      /* ================= PREMIUM METRICS BOOTSTRAP ARCHITECTURE ================= */
+  .max-w-1200 {
+      max-width: 1240px;
+  }
+.z-index-10 {
+    z-index: 10;
+}
+/* Negative Margin for Stripe/Fixfast style premium overlap */
+.trust-metrics-wrapper {
+    margin-top: -38px;
+}
+.backdrop-blur {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+/* Premium Soft Colors */
+.bg-sky-soft { background-color: rgba(14, 165, 233, 0.08); }
+.text-sky-custom { color: #0ea5e9; }
+
+.bg-amber-soft { background-color: rgba(245, 158, 11, 0.08); }
+.text-amber-custom { color: #d97706; }
+
+.bg-emerald-soft { background-color: rgba(16, 185, 129, 0.08); }
+.text-emerald-custom { color: #059669; }
+
+.bg-indigo-soft { background-color: rgba(99, 102, 241, 0.08); }
+.text-indigo-custom { color: #4f46e5; }
+
+/* Component Metrics Icons Grid Dimensions */
+.metric-icon {
+    width: 48px;
+    height: 48px;
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+/* Typography Overrides */
+.fs-7 { font-size: 0.88rem !important; }
+.fs-8 { font-size: 0.76rem !important; }
+.tracking-tight { tracking-spacing: -0.02em; }
+
+/* Hover Master Interactions */
+.metric-group {
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+.metric-group:hover {
+    transform: translateY(-1px);
+}
+.metric-group:hover .metric-title {
+    color: #0f4c81 !important; /* Locks into your core corporate identity */
+}
+
+/* Large Screens Columns Divider Lines */
+@media (min-width: 992px) {
+    .divide-lg-col > [class*="col-"]:not(:first-child) {
+        border-left: 1px solid rgba(0, 0, 0, 0.06);
+    }
+}
+
+      /* ================= ADVANCED ADVANTAGE LAYER ENGINE ================= */
+  .max-w-500 { max-width: 520px; }
+    .p-3 { padding: 1.15rem !important; }
+    .fs-6 { font-size: 1.05rem !important; }
+
+/* Feature Item Interactivity */
+.adv-feature-item {
+    background-color: transparent;
+    border: 1px solid transparent;
+}
+.adv-feature-item:hover {
+    background-color: #f8fafc;
+    border-color: #f1f5f9;
+    transform: translateY(-2px);
+}
+
+/* Icon Boxes Dimensions inside features */
+.adv-feature-icon-box {
+    width: 46px;
+    height: 46px;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.adv-feature-item:hover .adv-feature-icon-box {
+    transform: scale(1.08);
+}
+
+/* Floating Interactive Badge */
+.transition-up {
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.image-prestige-frame:hover .transition-up {
+    transform: translate(-5px, -5px) !important;
+    box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.12) !important;
+}
+
+/* Slow Cinematic Image Zoom Effect on Hover */
+.image-hover-scale {
+    perspective: 1000px;
+}
+.transition-transform-slow {
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.image-prestige-frame:hover .transition-transform-slow {
+    transform: scale(1.04);
+}
+
+/* Image Color Blueprint Tint Overlay */
+.image-gradient-tint {
+    background: linear-gradient(135deg, #0f4c81, #0ea5e9);
+}
+
+      /* স্মুথ কার্ড হোভার অ্যানিমেশন */
+  .service-premium-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+.service-premium-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.12) !important;
+}
+
+/* বাটন হোভার ইফেক্ট */
+.hover-btn {
+    transition: all 0.2s ease-in-out;
+}
+.hover-btn:hover i {
+    transform: translateX(4px);
+    transition: transform 0.2s ease-in-out;
+}
+
+/* টেক্সট লিমিট করার জন্য মাল্টিলাইন ট্রাঙ্কেশন */
+.text-truncate-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.text-truncate-1 {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+/* ১. ইমেজ কন্টেইনার ফ্রেম (ইমেজের বাইরের অংশ লক রাখবে) */
+.feature-image-wrapper {
+    height: 180px;
+    overflow: hidden; /* ইমেজ বড় হলেও বাইরে যাবে না */
+    border-radius: 12px; /* রাউন্ডেড কর্নার */
+    position: relative;
+}
+
+/* ২. ডিফল্ট ইমেজ স্টাইল */
+.feature-image-wrapper img {
+    width: 100%;
+    hight: 100%;
+    object-fit: cover;
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1); /* স্মুথ ট্রানজিশন */
+}
+
+/* 🚀 ৩. কার্ড বা ইমেজের ওপর মাউস নিলে স্কেল আপ হবে */
+.service-premium-card:hover .feature-image-wrapper img {
+    transform: scale(1.1); /* ১০% জুম হবে, আপনার পছন্দমত ১.১৫ বা ১.২ করতে পারেন */
+}
+
+      /* কন্টেইনার স্ক্রোলবক্স */
+  .infinite-ticker-container {
+      overflow: hidden;
+      width: 100%;
+      position: relative;
+      cursor: grab;
+      padding: 10px 0;
+  }
+.infinite-ticker-container:active {
+    cursor: grabbing;
+}
+
+/* মেইন ট্র্যাক যা অবিরত ঘুরবে */
+.infinite-ticker-track {
+    display: flex;
+    gap: 24px;
+    width: max-content;
+    will-change: transform;
+}
+
+/* প্রতিটা কার্ডের সাইজ (ডেস্কটপে ৩টা দেখানোর জন্য উইডথ সেট করা) */
+.ticker-item {
+    width: 380px; /* স্ক্রিন অনুযায়ী অ্যাডজাস্ট করে নিতে পারেন */
+    flex-shrink: 0;
+    user-select: none;
+}
+
+@media (max-width: 768px) {
+    .ticker-item {
+        width: 290px; /* মোবাইলের জন্য একটু ছোট */
+    }
+}
+.bg-brand-soft {
+    background-color: #f0ebfa !important; /* হালকা ব্র্যান্ড কালার */
+    color: #5e35b1 !important; /* গাঢ় ব্র্যান্ড কালার */
+}

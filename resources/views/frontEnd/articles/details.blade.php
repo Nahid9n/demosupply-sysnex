@@ -88,7 +88,7 @@
                         <div class="d-flex align-items-center gap-3 mb-4 pb-4 border-bottom">
                             <img src="https://ui-avatars.com/api/?name=Admin&background=0f4c81&color=fff" class="rounded-circle" alt="Admin" style="width: 45px; height: 45px;">
                             <div>
-                                <h6 class="mb-0 fw-bold">By Admin</h6>
+                                <h6 class="mb-0 fw-bold">By {{env('APP_NAME')}}</h6>
                                 {{-- ৫. ডাইনামিক ডেট এবং রিড টাইম --}}
                                 <span class="text-muted small"><i class="fa-regular fa-calendar me-1"></i> {{ $article->created_at->format('F d, Y') }}</span>
                                 <span class="text-muted small ms-3"><i class="fa-regular fa-clock me-1"></i> {{ $article->read_time }} Min Read</span>
@@ -128,18 +128,25 @@
                 <div class="col-lg-4 reveal">
                     <div class="sticky-sidebar">
 
-                        <div class="card border-0 shadow-sm rounded-4 p-4 mb-4 bg-white">
+                        <div class="card border-0 shadow-sm rounded-4 p-4 mb-4 bg-white position-relative">
                             <h5 class="fw-bold mb-3" style="color: #0f4c81;">Search Articles</h5>
-                            <form action="#" method="GET">
+                            <form action="#" method="GET" autocomplete="off">
                                 <div class="input-group">
-                                    <input type="text" name="search" class="form-control border-light bg-light rounded-start-pill px-3" placeholder="Type keywords...">
+                                    <input type="text" id="article-search" name="search" class="form-control border-light bg-light rounded-start-pill px-3" placeholder="Type keywords...">
                                     <button class="btn btn-brand rounded-end-pill px-3" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                                 </div>
                             </form>
+
+                            <!-- Suggestion Box Container -->
+                            <div id="search-suggestions" class="list-group position-absolute w-100 shadow-sm start-0 px-4" style="z-index: 1000; display: none; top: 100%;">
+                                <div class="list-group-item rounded-4 border-0 p-2 bg-white">
+
+                                </div>
+                            </div>
                         </div>
 
                         <div class="card border-0 shadow-sm rounded-4 p-4 mb-4 bg-white">
-                            <h5 class="fw-bold mb-3" style="color: #0f4c81;">Trending Insights</h5>
+                            <h5 class="fw-bold mb-3" style="color: #0f4c81;">Trending Articles</h5>
                             <div class="d-flex flex-column gap-3">
 
                                 {{-- ৯. রিলেটেড বা ট্রেন্ডিং পোস্ট লুপ (কন্ট্রোলার থেকে $trending_articles পাস করতে হবে) --}}
@@ -164,8 +171,14 @@
                             <i class="fa-regular fa-envelope-open display-6 mb-3"></i>
                             <h5 class="fw-bold mb-2">Subscribe to Newsletters</h5>
                             <p class="small mb-3" style="opacity: 0.9;">Get the latest wellness advice and filtration guides delivered straight to your inbox.</p>
-                            <input type="email" class="form-control form-control-sm border-0 mb-2 rounded-pill px-3 text-center" placeholder="Enter your email">
-                            <button class="btn btn-light btn-sm w-100 rounded-pill fw-bold text-brand">Join Hub</button>
+
+                            <form id="newsletter-form" autocomplete="off">
+                                @csrf
+                                <input type="email" id="newsletter-email" name="email" class="form-control form-control-sm border-0 mb-2 rounded-pill px-3 text-center" placeholder="Enter your email" required>
+                                <button type="submit" id="newsletter-btn" class="btn btn-light btn-sm w-100 rounded-pill fw-bold text-brand">Join Hub</button>
+                            </form>
+
+                            <div id="newsletter-message" class="small mt-2 fw-semibold" style="display: none;"></div>
                         </div>
 
                     </div>
@@ -176,3 +189,122 @@
     </section>
 
 @endsection
+@push('js')
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInput = document.getElementById('article-search');
+            const suggestionBox = document.getElementById('search-suggestions');
+            const suggestionContent = suggestionBox.querySelector('.list-group-item');
+
+            // Laravel Route Template
+            const baseUrlTemplate = "{{ route('article.details', ':slug') }}";
+
+            searchInput.addEventListener('input', function () {
+                let query = this.value.trim();
+
+                if (query.length > 2) {
+                    fetch("{{ route('articles.suggestions') }}?search=" + encodeURIComponent(query))
+                        .then(response => response.json())
+                        .then(data => {
+                            suggestionContent.innerHTML = ''; // Purano elements soriye fela
+
+                            if (data.length > 0) {
+                                data.forEach(article => {
+                                    // Dynamic URL toiri kora
+                                    let targetUrl = baseUrlTemplate.replace(':slug', article.slug);
+
+                                    // Ekta temporary block dynamic wrapper ready kora
+                                    let itemWrapper = document.createElement('div');
+
+                                    // Layout mapping template with rich layout
+                                    itemWrapper.innerHTML = `
+                                <a href="${targetUrl}" class="d-flex align-items-center list-group-item-action border-0 p-2 my-1 rounded-3 text-decoration-none text-dark transition-all">
+                                    <img src="${article.image}" alt="${article.title}" class="rounded-2 me-3" style="width: 50px; height: 50px; object-fit: cover;">
+                                    <div class="flex-grow-1">
+                                    <h6 class="mb-1 text-truncate" style="font-size: 14px; max-width: 280px; font-weight: 600;">${article.title}</h6>
+                                    <small class="text-muted" style="font-size: 11px;">
+                                    <i class="fa-regular fa-calendar-days me-1"></i> ${article.date}
+                                    </small>
+                                    </div>
+                                    </a>
+                                    `;
+
+                            // Pure wrapper child ti main suggestion block code e append kora
+                            suggestionContent.appendChild(itemWrapper.firstElementChild);
+                        });
+                        suggestionBox.style.display = 'block';
+                    } else {
+                        suggestionContent.innerHTML = '<span class="text-muted p-2 d-block text-center" style="font-size: 13px;">No articles found</span>';
+                        suggestionBox.style.display = 'block';
+                    }
+                })
+                .catch(error => console.error('Error fetching suggestions:', error));
+        } else {
+            suggestionBox.style.display = 'none';
+        }
+    });
+
+    // Outer boundary click wrapper close handler
+    document.addEventListener('click', function (e) {
+        if (!searchInput.contains(e.target) && !suggestionBox.contains(e.target)) {
+            suggestionBox.style.display = 'none';
+        }
+    });
+});
+</script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const newsletterForm = document.getElementById('newsletter-form');
+            const emailInput = document.getElementById('newsletter-email');
+            const submitBtn = document.getElementById('newsletter-btn');
+            const messageBox = document.getElementById('newsletter-message');
+
+            newsletterForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                // Double submit loading handler controller status modifier
+                submitBtn.disabled = true;
+                submitBtn.innerText = 'Subscribing...';
+
+                messageBox.style.display = 'none';
+
+                // Dynamic Form data preparation
+                let formData = new FormData();
+                formData.append('email', emailInput.value);
+                formData.append('_token', '{{ csrf_token() }}');
+                fetch("{{ route('newsletter.subscribe') }}", {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                    .then(response => {
+                        return response.json().then(data => {
+                            if (!response.ok) {
+                                throw new Error(data.message || 'Something went wrong. Please try again.');
+                            }
+                            return data;
+                        });
+                    })
+                    .then(data => {
+                        messageBox.className = 'small mt-2 fw-semibold text-warning';
+                        messageBox.textContent = data.message;
+                        messageBox.style.display = 'block';
+
+                        newsletterForm.reset();
+                    })
+                    .catch(error => {
+                        messageBox.className = 'small mt-2 fw-semibold text-white bg-danger p-1 rounded-3';
+                        messageBox.textContent = error.message;
+                        messageBox.style.display = 'block';
+                    })
+                    .finally(() => {
+                        // Re-activate tracking submit button status logic wrapper triggers state element
+                        submitBtn.disabled = false;
+                        submitBtn.innerText = 'Join Hub';
+                    });
+            });
+        });
+    </script>
+@endpush

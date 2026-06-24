@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Helpers\ImageUpload;
+use App\Helpers\SeoHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Service;
 use App\Models\ServiceGallery;
@@ -204,28 +205,12 @@ class ServiceController extends Controller
             'faq_title' => $request->faq_section_title,
             'cta_title' => $request->action_title,
             'cta_subtitle' => $request->action_subtitle,
-            'meta_title' => $request->seo_title,
-            'meta_description' => $request->seo_description,
+            'meta_title' => $request->meta_title,
+            'meta_description' => $request->meta_description,
             'faqs' => $faqs
         ]);
 
-        $service->seo()->updateOrCreate(
-            [
-                'model_type' => Service::class,
-                'model_id'   => $service->id,
-            ],
-            [
-                'page_name'        => $service->name . ' - Service Page',
-                'page_slug'        => $service->slug, // এসইও হাব আপডেট
-                'meta_title'       => $request->meta_title ?? $request->seo_title ?? $service->name,
-                'meta_description' => $request->meta_description ?? $request->seo_description,
-                'meta_keywords'    => $request->meta_keywords,
-                'canonical_url'    => $request->canonical_url,
-                'schema_script'    => $request->schema_script,
-                'datalayer_json'   => $request->datalayer_json,
-                'meta_robots'      => 'index, follow',
-            ]
-        );
+        SeoHelper::generateAutoSeo($service, $request, 'Service');
 
         // সার্ভিস আইটেম প্রসেস
         $service->items()->delete();

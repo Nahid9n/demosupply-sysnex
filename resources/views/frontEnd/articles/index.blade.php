@@ -2,7 +2,7 @@
 @section('title', 'Articles & Insights')
 @section('body')
     <!-- Hero Section -->
-    <section class="product-hero bg-soft py-5 position-relative overflow-hidden" style="background: linear-gradient(180deg, #f4f8fb 0%, #ffffff 100%);">
+    <section class="product-hero bg-soft mt-lg-5 mt-0 py-0 py-lg-5 position-relative overflow-hidden" style="background: linear-gradient(180deg, #f4f8fb 0%, #ffffff 100%);">
         <div class="container py-4">
             <div class="row align-items-center g-5">
                 <div class="col-lg-8 reveal mx-auto text-center">
@@ -15,7 +15,7 @@
     </section>
 
     <!-- Blog / Articles Section (SEO-Friendly & Premium Grid) -->
-    <section class="py-5">
+    <section class="py-0 py-lg-5">
         <div class="container">
             <!-- Filter / Top Bar (Optional but gives a premium feel) -->
             <div class="d-flex flex-wrap justify-content-between align-items-center mb-5 pb-2 border-bottom reveal">

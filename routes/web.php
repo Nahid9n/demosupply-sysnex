@@ -25,11 +25,11 @@ Route::get('/service', [\App\Http\Controllers\HomeController::class,'services'])
 Route::get('/service/{slug}', [\App\Http\Controllers\HomeController::class,'serviceDetails'])->name('service.details');
 Route::get('/article', [\App\Http\Controllers\HomeController::class,'articles'])->name('articles');
 Route::get('/article/{slug}', [\App\Http\Controllers\HomeController::class,'articlesDetails'])->name('article.details');
-Route::get('/electrolite', [\App\Http\Controllers\HomeController::class,'electrolite'])->name('electrolite');
-Route::get('/water-filter', [\App\Http\Controllers\HomeController::class,'water'])->name('water');
-Route::get('/device', [\App\Http\Controllers\HomeController::class,'device'])->name('device');
+Route::get('/articles/suggestions', [\App\Http\Controllers\HomeController::class, 'suggestions'])->name('articles.suggestions');
+Route::get('/project-gallery', [\App\Http\Controllers\HomeController::class,'projectGallery'])->name('project.gallery');
 Route::post('/contact-us-submit', [\App\Http\Controllers\HomeController::class,'contactFormSubmit'])->name('contact.submit');
 Route::get('/sitemap.xml', [\App\Http\Controllers\SitemapController::class, 'index']);
+Route::post('/newsletter/subscribe', [\App\Http\Controllers\HomeController::class, 'subscribe'])->name('newsletter.subscribe');
 
 Route::redirect('/admin', '/admin/login');
 Route::prefix('admin')->group(function () {

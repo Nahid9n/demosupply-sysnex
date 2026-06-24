@@ -60,11 +60,11 @@
                         <!-- Schema & DataLayer -->
                         <div class="col-md-6">
                             <label class="form-label fw-semibold text-danger">JSON-LD Schema Markup</label>
-                            <textarea name="schema_script" class="form-control font-monospace fs-7 text-danger" rows="6" placeholder='<script type="application/ld+json">...</script>'>{{ $page->schema_script }}</textarea>
+                            <textarea name="schema_script" class="form-control font-monospace fs-7 text-danger" rows="25" placeholder='<script type="application/ld+json">...</script>'>{{ $page->schema_script }}</textarea>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label fw-semibold text-primary">GTM DataLayer JSON</label>
-                            <textarea name="datalayer_json" class="form-control font-monospace fs-7 text-primary" rows="6" placeholder='{ "pageType": "homepage" }'>{{ $page->datalayer_json }}</textarea>
+                            <textarea name="datalayer_json" class="form-control font-monospace fs-7 text-primary" rows="25" placeholder='{ "pageType": "homepage" }'>{{ $page->datalayer_json }}</textarea>
                         </div>
                     </div>
                 </div>

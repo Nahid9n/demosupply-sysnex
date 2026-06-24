@@ -15,40 +15,8 @@
         @endif
 
         <div class="row g-4">
-            <!-- বাম পাশ: গ্লোবাল সেটিংস এবং ট্র্যাকিং স্ক্রিপ্ট -->
-            <div class="col-lg-5">
-                <form action="{{ route('admin.seo.global_update') }}" method="POST">
-                    @csrf
-                    <div class="card border-0 shadow-lg rounded-4 mb-4">
-                        <div class="card-header bg-secondary text-white p-3 fw-bold rounded-top-4">
-                            <i class="ri-settings-5-line"></i> Global Crawling & Script Setup
-                        </div>
-                        <div class="card-body p-4">
-                            <div class="mb-3">
-                                <label class="form-label fw-bold text-danger">Robots.txt Content</label>
-                                <textarea name="robots_txt" class="form-control font-monospace fs-7" rows="5">{{ $global->robots_txt }}</textarea>
-                                <small class="text-muted">গুগল ক্রলারকে কন্ট্রোল করার টেক্সট। উদাহরণ: <code>User-agent: * <br>Disallow: /admin</code></small>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label fw-bold text-primary">Header Injector Scripts (GA4 / FB Pixel)</label>
-                                <textarea name="header_scripts" class="form-control font-monospace fs-7" rows="4" placeholder="<script>... Analytics Script Here ...</script>">{{ $global->header_scripts }}</textarea>
-                                <small class="text-muted">এখানে বসানো কোড সরাসরি সাইটের <code>&lt;head&gt;</code> ট্যাগে চলে যাবে।</small>
-                            </div>
-                            <div class="mb-0">
-                                <label class="form-label fw-bold text-secondary">Footer Injector Scripts</label>
-                                <textarea name="footer_scripts" class="form-control font-monospace fs-7" rows="3" placeholder="Chatbot codes etc.">{{ $global->footer_scripts }}</textarea>
-                            </div>
-                        </div>
-                        <div class="card-footer bg-light p-3 text-end">
-                            <button type="submit" class="btn btn-success fw-bold px-4">Update Engines</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-
             <!-- ডান পাশ: নতুন পেজ অ্যাড ফর্ম এবং পেজ-ভিত্তিক মেটা ও স্কিমা আর্কিটেকচার -->
-            <div class="col-lg-7">
-
+            <div class="col-lg-12">
                 <!-- ১. নতুন পেজ যুক্ত করার উইজেট (Add New Page Widget) -->
                 <div class="card border-0 shadow-lg rounded-4 mb-4">
                     <div class="card-header bg-secondary text-white p-3 fw-bold rounded-top-4">
@@ -77,62 +45,94 @@
                         </div>
                     </form>
                 </div>
-
-                <!-- ২. আপনার মেইন মেটা আর্কিটেকচার টেবিল -->
-                <div class="card border-0 shadow-lg rounded-4">
-                    <div class="card-header bg-secondary text-white p-3 fw-bold rounded-top-4">
-                        <i class="ri-file-search-line"></i> Page-Specific Meta & Schema Architecture
+            </div>
+            {{--<!-- বাম পাশ: গ্লোবাল সেটিংস এবং ট্র্যাকিং স্ক্রিপ্ট -->
+            <div class="col-lg-7">
+                <form action="{{ route('admin.seo.global_update') }}" method="POST">
+                    @csrf
+                    <div class="card border-0 shadow-lg rounded-4 mb-4">
+                        <div class="card-header bg-secondary text-white p-3 fw-bold rounded-top-4">
+                            <i class="ri-settings-5-line"></i> Global Crawling & Script Setup
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="mb-3">
+                                <label class="form-label fw-bold text-danger">Robots.txt Content</label>
+                                <textarea name="robots_txt" class="form-control font-monospace fs-7" rows="5">{{ $global->robots_txt }}</textarea>
+                                <small class="text-muted">গুগল ক্রলারকে কন্ট্রোল করার টেক্সট। উদাহরণ: <code>User-agent: * <br>Disallow: /admin</code></small>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold text-primary">Header Injector Scripts (GA4 / FB Pixel)</label>
+                                <textarea name="header_scripts" class="form-control font-monospace fs-7" rows="4" placeholder="<script>... Analytics Script Here ...</script>">{{ $global->header_scripts }}</textarea>
+                                <small class="text-muted">এখানে বসানো কোড সরাসরি সাইটের <code>&lt;head&gt;</code> ট্যাগে চলে যাবে।</small>
+                            </div>
+                            <div class="mb-0">
+                                <label class="form-label fw-bold text-secondary">Footer Injector Scripts</label>
+                                <textarea name="footer_scripts" class="form-control font-monospace fs-7" rows="3" placeholder="Chatbot codes etc.">{{ $global->footer_scripts }}</textarea>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-light p-3 text-end">
+                            <button type="submit" class="btn btn-success fw-bold px-4">Update Engines</button>
+                        </div>
                     </div>
-                    <div class="card-body p-0">
-                        <div class="table-responsive">
-                            <table class="table table-hover align-middle mb-0">
-                                <thead class="table-light">
+                </form>
+            </div>--}}
+
+        </div>
+        <div class="row">
+            <!-- ২. আপনার মেইন মেটা আর্কিটেকচার টেবিল -->
+            <div class="card border-0 shadow-lg rounded-4">
+                <div class="card-header bg-secondary text-white p-3 fw-bold rounded-top-4">
+                    <i class="ri-file-search-line"></i> Page-Specific Meta & Schema Architecture
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light">
+                            <tr>
+                                <th class="ps-4">Page Target</th>
+                                <th>Slug Mapping</th>
+                                <th>Index Target</th>
+                                <th class="text-center pe-4">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($pages as $page)
                                 <tr>
-                                    <th class="ps-4">Page Target</th>
-                                    <th>Slug Mapping</th>
-                                    <th>Index Target</th>
-                                    <th class="text-center pe-4">Action</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($pages as $page)
-                                    <tr>
-                                        <td class="ps-4">
-                                            <div class="fw-bold text-dark">
-                                                {{ $page->page_name }}
-                                                @if($page->model_type)
-                                                    <span class="badge bg-info-subtle text-info sm-badge" style="font-size: 10px;">Dynamic</span>
-                                                @else
-                                                    <span class="badge bg-secondary-subtle text-secondary sm-badge" style="font-size: 10px;">Static</span>
-                                                @endif
-                                            </div>
-                                            <small class="text-muted text-truncate d-block" style="max-width: 250px;">
-                                                {{ $page->meta_title ?? 'Title not set yet' }}
-                                            </small>
-                                        </td>
-                                        <td>
+                                    <td class="ps-4">
+                                        <div class="fw-bold text-dark">
+                                            {{ $page->page_name }}
+                                            @if($page->model_type)
+                                                <span class="badge bg-info-subtle text-info sm-badge" style="font-size: 10px;">Dynamic</span>
+                                            @else
+                                                <span class="badge bg-secondary-subtle text-secondary sm-badge" style="font-size: 10px;">Static</span>
+                                            @endif
+                                        </div>
+                                        <small class="text-muted text-truncate d-block" style="max-width: 250px;">
+                                            {{ $page->meta_title ?? 'Title not set yet' }}
+                                        </small>
+                                    </td>
+                                    <td>
                                             <span class="badge bg-light text-dark font-monospace">
                                                 /{{ $page->page_slug ?? $page->seoable?->slug ?? 'dynamic-route' }}
                                             </span>
-                                        </td>
-                                        <td>
+                                    </td>
+                                    <td>
                                             <span class="badge {{ $page->meta_robots == 'index, follow' ? 'bg-success-subtle text-success' : 'bg-danger-subtle text-danger' }}">
                                                 {{ $page->meta_robots }}
                                             </span>
-                                        </td>
-                                        <td class="text-center pe-4">
-                                            <a href="{{ route('admin.seo.edit_page', $page->id) }}" class="btn btn-sm btn-primary rounded-2 px-3 fw-semibold">
-                                                <i class="ri-edit-line"></i> Tune SEO
-                                            </a>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="p-2">
-                            {{$pages->links('backEnd.layout.paginate')}}
-                        </div>
+                                    </td>
+                                    <td class="text-center pe-4">
+                                        <a href="{{ route('admin.seo.edit_page', $page->id) }}" class="btn btn-sm btn-primary rounded-2 px-3 fw-semibold">
+                                            <i class="ri-edit-line"></i> Tune SEO
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="p-2">
+                        {{$pages->links('backEnd.layout.paginate')}}
                     </div>
                 </div>
             </div>
