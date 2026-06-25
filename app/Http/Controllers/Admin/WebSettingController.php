@@ -48,6 +48,16 @@ class WebSettingController extends Controller
             $faviconLogoImage->move($dir,$faviconLogoImageNewName);
             $input['favicon_logo'] =  $dir.$faviconLogoImageNewName;
         }
+        if ($request->file('advantage_image')){
+            if (file_exists($webSetting->advantage_image)){
+                unlink($webSetting->advantage_image);
+            }
+            $advantage_image = $request->file('advantage_image');
+            $advantage_imageNewName = rand().'.'.$advantage_image->extension();
+            $dir = 'uploads/settings/';
+            $advantage_image->move($dir,$advantage_imageNewName);
+            $input['advantage_image'] =  $dir.$advantage_imageNewName;
+        }
 
         $webSetting->update($input);
         return back()->with('success','Settings Update Successfully.');

@@ -63,10 +63,9 @@
                                 <div class="col-md-6">
                                     <label class="form-label">Interest</label>
                                     <select name="interest" class="form-select">
-                                        <option value="1">Electrolite</option>
-                                        <option value="2">Device</option>
-                                        <option value="3">Water Filter</option>
-                                        <option value="4">General Enquiry</option>
+                                        @foreach($services as $service)
+                                        <option value="{{$service->id}}">{{$service->name}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="col-12">
@@ -88,7 +87,7 @@
                 </div>
                 <div class="col-lg-5 reveal">
                     <div class="rounded-4 overflow-hidden shadow-sm" style="height:100%;min-height:420px">
-                        <iframe title="AquaNova location" src="https://www.google.com/maps?q=Innovation%20Ave&output=embed" width="100%" height="100%" style="border:0;min-height:420px" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        {!! $web_setting->google_map !!}
                     </div>
                 </div>
             </div>

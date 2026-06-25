@@ -118,6 +118,7 @@ Route::prefix('admin')->group(function () {
             Route::post('/user/update/{id}','update')->name('admin.user.update');
             Route::post('/user/delete','delete')->name('admin.user.delete');
         });
+
         Route::get('/settings', [WebSettingController::class, 'index'])->name('admin.general.settings');
         Route::post('/settings-update', [WebSettingController::class, 'settingsUpdate'])->name('admin.settings.update');
         Route::get('/reset-password', [AdminAuthController::class, 'resetPasswordIndex'])->name('admin.reset.password');
@@ -126,6 +127,11 @@ Route::prefix('admin')->group(function () {
         Route::post('/profile-update', [AdminAuthController::class, 'profileUpdate'])->name('admin.profile.update');
         Route::get('/about-us', [WebSettingController::class, 'aboutUs'])->name('admin.about.us');
         Route::post('/about-us/update', [WebSettingController::class, 'updateAboutUs'])->name('admin.about.update');
+
+        Route::prefix('logs')->name('admin.logs.')->group(function () {
+            Route::get('clicks', [Admin\AnalyticsController::class, 'trafficLogs'])->name('clicks');
+            Route::get('reports', [Admin\AnalyticsController::class, 'performanceReports'])->name('reports');
+        });
 
         Route::get('/seo-manager', [Admin\SeoManagementController::class, 'index'])->name('admin.seo.index');
         Route::post('/seo-manager/store', [Admin\SeoManagementController::class, 'storeCustomPage'])->name('admin.seo.store_page');

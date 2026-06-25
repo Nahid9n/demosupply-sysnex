@@ -11,10 +11,11 @@
                     Smart solutions for modern living — premium Electrolite, Devices and Water Filters engineered for healthier homes.
                 </p>
                 <div class="d-flex gap-3 mt-3">
-                    <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
-                    <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                    <a href="{{$web_setting->facebook}}" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="{{$web_setting->twitter}}" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+{{--                    <a href="{{$web_setting->facebook}}" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>--}}
+                    <a href="{{$web_setting->linkedin}}" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                    <a href="{{$web_setting->youtube}}" aria-label="Youtube"><i class="fa-brands fa-youtube"></i></a>
                 </div>
             </div>
             <div class="col-6 col-lg-2">

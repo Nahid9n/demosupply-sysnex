@@ -96,7 +96,7 @@
         <a href="{{$web_setting->messenger}}" target="_blank" class="floating-btn sub-btn text-white" style="background-color: #006aff;" title="Messenger">
             <i class="fa-brands fa-facebook-messenger"></i>
         </a>
-        <a href="https://wa.me/{{$web_setting->whatsApp}}" target="_blank" class="floating-btn sub-btn text-white" style="background-color: #25d366;" title="WhatsApp">
+        <a href="{{$web_setting->whatsApp}}" target="_blank" class="floating-btn sub-btn text-white" style="background-color: #25d366;" title="WhatsApp">
             <i class="fa-brands fa-whatsapp"></i>
         </a>
     </div>
@@ -185,6 +185,7 @@
         visibility: visible;
     }
 </style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="{{asset('/')}}Frontend/js/main.js"></script>
 <script src="{{asset('/')}}Backend/assets/js/sweetalert.js"></script>

@@ -33,8 +33,25 @@ class HomeController extends Controller
         $services = Service::where('status',1)->latest()->get()->take(15);
         return view('frontEnd.services.details',compact('service','seo','services'));
     }
-    public function articles(){
-        $articles = Article::latest()->where('status',1)->get();
+    public function articles(Request $request){
+        // Eikhane standard pagination dynamically set hobe (ধরি, প্রতি পেজে ৯টি পোস্ট)
+        $articles = Article::latest()->where('status',1)->paginate(3);
+
+        // Dynamic handling for AJAX Load More
+        if ($request->ajax()) {
+            $view = '';
+            foreach ($articles as $article) {
+                // dynamic string output banano hocche loop loop kore layout standard rekhe
+                $view .= '<div class="col-md-6 col-lg-4 reveal article-item">' .
+                    view('frontEnd.component.articleCard', compact('article'))->render() .
+                    '</div>';
+            }
+
+            return response()->json([
+                'html' => $view,
+                'hasMore' => $articles->hasMorePages()
+            ]);
+        }
         return view('frontEnd.articles.index',compact('articles'));
     }
     public function articlesDetails($slug)
@@ -85,11 +102,11 @@ class HomeController extends Controller
         return view('frontEnd.gallery.index',compact('galleries'));
     }
     public function contact(){
-        return view('frontEnd.contact-us.index');
+        $services = Service::where('status',1)->get();
+        return view('frontEnd.contact-us.index',compact('services'));
     }
     public function contactFormSubmit(Request $request)
     {
-        // ১. ফর্ম ভ্যালিডেশন (ডাটাবেজ সেফটি এবং রিকোয়ার্ড ফিল্ড নিশ্চিত করতে)
         $validatedData = $request->validate([
             'name'     => 'required|string|max:255',
             'email'    => 'required|email|max:255',

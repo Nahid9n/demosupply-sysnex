@@ -79,11 +79,16 @@
                 </li>
             @endcan
             <li class="nav-item">
-                <a class="nav-link" href="{{route('admin.message')}}">
+                <a class="nav-link d-flex justify-content-between" href="{{route('admin.message')}}">
                     <span class="nav-icon">
-                        <i class="ri-message-3-fill"></i>
+                        <i class="ri-message-3-fill"></i> &nbsp; <span class="nav-text ms-1" style="font-size: 14px">Messages</span>
                     </span>
-                    <span class="nav-text">Messages</span>
+                    @php
+                        $messageCount = \App\Models\Message::where('status',0)->count();
+                    @endphp
+                    @if($messageCount > 0)
+                        <span class="bg-primary rounded-2 p-1">{{$messageCount}}</span>
+                    @endif
                 </a>
             </li>
 
@@ -109,7 +114,22 @@
                     </div>
                 </li>
             @endcan
-
+            <li class="nav-item">
+                <a class="nav-link menu-arrow  {{ request()->is(['admin/logs/clicks', 'admin/logs/reports*']) ? 'active' : '' }}" href="#sidebarAnalytics" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarAnalytics">
+                    <span class="nav-icon"><i class="ri-pie-chart-line"></i></span>
+                    <span class="nav-text"> Click Analytics Logs </span>
+                </a>
+                <div class="collapse {{ request()->is(['admin/logs/clicks', 'admin/logs/reports']) ? 'show' : '' }}" id="sidebarAnalytics">
+                    <ul class="nav sub-navbar-nav">
+                        <li class="sub-nav-item">
+                            <a class="sub-nav-link {{ request()->is('admin/logs/clicks') ? 'active text-dark bg-info-subtle' : ''}}" href="{{route('admin.logs.clicks')}}">Real-time Traffic Logs</a>
+                        </li>
+                        <li class="sub-nav-item">
+                            <a class="sub-nav-link {{ request()->is('admin/logs/reports') ? 'active text-dark bg-info-subtle' : ''}}" href="{{route('admin.logs.reports')}}">Performance Reports</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
             @can('setting')
                 <li class="nav-item">
                     <a class="nav-link menu-arrow" href="#sidebarSettings" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarDashboards">

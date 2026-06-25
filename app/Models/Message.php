@@ -9,6 +9,10 @@ class Message extends Model
 {
     use HasFactory;
     protected $fillable = [
-      'name',  'email',  'phone',  'interest',  'message',
+      'name',  'email',  'phone',  'interest',  'message', 'status'
     ];
+
+    public function get_service(){
+        return $this->belongsTo(Service::class,'interest','id');
+    }
 }

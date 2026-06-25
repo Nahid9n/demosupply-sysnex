@@ -10,49 +10,50 @@
                 </div>
             </div>
 
-            <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden" id="messageTableWrapper">
                 <div class="card-body p-0">
                     <div class="table-responsive">
-                        <table class="table table-hover align-middle mb-0">
-                            <thead class="bg-primary text-uppercase text-wrap fs-6 fw-bold text-slate-700">
+                        <table class="table table-hover align-middle mb-0" id="messageTable">
+                            <thead class="bg-primary text-uppercase text-wrap fs-5 fw-bold text-slate-700">
                             <tr>
                                 <th class="text-white">SL</th>
                                 <th class="text-white">Name</th>
                                 <th class="text-white">Email</th>
                                 <th class="text-white">Phone</th>
-                                <th class="text-white">Interest</th>
+                                <th class="text-white">Interest Service</th>
                                 <th class="text-white">Date</th>
                                 <th class="text-white">Action</th>
                             </tr>
                             </thead>
                             <tbody class="border-top-0">
-                                @forelse ($messages as $item)
-                                <tr>
+                            @forelse ($messages as $item)
+                                {{-- স্ট্যাটাস ০ হলে রো-তে একটু হালকা ব্যাকগ্রাউন্ড থাকবে এবং ফন্ট বোল্ড থাকবে --}}
+                                <tr id="row-{{ $item->id }}" class="{{ $item->status == 0 ? 'fw-bold bg-light-subtle' : '' }}">
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $item->name }}</td>
+                                    <td>
+                                        {{ $item->name }}
+                                        @if($item->status == 0)
+                                            <span class="badge bg-danger rounded-pill ms-1 unread-badge" style="font-size: 10px;">New</span>
+                                        @endif
+                                    </td>
                                     <td>{{ $item->email }}</td>
                                     <td>{{ $item->phone ?? 'N/A' }}</td>
                                     <td>
-                                        @if($item->interest == 1) <span class="badge bg-info">Electrolite</span>
-                                        @elseif($item->interest == 2) <span class="badge bg-primary">Device</span>
-                                        @elseif($item->interest == 3) <span class="badge bg-warning">Water Filter</span>
-                                        @else <span class="badge bg-secondary">General Enquiry</span>
-                                        @endif
+                                        {{ $item->get_service->name ?? 'N/A' }}
                                     </td>
                                     <td>{{ $item->created_at->format('d M, Y h:i A') }}</td>
                                     <td>
                                         <div class="d-flex gap-2">
-                                            <!-- View Button -->
-                                            <a data-bs-target="#viewMessage" data-bs-toggle="modal" class="btn btn-soft-primary btn-sm"
+                                            <a data-bs-target="#viewMessage" data-bs-toggle="modal" class="btn btn-soft-primary btn-sm view-message-btn"
+                                               data-id="{{ $item->id }}"
                                                data-name="{{ $item->name }}"
                                                data-email="{{ $item->email }}"
                                                data-phone="{{ $item->phone ?? 'N/A' }}"
-                                               data-interest="@if($item->interest == 1) Electrolite @elseif($item->interest == 2) Device @elseif($item->interest == 3) Water Filter @else General Enquiry @endif"
+                                               data-interest="{{ $item->get_service->name ?? 'General Enquiry' }}"
                                                data-message="{{ $item->message }}"
                                                title="View Message">
                                                 <iconify-icon icon="solar:eye-broken" class="align-middle fs-18"></iconify-icon>
                                             </a>
-                                            <!-- Delete Button -->
                                             <a href="javascript:void(0);" onclick="deleteMessage({{ $item->id }})"
                                                title="Delete" class="btn btn-soft-danger btn-sm">
                                                 <iconify-icon icon="solar:trash-bin-minimalistic-2-broken" class="align-middle fs-18"></iconify-icon>
@@ -60,13 +61,13 @@
                                         </div>
                                     </td>
                                 </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="6" class="text-center py-5 text-muted">
-                                            <p class="mb-0 fw-semibold">No message yet.</p>
-                                        </td>
-                                    </tr>
-                                @endforelse
+                            @empty
+                                <tr>
+                                    <td colspan="7" class="text-center py-5 text-muted">
+                                        <p class="mb-0 fw-semibold">No message yet.</p>
+                                    </td>
+                                </tr>
+                            @endforelse
                             </tbody>
                         </table>
                     </div>
@@ -75,7 +76,6 @@
         </div>
     </div>
 
-    <!-- View Message Modal -->
     <div class="modal modal-lg fade" id="viewMessage" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -117,19 +117,46 @@
 
 @push('js')
     <script>
-        // View Modal Data Pass
-        $(document).on("click", "a[data-bs-target='#viewMessage']", function () {
+        // View Modal Data Pass and Status Update
+        $(document).on("click", ".view-message-btn", function () {
+            let id = $(this).data("id");
             let name = $(this).data("name");
             let email = $(this).data("email");
             let phone = $(this).data("phone");
             let interest = $(this).data("interest");
             let message = $(this).data("message");
 
+            // মোডালে ডাটা সেট করা
             $("#view_name").text(name);
             $("#view_email").text(email);
             $("#view_phone").text(phone);
             $("#view_interest").text(interest);
             $("#view_message").text(message);
+
+            // স্ট্যাটাস ১ (রিড) করার জন্য AJAX রিকোয়েস্ট
+            let currentRow = $(`#row-${id}`);
+
+            // শুধুমাত্র যদি মেসেজটি আগে আনরিড (status 0) থাকে তবেই AJAX কল হবে
+            if(currentRow.hasClass('fw-bold')) {
+                $.ajax({
+                    url: "{{ route('admin.message.read') }}", // আপনার নতুন কন্ট্রোলার রাউট
+                    type: "POST",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        id: id
+                    },
+                    success: function(response) {
+                        if(response.success) {
+                            // ইনস্ট্যান্ট ফ্রন্টএন্ড চেঞ্জ (পেজ রিফ্রেশ ছাড়া)
+                            currentRow.removeClass('fw-bold bg-light-subtle');
+                            currentRow.find('.unread-badge').remove();
+                        }
+                    },
+                    error: function(err) {
+                        console.log("Error updating status:", err);
+                    }
+                });
+            }
         });
 
         // Delete Message via AJAX
@@ -152,7 +179,8 @@
                             id: id
                         },
                         success: function(data) {
-                            $("#messageTable").load(location.href + ' #messageTable>*', "");
+                            // টেবিল কন্টেইনার রিলোড করা
+                            $("#messageTableWrapper").load(location.href + ' #messageTable', "");
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Message Deleted Successfully',

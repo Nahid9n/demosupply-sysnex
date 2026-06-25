@@ -2,25 +2,22 @@
 
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
-use App\Models\Article;
 use App\Models\ClickLog;
-use App\Models\Message;
-use App\Models\Service;
-use App\Models\Testimonial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class DashboardController extends Controller
+class AnalyticsController extends Controller
 {
-    public function dashboard(Request $request)
+    // 🌐 ১. Real-time Traffic Logs
+    public function trafficLogs()
     {
-        // ড্যাশবোর্ড কার্ডের জন্য ডেটা কাউন্ট
-        $totalServices     = Service::count();
-        $totalArticles     = Article::count();
-        $totalTestimonials = Testimonial::count();
-        $totalMessages    = Message::count();
-        $recentMessages    = Message::with('get_service')->latest()->take(10)->get();
+        $logs = ClickLog::latest()->paginate(50);
+        return view('backEnd.logs.clicks', compact('logs'));
+    }
 
+    // 📊 ২. Performance Reports
+    public function performanceReports(Request $request)
+    {
         // 🗓️ ফিল্টারিং লজিক (Default: today)
         $filter = $request->get('filter', 'today');
         $query = ClickLog::query();
@@ -84,12 +81,9 @@ class DashboardController extends Controller
         foreach ($hourlyData as $data) {
             $hourlyTicks[$data->hour] = $data->total;
         }
-        return view('backEnd.home.dashboard', compact(
-            'totalServices',
-            'totalArticles',
-            'totalTestimonials',
-            'totalMessages',
-            'recentMessages',
+
+        // সব ডেটা একসাথে ভিউতে পাঠানো হলো
+        return view('backEnd.logs.reports', compact(
             'totalClicks', 'uniqueVisitors', 'bounceRateEstimate',
             'topPages', 'topReferrers', 'deviceData', 'browserData', 'countryData', 'hourlyTicks', 'filter'
         ));

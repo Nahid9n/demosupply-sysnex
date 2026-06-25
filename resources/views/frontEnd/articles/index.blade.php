@@ -1,7 +1,6 @@
 @extends('frontEnd.layout.app')
 @section('title', 'Articles & Insights')
 @section('body')
-    <!-- Hero Section -->
     <section class="product-hero bg-soft mt-lg-5 mt-0 py-0 py-lg-5 position-relative overflow-hidden" style="background: linear-gradient(180deg, #f4f8fb 0%, #ffffff 100%);">
         <div class="container py-4">
             <div class="row align-items-center g-5">
@@ -14,50 +13,26 @@
         </div>
     </section>
 
-    <!-- Blog / Articles Section (SEO-Friendly & Premium Grid) -->
     <section class="py-0 py-lg-5">
         <div class="container">
-            <!-- Filter / Top Bar (Optional but gives a premium feel) -->
-            <div class="d-flex flex-wrap justify-content-between align-items-center mb-5 pb-2 border-bottom reveal">
-                <div>
-                    <h3 class="fw-bold mb-1" style="color: #1a1a1a;">All Publications</h3>
-                    <p class="text-muted small mb-0">Showing the latest research and guides</p>
-                </div>
-                <div class="mt-3 mt-md-0">
-                    <span class="text-muted small me-2">Sort by:</span>
-                    <select class="form-select form-select-sm d-inline-block w-auto border-0 bg-light rounded-pill px-3 fw-semibold text-secondary">
-                        <option>Latest Articles</option>
-                        <option>Trending</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- Blog Grid -->
-            <div class="row g-4">
-
+            <div class="row g-4" id="articles-wrapper">
                 @foreach($articles as $article)
-                    <div class="col-md-6 col-lg-4 reveal">
+                    <div class="col-md-6 col-lg-4 reveal article-item">
                         @include('frontEnd.component.articleCard',[ 'article' => $article ])
                     </div>
                 @endforeach
-
             </div>
 
-            <!-- View All Button / Pagination Area -->
-            <div class="text-center mt-5 pt-3 reveal">
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination justify-content-center m-0">
-                        <li class="page-item disabled"><a class="page-line rounded-circle me-2 d-flex align-items-center justify-content-center" href="#" style="width:40px; height:40px; border:1px solid #eee; text-decoration:none; color:#ccc;"><i class="fa-solid fa-chevron-left"></i></a></li>
-                        <li class="page-item active"><a class="page-link rounded-circle me-2 bg-brand text-white d-flex align-items-center justify-content-center border-0" href="#" style="width:40px; height:40px;">1</a></li>
-                        <li class="page-item"><a class="page-link rounded-circle me-2 text-dark d-flex align-items-center justify-content-center" href="#" style="width:40px; height:40px; border:1px solid #eee;">2</a></li>
-                        <li class="page-item"><a class="page-link rounded-circle d-flex align-items-center justify-content-center text-dark" href="#" style="width:40px; height:40px; border:1px solid #eee;"><i class="fa-solid fa-chevron-right"></i></a></li>
-                    </ul>
-                </nav>
-            </div>
+            @if($articles->hasMorePages())
+                <div class="text-center mt-5 pt-3 reveal">
+                    <button id="load-more-btn" data-page="2" class="btn btn-brand rounded-pill px-5 py-3 fw-semibold shadow-sm" style="background-color: #0f4c81; color: white;">
+                        Load More Articles <i class="fa-solid fa-spinner fa-spin ms-2 d-none" id="loader-icon"></i>
+                    </button>
+                </div>
+            @endif
         </div>
     </section>
 
-    <!-- Custom Solutions / CTA Section -->
     <section class="py-5">
         <div class="container">
             <div class="glass p-5 text-center reveal" style="background: linear-gradient(135deg, rgba(15, 76, 129, 0.95), rgba(0, 174, 239, 0.9)); color: #fff; border-radius: 24px; box-shadow: 0 15px 35px rgba(0, 174, 239, 0.25);">
@@ -67,5 +42,68 @@
             </div>
         </div>
     </section>
-
 @endsection
+@push('js')
+    <script>
+        $(document).ready(function() {
+            $('#load-more-btn').click(function() {
+                let button = $(this);
+                let page = button.data('page');
+                let loader = $('#loader-icon');
+
+                console.log(page);
+                // Loader show and disable button
+                loader.removeClass('d-none');
+                button.prop('disabled', true);
+
+                $.ajax({
+                    // Laravel Route Name dynamic dynamic use kora holo ekhane
+                    url: "{{ route('articles') }}",
+                    type: "GET",
+                    data: {
+                        page: page // Request page query parameter standard hishebe pas hocche
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        // Check korun data ashche kina directly length diye (trim jhamela mukto)
+                        if(!response.html || response.html.trim().length === 0) {
+                            button.remove();
+                            return;
+                        }
+
+                        // Loader off and push content
+                        loader.addClass('d-none');
+                        button.prop('disabled', false);
+
+                        // New HTML object/node generate kore wrapper section-e pathano hocche
+                        let $newItems = $(response.html);
+
+                        // UI layout freeze thaka/hide thaka rodh korte initial dynamic filter apply
+                        // Jodi element automatic load na hoy, reveal dynamic override korbe
+                        $newItems.css('opacity', '1').css('visibility', 'visible');
+
+                        // New cards push to main row
+                        $('#articles-wrapper').append($newItems);
+
+                        // Increment page count for next click
+                        button.data('page', page + 1);
+
+                        // If no more data remains, remove button
+                        if(!response.hasMore) {
+                            button.remove();
+                        }
+
+                        // [IMPORTANT] Jodi ScrollReveal / AOS wrapper plugin thake, seta dynamic reload kora:
+                        // typeof ScrollReveal !== 'undefined' && ScrollReveal().sync();
+                    },
+                    error: function(xhr) {
+                        console.log('Something went wrong!');
+                        loader.addClass('d-none');
+                        button.prop('disabled', false);
+                    }
+                });
+            });
+        });
+    </script>
+@endpush
+

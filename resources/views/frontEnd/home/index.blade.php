@@ -48,8 +48,8 @@
                                     <i class="fa-solid fa-user-tie fs-5"></i>
                                 </div>
                                 <div>
-                                    <h5 class="fs-7 fw-bold text-dark mb-0 tracking-tight metric-title">Certified Engineers</h5>
-                                    <p class="fs-8 text-muted mb-0 d-none d-sm-block fw-medium">Vetted elite technicians</p>
+                                    <h5 class="fs-7 fw-bold text-dark mb-0 tracking-tight metric-title">{{$web_setting->metric_1_title}}</h5>
+                                    <p class="fs-8 text-muted mb-0 d-none d-sm-block fw-medium">{{$web_setting->metric_1_desc}}</p>
                                 </div>
                             </div>
                         </div>
@@ -60,8 +60,8 @@
                                     <i class="fa-solid fa-handshake-angle fs-5"></i>
                                 </div>
                                 <div>
-                                    <h5 class="fs-7 fw-bold text-dark mb-0 tracking-tight metric-title">2-Hour Dispatch</h5>
-                                    <p class="fs-8 text-muted mb-0 d-none d-sm-block fw-medium">Instant emergency response</p>
+                                    <h5 class="fs-7 fw-bold text-dark mb-0 tracking-tight metric-title">{{$web_setting->metric_2_title}}</h5>
+                                    <p class="fs-8 text-muted mb-0 d-none d-sm-block fw-medium">{{$web_setting->metric_2_desc}}</p>
                                 </div>
                             </div>
                         </div>
@@ -72,8 +72,8 @@
                                     <i class="fa-solid fa-money-check-dollar fs-5"></i>
                                 </div>
                                 <div>
-                                    <h5 class="fs-7 fw-bold text-dark mb-0 tracking-tight metric-title">100% Transparent</h5>
-                                    <p class="fs-8 text-muted mb-0 d-none d-sm-block fw-medium">No hidden fees structural logs</p>
+                                    <h5 class="fs-7 fw-bold text-dark mb-0 tracking-tight metric-title">{{$web_setting->metric_3_title}}</h5>
+                                    <p class="fs-8 text-muted mb-0 d-none d-sm-block fw-medium">{{$web_setting->metric_3_desc}}</p>
                                 </div>
                             </div>
                         </div>
@@ -84,8 +84,8 @@
                                     <i class="fa-solid fa-award fs-5"></i>
                                 </div>
                                 <div>
-                                    <h5 class="fs-7 fw-bold text-dark mb-0 tracking-tight metric-title">SLA Guaranteed</h5>
-                                    <p class="fs-8 text-muted mb-0 d-none d-sm-block fw-medium">Strict compliance management</p>
+                                    <h5 class="fs-7 fw-bold text-dark mb-0 tracking-tight metric-title">{{$web_setting->metric_4_title}}</h5>
+                                    <p class="fs-8 text-muted mb-0 d-none d-sm-block fw-medium">{{$web_setting->metric_4_desc}}</p>
                                 </div>
                             </div>
                         </div>
@@ -133,11 +133,10 @@
                     The Premium Advantage
                 </span>
                     <h2 class="display-6 fw-black text-slate-900 tracking-tight mb-4" style="font-weight: 800;">
-                        Why High-End Properties <br>
-                        <span class="text-gradient-navy">Rely on AquaNova</span>
+                        {{$web_setting->advantage_title}}
                     </h2>
                     <p class="text-slate-500 fs-6 mb-5 leading-relaxed">
-                        We don't do quick fixes. We deploy a comprehensive operational infrastructure tracking framework. Every electrician, technician, and cleaning supervisor is rigorously certified, background-checked, and monitored under stringent SLA standards.
+                        {{$web_setting->advantage_description}}
                     </p>
 
                     <!-- Premium Features Sub-Grid -->
@@ -148,8 +147,8 @@
                                 <div class="adv-feature-icon-box bg-blue-soft text-blue-custom rounded-3 mb-3 d-flex align-items-center justify-content-center">
                                     <i class="fa-solid fa-circle-nodes fs-5"></i>
                                 </div>
-                                <h5 class="fw-bold text-slate-900 fs-6.5 mb-2">Smart Scheduling</h5>
-                                <p class="text-slate-500 fs-7 mb-0 leading-relaxed">Book and monitor field crew metrics directly from our integrated live app portal.</p>
+                                <h5 class="fw-bold text-slate-900 fs-6.5 mb-2">{{$web_setting->feature_1_title}}</h5>
+                                <p class="text-slate-500 fs-7 mb-0 leading-relaxed">{{$web_setting->feature_1_desc}}</p>
                             </div>
                         </div>
 
@@ -159,8 +158,8 @@
                                 <div class="adv-feature-icon-box bg-emerald-soft text-emerald-custom rounded-3 mb-3 d-flex align-items-center justify-content-center">
                                     <i class="fa-solid fa-user-shield fs-5"></i>
                                 </div>
-                                <h5 class="fw-bold text-slate-900 fs-6.5 mb-2">Full Coverage Insurance</h5>
-                                <p class="text-slate-500 fs-7 mb-0 leading-relaxed">Complete third-party property damage coverage up to $1M for ultimate peace of mind.</p>
+                                <h5 class="fw-bold text-slate-900 fs-6.5 mb-2">{{$web_setting->feature_2_title}}</h5>
+                                <p class="text-slate-500 fs-7 mb-0 leading-relaxed">{{$web_setting->feature_2_desc}}</p>
                             </div>
                         </div>
                     </div>
@@ -172,7 +171,7 @@
                         <!-- Abstract geometric backdrop box (Tailwind design style) -->
                         <div class="position-absolute start-0 top-0 bg-slate-50 border border-slate-100 rounded-5 w-100 h-100 transform translate-x-4 translate-y-4 shadow-sm" style="z-index: -1;"></div>
 
-                        <!-- Floating Stat Badge Overlay -->
+                        {{--<!-- Floating Stat Badge Overlay -->
                         <div class="position-absolute top-0 start-0 translate-middle-x mt-5 ms-4 bg-white bg-opacity-95 backdrop-blur shadow-prestige rounded-4 p-3 d-none d-sm-flex align-items-center gap-3 border border-slate-100 transition-up" style="z-index: 5;">
                             <div class="rounded-circle bg-emerald-soft text-emerald-custom d-flex align-items-center justify-content-center" style="width: 42px; height: 42px;">
                                 <i class="fa-solid fa-circle-check fs-5"></i>
@@ -181,13 +180,15 @@
                                 <h6 class="fw-black text-slate-900 mb-0 fs-7">100% Vetted</h6>
                                 <p class="text-slate-400 fs-8.5 mb-0 fw-semibold">SLA Compliance Locked</p>
                             </div>
-                        </div>
+                        </div>--}}
 
                         <!-- Main Cover Image with Wrapper -->
                         <div class="overflow-hidden rounded-5 shadow-prestige image-hover-scale" style="border: 1px solid rgba(255,255,255,0.8);">
-                            <img src="{{asset('/')}}Frontend/images/hero.jpg" class="img-fluid w-100 transition-transform-slow" style="max-height: 460px; min-height: 400px; object-fit: cover;" alt="AquaNova Execution Blueprint"/>
+
+                            <img src="{{ asset($web_setting->advantage_image) }}" class="img-fluid w-100 transition-transform-slow" style="max-height: 460px; min-height: 400px; object-fit: cover;" alt="AquaNova Execution Blueprint"/>
+
                             <!-- Soft premium color overlay -->
-                            <div class="position-absolute top-0 start-0 w-100 h-100 image-gradient-tint opacity-20 pointer-events-none"></div>
+{{--                            <div class="position-absolute top-0 start-0 w-100 h-100 image-gradient-tint opacity-20 pointer-events-none"></div>--}}
                         </div>
                     </div>
                 </div>

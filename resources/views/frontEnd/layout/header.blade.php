@@ -9,7 +9,7 @@
             <!-- স্ক্রলিং টেক্সট (Marquee) -->
             <div class="marquee-container flex-grow-1">
                 <div class="marquee-text">
-                    🔥 Welcome to KAMALS SERVICE! We provide premium solutions for your needs. Check out our latest services and articles. Contact us today for special offers! 🌟
+                    {{ $web_setting->header_top_text }}
                 </div>
             </div>
         </div>
@@ -21,7 +21,7 @@
 <nav class="navbar navbar-expand-lg fixed-top navbar-aqua navbar-position-adjust">
     <div class="container">
         <a class="navbar-brand d-flex align-items-center" href="{{route('home')}}">
-            <span class="logo-mark"><i class="fa-solid fa-droplet"></i></span> KAMALS SERVICE
+            <span class="logo-mark"><i class="fa-solid fa-droplet"></i></span> {{$web_setting->company_name}}
         </a>
         <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMain">
             <i class="fa-solid fa-bars"></i>

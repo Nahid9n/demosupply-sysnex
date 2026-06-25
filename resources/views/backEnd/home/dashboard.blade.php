@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-12">
             <div class="page-title-box">
-                <h4 class="mb-0 fw-semibold">Analytics</h4>
+                <h4 class="mb-0 fw-semibold">Analytics & Insights</h4>
                 <ol class="breadcrumb mb-0">
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
                     <li class="breadcrumb-item active">Analytics</li>
@@ -14,414 +14,374 @@
         </div>
     </div>
     <!-- ========== Page Title End ========== -->
-
-    <!-- Start here.... -->
+    <!-- Dashboard Metric Cards -->
     <div class="row">
+        <!-- Card 1: Active Services -->
         <div class="col-md-6 col-xl-3">
-            <div class="card">
+            <div class="card border-0 shadow-sm rounded-3">
                 <div class="card-body">
-                    <div class="row align-items-center justify-content-between">
-                        <div class="col-6">
-                            <div class="avatar-md bg-light bg-opacity-50 rounded">
-                                <iconify-icon icon="solar:buildings-2-broken" class="fs-32 text-primary avatar-title"></iconify-icon>
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <div class="avatar-md bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                                <i class="ri-service-fill fs-24 text-primary"></i>
                             </div>
-                            <p class="text-muted mb-2 mt-3">No. of Properties</p>
-                            <h3 class="text-dark fw-bold d-flex align-items-center gap-2 mb-0">2,854 <span class="badge text-success bg-success-subtle fs-12"><i class="ri-arrow-up-line"></i>7.34%</span></h3>
-                        </div> <!-- end col -->
-                        <div class="col-6">
-                            <div id="total_customers" class="apex-charts"></div>
-                        </div> <!-- end col -->
-                    </div> <!-- end row-->
-                </div> <!-- end card body -->
-            </div> <!-- end card -->
-        </div> <!-- end col -->
-        <div class="col-md-6 col-xl-3">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row align-items-center justify-content-between">
-                        <div class="col-6">
-                            <div class="avatar-md bg-light bg-opacity-50 rounded">
-                                <iconify-icon icon="solar:users-group-two-rounded-broken" class="fs-32 text-primary avatar-title"></iconify-icon>
-                            </div>
-                            <p class="text-muted mb-2 mt-3">Regi. Agents</p>
-                            <h3 class="text-dark fw-bold d-flex align-items-center gap-2 mb-0">705 <span class="badge text-success bg-success-subtle fs-12"><i class="ri-arrow-up-line"></i>76.89%</span></h3>
-                        </div> <!-- end col -->
-                        <div class="col-6 text-end">
-                            <div id="invoiced_customers" class="apex-charts"></div>
-                        </div> <!-- end col -->
-                    </div> <!-- end row-->
-                </div> <!-- end card body -->
-            </div> <!-- end card -->
-        </div> <!-- end col -->
-        <div class="col-md-6 col-xl-3">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row align-items-center justify-content-between">
-                        <div class="col-5">
-                            <div class="avatar-md bg-light bg-opacity-50 rounded">
-                                <iconify-icon icon="solar:shield-user-broken" class="fs-32 text-primary avatar-title"></iconify-icon>
-                            </div>
-                            <p class="text-muted mb-2 mt-3">Customers</p>
-                            <h3 class="text-dark fw-bold d-flex align-items-center gap-2 mb-0">9,431 <span class="badge text-danger bg-danger-subtle fs-12"><i class="ri-arrow-down-line"></i>45.00%</span></h3>
-                        </div> <!-- end col -->
-                        <div class="col-6 text-end">
-                            <div id="new_sale" class="apex-charts"></div>
-                        </div> <!-- end col -->
-                    </div> <!-- end row-->
-                </div> <!-- end card body -->
-            </div> <!-- end card -->
-        </div> <!-- end col -->
-        <div class="col-md-6 col-xl-3">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row align-items-center justify-content-between">
-                        <div class="col-5">
-                            <div class="avatar-md bg-light bg-opacity-50 rounded">
-                                <iconify-icon icon="solar:money-bag-broken" class="fs-32 text-primary avatar-title"></iconify-icon>
-                            </div>
-                            <p class="text-muted mb-2 mt-3">Revenue</p>
-                            <h3 class="text-dark fw-bold d-flex align-items-center gap-2 mb-0">$78.3M <span class="badge text-success bg-success-subtle fs-12"><i class="ri-arrow-up-line"></i>8.76%</span></h3>
-                        </div> <!-- end col -->
-                        <div class="col-6 text-end">
-                            <div id="invoiced_sales" class="apex-charts"></div>
-                        </div> <!-- end col -->
-                    </div> <!-- end row-->
-                </div> <!-- end card body -->
-            </div> <!-- end card -->
-        </div> <!-- end col -->
-    </div> <!-- end row -->
-    <div class="row">
-        <div class="col-xl-8">
-            <div class="card overflow-hidden">
-                <div class="card-header d-flex justify-content-between align-items-center pb-1">
-                    <div>
-                        <h4 class="card-title">Sales Analytic</h4>
-                    </div>
-                    <div class="dropdown">
-                        <a href="#" class="dropdown-toggle btn btn-sm btn-outline-light rounded" data-bs-toggle="dropdown" aria-expanded="false">
-                            This Month
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end">
-                            <!-- item-->
-                            <a href="#!" class="dropdown-item">Week</a>
-                            <!-- item-->
-                            <a href="#!" class="dropdown-item">Months</a>
-                            <!-- item-->
-                            <a href="#!" class="dropdown-item">Years</a>
+                            <p class="text-muted mb-1 mt-3 small text-uppercase fw-semibold">Total Services</p>
+                            <h3 class="text-dark fw-bold mb-0">{{ $totalServices }}</h3>
                         </div>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="text-end">
-                        <p class="mb-0 fs-18 fw-medium text-dark"><i class="ri-wallet-3-fill"></i> Earnings : <span class="text-primary fw-bold">$85,934</span></p>
-                    </div>
-                    <div class="row align-items-top text-center">
-                        <div class="col-lg-12">
-                            <div class="apex-charts mt-2" id="sales_analytic"></div>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="card-footer p-2 bg-light-subtle text-center">
-                    <div class="row g-3">
-                        <div class="col-md-4 border-end">
-                            <p class="text-muted mb-1">Income</p>
-                            <p class="text-dark fs-18 fw-medium d-flex align-items-center justify-content-center gap-2 mb-0">23,675.00 <span class="badge text-success bg-success-subtle fs-12"><i class="ri-arrow-up-line"></i>0.08%</span></p>
-                        </div>
-                        <div class="col-md-4 border-end">
-                            <p class="text-muted mb-1">Expenses</p>
-                            <p class="text-dark fs-18 fw-medium d-flex align-items-center justify-content-center gap-2 mb-0">11,562.00 <span class="badge text-danger bg-danger-subtle fs-12"><i class="ri-arrow-down-line"></i>5.38%</span></p>
-                        </div>
-                        <div class="col-md-4">
-                            <p class="text-muted mb-1">Balance</p>
-                            <p class="text-dark fs-18 fw-medium d-flex align-items-center justify-content-center gap-2 mb-0">67,365.00 <span class="badge text-success bg-success-subtle fs-12"><i class="ri-arrow-up-line"></i>2.89%</span></p>
+                        <div class="text-end">
+                            <span class="badge bg-success-subtle text-success rounded-pill px-2 py-1 fs-12">Active</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-xl-4">
-            <div class="card bg-primary bg-gradient">
+
+        <!-- Card 2: Total Articles -->
+        <div class="col-md-6 col-xl-3">
+            <div class="card border-0 shadow-sm rounded-3">
                 <div class="card-body">
-                    <div class="row align-items-center justify-content-between">
-                        <div class="col-xl-7 col-lg-6 col-md-6">
-                            <h3 class="text-white fw-bold">$117,000.43</h3>
-                            <p class="text-white-50">My Balance</p>
-                            <div class="row mt-4">
-                                <div class="col-lg-6 col-lg-6 col-md-6 col-6">
-                                    <div class="d-flex gap-2">
-                                        <div class="avatar-sm flex-shrink-0">
-                                                                      <span class="avatar-title bg-success bg-opacity-50 text-white rounded">
-                                                                           <i class="ri-arrow-down-line fs-4"></i>
-                                                                      </span>
-                                        </div>
-                                        <div class="d-block">
-                                            <h5 class="text-white fw-medium mb-0">$13,321.12</h5>
-                                            <p class="mb-0 text-white-50">Income</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-lg-6 col-md-6 col-6">
-                                    <div class="d-flex gap-2">
-                                        <div class="avatar-sm flex-shrink-0">
-                                                                      <span class="avatar-title bg-danger bg-opacity-50 text-white rounded">
-                                                                           <i class="ri-arrow-up-line fs-4"></i>
-                                                                      </span>
-                                        </div>
-                                        <div class="d-block">
-                                            <h5 class="text-white fw-medium mb-0">$7,566.11</h5>
-                                            <p class="mb-0 text-white-50">Expanse</p>
-                                        </div>
-                                    </div>
-                                </div>
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <div class="avatar-md bg-warning bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                                <i class="ri-blogger-fill fs-24 text-warning"></i>
                             </div>
-                            <div class="row mt-3 g-2">
-                                <div class="col-xl-6 col-lg-6 col-md-6">
-                                    <a href="#!" class="btn btn-warning w-100 btn-sm">Send</a>
-                                </div>
-                                <div class="col-xl-6 col-lg-6 col-md-6">
-                                    <a href="#!" class="btn bg-light bg-opacity-25 text-white w-100 btn-sm">Receive</a>
-                                </div>
-                            </div>
+                            <p class="text-muted mb-1 mt-3 small text-uppercase fw-semibold">Total Articles</p>
+                            <h3 class="text-dark fw-bold mb-0">{{ $totalArticles }}</h3>
                         </div>
-                        <div class="col-xl-5 col-lg-4 col-md-4">
-                            <img src="{{asset('/')}}Backend/assets/images/money.png" alt="" class="img-fluid">
+                        <div class="text-end">
+                            <span class="badge bg-info-subtle text-info rounded-pill px-2 py-1 fs-12">Blogs</span>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="card">
-                <div class="card-body p-0">
-                    <div class="row g-3">
-                        <div class="col-xl-6 col-md-6">
-                            <div class="text-center p-3 border-end">
-                                <h5 class="card-title mb-0 text-dark fw-medium">Property</h5>
-                                <div class="avatar-md bg-light bg-opacity-50 rounded mx-auto my-3">
-                                    <iconify-icon icon="solar:home-bold-duotone" class="fs-32 text-primary avatar-title"></iconify-icon>
-                                </div>
-                                <h4 class="text-dark fw-medium">15,780</h4>
+        </div>
 
-                                <p class="text-muted">60% Target</p>
-
-                                <div class="progress mt-3" style="height: 10px;">
-                                    <div class="progress-bar progress-bar  progress-bar-striped progress-bar-animated bg-primary" role="progressbar" style="width: 60%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="70"> </div>
-                                </div>
+        <!-- Card 3: Client Testimonials -->
+        <div class="col-md-6 col-xl-3">
+            <div class="card border-0 shadow-sm rounded-3">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <div class="avatar-md bg-success bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                                <i class="ri-team-fill fs-24 text-success"></i>
                             </div>
+                            <p class="text-muted mb-1 mt-3 small text-uppercase fw-semibold">Testimonials</p>
+                            <h3 class="text-dark fw-bold mb-0">{{ $totalTestimonials }}</h3>
                         </div>
-
-                        <div class="col-xl-6 col-md-6">
-                            <div class="text-center p-3">
-                                <h5 class="card-title mb-0 text-dark fw-medium">Revenue</h5>
-                                <div class="avatar-md bg-light bg-opacity-50 rounded mx-auto my-3">
-                                    <iconify-icon icon="solar:money-bag-bold-duotone" class="fs-32 text-success avatar-title"></iconify-icon>
-                                </div>
-                                <h4 class="text-dark fw-medium">$78.3M</h4>
-
-                                <p class="text-muted">80% Target</p>
-
-                                <div class="progress mt-3" style="height: 10px;">
-                                    <div class="progress-bar progress-bar  progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="80">
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="text-end">
+                            <span class="badge bg-success-subtle text-success rounded-pill px-2 py-1 fs-12">Reviews</span>
                         </div>
                     </div>
                 </div>
-                <div class="card-footer border-top mt-1">
-                    <a href="#!" class="link-dark fw-medium">View More <i class="ri-arrow-right-line"></i></a>
+            </div>
+        </div>
+
+        <!-- Card 4: Unread Messages -->
+        <div class="col-md-6 col-xl-3">
+            <div class="card border-0 shadow-sm rounded-3">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <div class="avatar-md bg-danger bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                                <i class="ri-message-3-fill fs-24 text-danger"></i>
+                            </div>
+                            <p class="text-muted mb-1 mt-3 small text-uppercase fw-semibold">Total Messages</p>
+                            <h3 class="text-dark fw-bold mb-0">{{ $totalMessages }}</h3>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <!-- 📅 টপ হেডার এবং ফিল্টার সেকশন -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4 class="mb-0">📊 Performance & Traffic Reports</h4>
+        <form action="{{ route('admin.dashboard') }}" method="GET" id="filterForm">
+            <select name="filter" class="form-select" onchange="document.getElementById('filterForm').submit()">
+                <option value="today" {{ $filter == 'today' ? 'selected' : '' }}>Today</option>
+                <option value="yesterday" {{ $filter == 'yesterday' ? 'selected' : '' }}>Yesterday</option>
+                <option value="last_7_days" {{ $filter == 'last_7_days' ? 'selected' : '' }}>Last 7 Days</option>
+                <option value="last_30_days" {{ $filter == 'last_30_days' ? 'selected' : '' }}>Last 30 Days</option>
+            </select>
+        </form>
+    </div>
 
+    <!-- 📈 কাউন্টার উইজেটস -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card border-0 bg-primary text-white shadow-sm rounded-3">
+                <div class="card-body p-4">
+                    <span class="text-white fw-bold small text-uppercase">Total Page Views</span>
+                    <h2 class="mt-2 mb-0 fw-bold">{{ number_format($totalClicks) }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 bg-success text-white shadow-sm rounded-3">
+                <div class="card-body p-4">
+                    <span class="text-white fw-bold small text-uppercase">Unique Visitors</span>
+                    <h2 class="mt-2 mb-0 fw-bold">{{ number_format($uniqueVisitors) }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 bg-danger text-white shadow-sm rounded-3">
+                <div class="card-body p-4">
+                    <span class="text-white fw-bold small text-uppercase">Single-Click Visitors</span>
+                    <h2 class="mt-2 mb-0 fw-bold">{{ $bounceRateEstimate }}% <small class="fs-6">(Bounce Appx)</small></h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 📉 নতুন ফিচার: Hourly Traffic Trend (Line Chart) -->
+    <div class="card shadow-sm mb-4 border-0">
+        <div class="card-header text-dark bg-white py-3 fw-bold border-bottom">⏰ Hourly Traffic Trend (24-Hour Distribution)</div>
+        <div class="card-body">
+            <div style="height: 300px; width: 100%;">
+                <canvas id="trendChart"></canvas>
+            </div>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-xl-12">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <div>
-                        <h4 class="card-title">Latest Transaction</h4>
-                    </div>
-                    <div class="dropdown">
-                        <a href="#" class="dropdown-toggle btn btn-sm btn-outline-light rounded" data-bs-toggle="dropdown" aria-expanded="false">
-                            This Month
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end">
-                            <!-- item-->
-                            <a href="#!" class="dropdown-item">Week</a>
-                            <!-- item-->
-                            <a href="#!" class="dropdown-item">Months</a>
-                            <!-- item-->
-                            <a href="#!" class="dropdown-item">Years</a>
-                        </div>
+        <!-- 🔥 Top 5 Pages -->
+        <div class="col-md-6 mb-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-header text-dark bg-white py-3 fw-bold">🔥 Top 5 Visited Pages</div>
+                <div class="card-body p-0">
+                    <table class="table table-hover mb-0 align-middle">
+                        <tbody>
+                        @foreach($topPages as $page)
+                            <tr>
+                                <td class="ps-3"><code class="text-primary">{{ Str::limit($page->url, 45) }}</code></td>
+                                <td class="text-end pe-3"><span class="badge bg-light text-dark">{{ $page->total }} hits</span></td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- 🌐 Top Traffic Sources (Referrers) -->
+        <div class="col-md-6 mb-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-header text-dark bg-white py-3 fw-bold">📣 Top Referral Channels</div>
+                <div class="card-body p-0">
+                    <table class="table table-hover mb-0 align-middle">
+                        <tbody>
+                        @foreach($topReferrers as $ref)
+                            <tr>
+                                <td class="ps-3">🌐 <span class="fw-semibold">{{ $ref->referrer }}</span></td>
+                                <td class="text-end pe-3"><span class="badge bg-soft-success bg-secondary text-dark">{{ $ref->total }} sessions</span></td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- 📱 Device Breakdown -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-header text-dark bg-white py-3 fw-bold">📱 Platform Distribution</div>
+                <div class="card-body d-flex align-items-center justify-content-center">
+                    <div style="width: 220px; height: 220px;">
+                        <canvas id="deviceChart"></canvas>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- 🌍 Browser Breakdown -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-header text-dark bg-white py-3 fw-bold">🌐 Preferred Browsers</div>
+                <div class="card-body d-flex align-items-center justify-content-center">
+                    <div style="width: 220px; height: 220px;">
+                        <canvas id="browserChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-header bg-white py-3 fw-bold">🌍 Top 5 Visitor Countries</div>
                 <div class="card-body p-0">
-                    <div class="table-responsive">
-                        <table class="table align-middle text-nowrap table-hover table-centered mb-0">
-                            <thead class="bg-light-subtle">
+                    <table class="table table-hover mb-0 align-middle">
+                        <tbody>
+                        @foreach($countryData as $cData)
                             <tr>
-                                <th style="width: 20px;">
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="customCheck1">
-                                        <label class="form-check-label" for="customCheck1"></label>
-                                    </div>
-                                </th>
-                                <th>Purchase ID</th>
-                                <th>Buyer Name</th>
-                                <th>Invoice</th>
-                                <th>Purchase Date</th>
-                                <th>Total Amount</th>
-                                <th>Payment Method</th>
-                                <th>Payment Status</th>
-                                <th>Action</th>
+                                <td class="ps-3">📍 <span class="fw-semibold">{{ $cData->country }}</span></td>
+                                <td class="text-end pe-3"><span class="badge bg-info text-white">{{ $cData->total }} clicks</span></td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Recent Messages Table Row -->
+    <div class="row mt-4">
+        <div class="col-xl-12">
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                <div class="card-header bg-transparent border-0 d-flex justify-content-between align-items-center pt-3 px-3">
+                    <div>
+                        <h5 class="fw-bold text-slate-900 mb-0">Recent Contact Messages</h5>
+                        <p class="text-muted small mb-0">Latest inquiries from clients</p>
+                    </div>
+                    <a href="{{ route('admin.message') }}" class="btn btn-soft-primary btn-sm rounded-2">
+                        View All Messages <i class="ri-arrow-right-line ms-1 align-middle"></i>
+                    </a>
+                </div>
+                <div class="card-body p-0 mt-2">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light text-uppercase fs-13 text-muted">
+                            <tr>
+                                <th class="ps-3">Sender</th>
+                                <th>Email</th>
+                                <th>Interest Service</th>
+                                <th>Date Received</th>
+                                <th class="text-center">Status</th>
+                                <th class="text-end pe-3">Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="customCheck2">
-                                        <label class="form-check-label" for="customCheck2">&nbsp;</label>
-                                    </div>
-                                </td>
-                                <td><a href="javascript: void(0);" class="text-dark fw-medium">#TZ2540</a> </td>
-                                <td><img src="{{asset('/')}}Backend/assets/images/users/avatar-2.jpg" class="avatar-sm rounded-circle me-2" alt="..."> Michael A. Miner</td>
-                                <td>IN-4563</td>
-                                <td> 07 Jan, 2023</td>
-                                <td> $45,842 </td>
-                                <td> Mastercard </td>
-                                <td> <span class="badge bg-success-subtle text-success py-1 px-2 fs-12">Completed</span> </td>
-                                <td>
-                                    <div class="d-flex gap-2">
-                                        <a href="#!" class="btn btn-light btn-sm"><iconify-icon icon="solar:eye-broken" class="align-middle fs-18"></iconify-icon></a>
-                                        <a href="#!" class="btn btn-soft-primary btn-sm"><iconify-icon icon="solar:pen-2-broken" class="align-middle fs-18"></iconify-icon></a>
-                                        <a href="#!" class="btn btn-soft-danger btn-sm"><iconify-icon icon="solar:trash-bin-minimalistic-2-broken" class="align-middle fs-18"></iconify-icon></a>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="customCheck3">
-                                        <label class="form-check-label" for="customCheck3">&nbsp;</label>
-                                    </div>
-                                </td>
-                                <td><a href="javascript: void(0);" class="text-dark fw-medium">#TZ3924</a> </td>
-                                <td><img src="{{asset('/')}}Backend/assets/images/users/avatar-3.jpg" class="avatar-sm rounded-circle me-2" alt="..."> Theresa T. Brose</td>
-                                <td>IN-3728</td>
-                                <td> 03 Dec, 2023</td>
-                                <td> $78,483 </td>
-                                <td> Visa </td>
-                                <td> <span class="badge bg-danger-subtle text-danger px-2 py-1 fs-12">Cancel</span> </td>
-                                <td>
-                                    <div class="d-flex gap-2">
-                                        <a href="#!" class="btn btn-light btn-sm"><iconify-icon icon="solar:eye-broken" class="align-middle fs-18"></iconify-icon></a>
-                                        <a href="#!" class="btn btn-soft-primary btn-sm"><iconify-icon icon="solar:pen-2-broken" class="align-middle fs-18"></iconify-icon></a>
-                                        <a href="#!" class="btn btn-soft-danger btn-sm"><iconify-icon icon="solar:trash-bin-minimalistic-2-broken" class="align-middle fs-18"></iconify-icon></a>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="customCheck4">
-                                        <label class="form-check-label" for="customCheck4">&nbsp;</label>
-                                    </div>
-                                </td>
-                                <td><a href="javascript: void(0);" class="text-dark fw-medium">#TZ5032</a> </td>
-                                <td><img src="{{asset('/')}}Backend/assets/images/users/avatar-4.jpg" class="avatar-sm rounded-circle me-2" alt="..."> James L. Erickson</td>
-                                <td>IN-8265</td>
-                                <td> 28 Sep, 2023 </td>
-                                <td> $83,644 </td>
-                                <td> Paypal </td>
-                                <td>
-                                    <span class="badge bg-success-subtle text-success py-1 px-2 fs-12">Completed</span>
-                                </td>
-                                <td>
-                                    <div class="d-flex gap-2">
-                                        <a href="#!" class="btn btn-light btn-sm"><iconify-icon icon="solar:eye-broken" class="align-middle fs-18"></iconify-icon></a>
-                                        <a href="#!" class="btn btn-soft-primary btn-sm"><iconify-icon icon="solar:pen-2-broken" class="align-middle fs-18"></iconify-icon></a>
-                                        <a href="#!" class="btn btn-soft-danger btn-sm"><iconify-icon icon="solar:trash-bin-minimalistic-2-broken" class="align-middle fs-18"></iconify-icon></a>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="customCheck5">
-                                        <label class="form-check-label" for="customCheck5">&nbsp;</label>
-                                    </div>
-                                </td>
-                                <td><a href="javascript: void(0);" class="text-dark fw-medium">#TZ1695</a> </td>
-                                <td><img src="{{asset('/')}}Backend/assets/images/users/avatar-5.jpg" class="avatar-sm rounded-circle me-2" alt="..."> Lily W. Wilson</td>
-                                <td>IN-9025</td>
-                                <td>10 Aug, 2023</td>
-                                <td> $94,305 </td>
-                                <td> Mastercard</td>
-                                <td><span class="badge bg-warning-subtle text-warning py-1 px-2 fs-12">Pending</span></td>
-                                <td>
-                                    <div class="d-flex gap-2">
-                                        <a href="#!" class="btn btn-light btn-sm"><iconify-icon icon="solar:eye-broken" class="align-middle fs-18"></iconify-icon></a>
-                                        <a href="#!" class="btn btn-soft-primary btn-sm"><iconify-icon icon="solar:pen-2-broken" class="align-middle fs-18"></iconify-icon></a>
-                                        <a href="#!" class="btn btn-soft-danger btn-sm"><iconify-icon icon="solar:trash-bin-minimalistic-2-broken" class="align-middle fs-18"></iconify-icon></a>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="customCheck6">
-                                        <label class="form-check-label" for="customCheck6">&nbsp;</label>
-                                    </div>
-                                </td>
-                                <td><a href="javascript: void(0);" class="text-dark fw-medium">#TZ8473</a> </td>
-                                <td><img src="{{asset('/')}}Backend/assets/images/users/avatar-6.jpg" class="avatar-sm rounded-circle me-2" alt="..."> Sarah M. Brooks</td>
-                                <td>IN-8945</td>
-                                <td> 22 May, 2023 </td>
-                                <td> $42.561</td>
-                                <td> Visa</td>
-                                <td> <span class="badge bg-danger-subtle text-danger px-2 py-1 fs-12">Cancel</span></td>
-                                <td>
-                                    <div class="d-flex gap-2">
-                                        <a href="#!" class="btn btn-light btn-sm"><iconify-icon icon="solar:eye-broken" class="align-middle fs-18"></iconify-icon></a>
-                                        <a href="#!" class="btn btn-soft-primary btn-sm"><iconify-icon icon="solar:pen-2-broken" class="align-middle fs-18"></iconify-icon></a>
-                                        <a href="#!" class="btn btn-soft-danger btn-sm"><iconify-icon icon="solar:trash-bin-minimalistic-2-broken" class="align-middle fs-18"></iconify-icon></a>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="customCheck7">
-                                        <label class="form-check-label" for="customCheck7">&nbsp;</label>
-                                    </div>
-                                </td>
-                                <td><a href="javascript: void(0);" class="text-dark fw-medium">#TZ2150</a> </td>
-                                <td><img src="{{asset('/')}}Backend/assets/images/users/avatar-7.jpg" class="avatar-sm rounded-circle me-2" alt="..."> Joe K. Hall</td>
-                                <td>IN-0987</td>
-                                <td>15 Mar, 2023
-                                </td>
-                                <td>$25,671 </td>
-                                <td> Paypal </td>
-                                <td> <span class="badge bg-success-subtle text-success py-1 px-2 fs-12">Completed</span> </td>
-                                <td>
-                                    <div class="d-flex gap-2">
-                                        <a href="#!" class="btn btn-light btn-sm"><iconify-icon icon="solar:eye-broken" class="align-middle fs-18"></iconify-icon></a>
-                                        <a href="#!" class="btn btn-soft-primary btn-sm"><iconify-icon icon="solar:pen-2-broken" class="align-middle fs-18"></iconify-icon></a>
-                                        <a href="#!" class="btn btn-soft-danger btn-sm"><iconify-icon icon="solar:trash-bin-minimalistic-2-broken" class="align-middle fs-18"></iconify-icon></a>
-                                    </div>
-                                </td>
-                            </tr>
+                            @forelse ($recentMessages as $msg)
+                                <tr class="{{ $msg->status == 0 ? 'fw-medium bg-light-subtle' : '' }}">
+                                    <td class="ps-3">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <div class="avatar-xs rounded-circle bg-soft-primary text-primary d-flex align-items-center justify-content-center fw-bold" style="width: 32px; height: 32px; font-size: 12px;">
+                                                {{ strtoupper(substr($msg->name, 0, 1)) }}
+                                            </div>
+                                            <div>
+                                                <span class="text-dark d-block mb-0">{{ $msg->name }}</span>
+                                                <small class="text-muted fs-11">{{ $msg->phone ?? 'No Phone' }}</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>{{ $msg->email }}</td>
+                                    <td>
+                                            <span class="badge bg-light text-secondary border px-2 py-1">
+                                                {{ $msg->get_service->name ?? 'General Enquiry' }}
+                                            </span>
+                                    </td>
+                                    <td>{{ $msg->created_at->diffForHumans() }}</td>
+                                    <td class="text-center">
+                                        @if($msg->status == 0)
+                                            <span class="badge bg-danger-subtle text-danger rounded-pill px-2">Unread</span>
+                                        @else
+                                            <span class="badge bg-success-subtle text-success rounded-pill px-2">Read</span>
+                                        @endif
+                                    </td>
+                                    <td class="text-end pe-3">
+                                        {{-- সরাসরি মেসেজ মেইন পেইজে গিয়ে দেখার জন্য লিংক --}}
+                                        <a href="{{ route('admin.message') }}" class="btn btn-sm btn-light border-0 rounded-2 p-1 px-2" title="View Details">
+                                            <i class="ri-eye-line align-middle text-primary fs-16"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="6" class="text-center py-4 text-muted">
+                                        <i class="ri-mail-open-line fs-24 text-secondary mb-1 d-block"></i>
+                                        <p class="mb-0 small fw-medium">No recent messages found.</p>
+                                    </td>
+                                </tr>
+                            @endforelse
                             </tbody>
                         </table>
                     </div>
-                    <!-- end table-responsive -->
                 </div>
             </div>
         </div>
-
     </div>
 @endsection
+
+@push('css')
+    <style>
+        /* নতুন মেসেজ থাকলে অ্যাকশন রিকোয়ার্ড ব্যাজটি যাতে মৃদু ব্লিঙ্ক বা পালস করে */
+        .pulse {
+            animation: pulse-animation 2s infinite;
+        }
+        @keyframes pulse-animation {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+            70% { box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+        .bg-soft-primary {
+            background-color: rgba(var(--bs-primary-rgb), 0.1);
+        }
+    </style>
+@endpush
+@push('js')
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        $(document).ready(function() {
+
+            // ১. ⏰ Hourly Trend (Line Chart Script)
+            let hourlyData = {!! json_encode($hourlyTicks) !!};
+            const ctxTrend = document.getElementById('trendChart').getContext('2d');
+            new Chart(ctxTrend, {
+                type: 'line',
+                data: {
+                    labels: Array.from({length: 24}, (_, i) => `${i}:00`),
+                    datasets: [{
+                        label: 'Hourly Page Views',
+                        data: hourlyData,
+                        borderColor: '#0d6efd',
+                        backgroundColor: 'rgba(13, 110, 253, 0.08)',
+                        fill: true,
+                        tension: 0.3,
+                        pointRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { y: { beginAtZero: true } }
+                }
+            });
+
+            // ২. 📱 Device Chart
+            let deviceLabels = {!! json_encode($deviceData->pluck('device')) !!};
+            let deviceCounts = {!! json_encode($deviceData->pluck('total')) !!};
+            const ctxDevice = document.getElementById('deviceChart').getContext('2d');
+            new Chart(ctxDevice, {
+                type: 'doughnut',
+                data: {
+                    labels: deviceLabels.map(l => l ? l.toUpperCase() : 'UNKNOWN'),
+                    datasets: [{
+                        data: deviceCounts,
+                        backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e']
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+            });
+
+            // ৩. 🌐 Browser Chart
+            let browserLabels = {!! json_encode($browserData->pluck('browser')) !!};
+            let browserCounts = {!! json_encode($browserData->pluck('total')) !!};
+            const ctxBrowser = document.getElementById('browserChart').getContext('2d');
+            new Chart(ctxBrowser, {
+                type: 'pie',
+                data: {
+                    labels: browserLabels,
+                    datasets: [{
+                        data: browserCounts,
+                        backgroundColor: ['#ff6384', '#36a2eb', '#cc65fe', '#ffce56', '#4bc0c0']
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+            });
+
+        });
+    </script>
+@endpush
