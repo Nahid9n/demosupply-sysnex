@@ -27,7 +27,7 @@
                 </ul>
             </div>
             @php
-                $services = \App\Models\Service::where('status',1)->latest()->get()->take(5)
+                $services = \App\Models\Service::where('status',1)->whereNull('parent_id')->latest()->get()->take(5)
             @endphp
             <div class="col-6 col-lg-3">
                 <h5>Services</h5>

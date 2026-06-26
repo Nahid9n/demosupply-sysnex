@@ -30,12 +30,15 @@ class SeoManagementController extends Controller
     public function updatePage(Request $request, $id)
     {
         $page = SeoManagement::findOrFail($id);
-        $data = $request->except(['meta_image']);
+        $data = $request->except(['meta_image','service']);
 
         if ($request->hasFile('meta_image')) {
             $data['meta_image'] = ImageUpload::upload($request->file('meta_image'),'uploads/seo',null,null,$page->meta_image);
         }
         $page->update($data);
+        if ($request->service){
+            return back()->with('success', 'Page SEO configuration updated!');
+        }
         return redirect()->route('admin.seo.index')->with('success', 'Page SEO configuration updated!');
     }
 

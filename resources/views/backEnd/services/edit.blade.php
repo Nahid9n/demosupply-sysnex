@@ -23,14 +23,26 @@
                     <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
                         <h5 class="fw-bold text-slate-800 mb-3 border-bottom pb-2">Core Information</h5>
                         <div class="row g-3">
+                            <!-- 🚀 SUB SERVICE SYSTEM: Parent Service Selector (Edit Mode) -->
+                            <div class="col-12 mb-2">
+                                <label class="form-label fw-semibold text-slate-700">Service Category Type (Parent Service)</label>
+                                <select name="parent_id" class="form-select border-2 border-primary border-opacity-25" id="parentServiceSelect">
+                                    <option value="" {{ is_null($service->parent_id) ? 'selected' : '' }}>None</option>
+                                    @foreach($mainServices ?? [] as $mainService)
+                                        @if($mainService->id !== $service->id) {{-- নিজেকে যেন নিজের সাব-সার্ভিস না বানানো যায় --}}
+                                        <option value="{{ $mainService->id }}" {{ $service->parent_id == $mainService->id ? 'selected' : '' }}>
+                                            {{ $mainService->name }}
+                                        </option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                                <small class="text-muted">যদি এটি কোনো মেইন সার্ভিসের ভেতরের সাব-সার্ভিস হয়, তবে উপর থেকে মেইন সার্ভিসটি সিলেক্ট করুন।</small>
+                            </div>
+
                             <div class="col-md-6">
                                 <label class="form-label fw-semibold text-slate-700">Service Name *</label>
                                 <input type="text" name="service_name" class="form-control" value="{{ $service->name }}" placeholder="Enter service name" required>
                             </div>
-                           {{-- <div class="col-md-6">
-                                <label class="form-label fw-semibold text-slate-700">Sidebar Icon Class</label>
-                                <input type="text" name="sidebar_icon" class="form-control" value="{{ $service->icon_class }}" placeholder="e.g., fa-solid fa-bolt">
-                            </div>--}}
                             <div class="col-md-6">
                                 <label class="form-label fw-semibold text-slate-700">Page Headline / Main Banner Title</label>
                                 <input type="text" name="banner_title" class="form-control" value="{{ $service->page_title }}" placeholder="e.g., Professional Electrical Work">
@@ -212,14 +224,93 @@
                         </div>
                         <div>
                             <label class="form-label fw-semibold text-slate-700">Meta Description</label>
-                            <textarea name="meta_description" class="form-control" rows="3" placeholder="Enter SEO Meta Description String...">{{ $service->seo_description }}</textarea>
+                            <textarea name="meta_description" class="form-control" rows="3" placeholder="Enter SEO Meta Description String...">{{ $service->meta_description }}</textarea>
+                        </div>
+                        <div>
+                            <label class="form-label fw-semibold text-slate-700">Meta Keywords</label>
+                            <textarea name="meta_keywords" class="form-control" rows="3" placeholder="Enter SEO Meta Keywords...">{{ $service->meta_keywords }}</textarea>
+                            <small class="text-danger">Comma separated keywords</small>
+                        </div>
+                        <div>
+                            <label class="form-label fw-semibold text-slate-700">Service Target Cities</label>
+                            <textarea name="target_city" class="form-control" rows="3" placeholder="Enter SEO Target Cities...">{{ $service->target_city }}</textarea>
                         </div>
                     </div>
                 </div>
             </div>
         </form>
     </div>
+    <div class="card border-0 shadow-sm rounded-4 p-4 mb-4 border-start border-4 border-primary">
+        <h5 class="fw-bold text-slate-800 mb-3 border-bottom pb-2 d-flex align-items-center">
+            <i class="ri-search-eye-line text-primary me-2"></i> Advanced SEO Management
+        </h5>
 
+        @php
+            // কনফিগারেশন সহজ করার জন্য রিলেশন ডেটা ভেরিয়েবলে সেট করা হলো
+            $seo = $service->seo ?? null;
+        @endphp
+
+        <form action="{{ route('admin.seo.update_page', [ 'service' => 'service' , 'id' => $seo->id]) }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold text-slate-700">Meta Title</label>
+                    <input type="text" name="meta_title" class="form-control" value="{{ $seo->meta_title }}" placeholder="Enter SEO Meta Title">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold text-slate-700">Meta Description</label>
+                    <textarea name="meta_description" class="form-control" rows="3" placeholder="Enter SEO Meta Description String...">{{ $seo->meta_description }}</textarea>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold text-slate-700">Meta Keywords</label>
+                    <textarea name="meta_keywords" class="form-control" rows="3" placeholder="Enter SEO Meta Keywords...">{{ $seo->meta_keywords }}</textarea>
+                    <small class="text-danger">Comma separated keywords</small>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold text-slate-700">Canonical URL</label>
+                    <input type="url" name="canonical_url" class="form-control" value="{{ $seo->canonical_url ?? '' }}" placeholder="https://example.com/custom-link">
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold text-slate-700">Meta Robots Directive</label>
+                    <select name="meta_robots" class="form-select">
+                        <option value="index, follow" {{ ($seo->meta_robots ?? 'index, follow') == 'index, follow' ? 'selected' : '' }}>INDEX, FOLLOW (Default)</option>
+                        <option value="noindex, nofollow" {{ ($seo->meta_robots ?? '') == 'noindex, nofollow' ? 'selected' : '' }}>NOINDEX, NOFOLLOW</option>
+                        <option value="index, nofollow" {{ ($seo->meta_robots ?? '') == 'index, nofollow' ? 'selected' : '' }}>INDEX, NOFOLLOW</option>
+                    </select>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold text-slate-700">Social Share Image (Meta Image)</label>
+                    @if($seo && $seo->meta_image)
+                        <div class="mb-2">
+                            <img src="{{ asset($seo->meta_image) }}" class="img-thumbnail" style="max-height: 80px;">
+                        </div>
+                    @endif
+                    <input type="file" name="meta_image" class="form-control">
+                    <small class="text-muted">Recommended size: 1200x630px (OG Image Ratio)</small>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold text-slate-700 text-danger d-flex align-items-center">
+                        <i class="ri-code-box-line me-1"></i> Structured Schema Script (LD+JSON)
+                    </label>
+                    <textarea name="schema_script" class="form-control text-monospace small" rows="20" style="font-family: monospace; font-size: 13px;" placeholder="<script type='application/ld+json'>\n...\n</script>">{{ $seo->schema_script ?? '' }}</textarea>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold text-slate-700 text-info d-flex align-items-center">
+                        <i class="ri-braces-line me-1"></i> GTM DataLayer JSON
+                    </label>
+                    <textarea name="datalayer_json" class="form-control text-monospace small" rows="20" style="font-family: monospace; font-size: 13px;" placeholder="{ 'event': 'service_view', 'category': 'Cleaning' }">{{ $seo->datalayer_json ?? '' }}</textarea>
+                </div>
+            </div>
+            <div class="p-3 text-end">
+                <button type="submit" class="btn btn-primary px-5 fw-bold rounded-3">Save Seo Configurations</button>
+            </div>
+        </form>
+
+    </div>
     <!-- Dynamic Fields Handler Script -->
     <script>
         function addInclusionRow() {

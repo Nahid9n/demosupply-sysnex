@@ -3,10 +3,13 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{{ $seo->meta_title ?? '' }} | {{env('APP_NAME')}}</title>
+    <title> @yield('title') | {{env('APP_NAME')}}</title>
+    <meta name="title" content="{{ $seo->meta_title ?? '' }}">
     <meta name="description" content="{{ $seo->meta_description ?? '' }}">
     <meta name="keywords" content="{{ $seo->meta_keywords ?? '' }}">
     <meta name="robots" content="{{ $seo->meta_robots ?? 'index, follow' }}">
+    <meta name="author" content="{{env('APP_NAME')}}">
+    <meta name="publisher" content="{{env('APP_NAME')}}">
     <link rel="canonical" href="{{ $seo->canonical_url ?? url()->current() }}">
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ url()->current() }}">
@@ -30,8 +33,7 @@
         {!! $seo->schema_script !!}
     @endif
 
-
-
+    <link rel="icon" type="image/png" href="{{ asset($web_setting->favicon_logo) }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">

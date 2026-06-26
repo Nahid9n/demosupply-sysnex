@@ -18,19 +18,19 @@ class HomeController extends Controller
 {
     public function index(){
         $sliders = Slider::orderBy('serial','asc')->where('status',1)->get();
-        $services = Service::with('items')->latest()->where('status',1)->get()->take(6);
+        $services = Service::with('items')->whereNull('parent_id')->latest()->where('status',1)->get()->take(6);
         $testimonials = Testimonial::latest()->where('status',1)->get();
         $articles = Article::latest()->where('status',1)->get()->take(3);
         return view('frontEnd.home.index',compact('sliders','services','testimonials','articles'));
     }
     public function services(){
-        $services = Service::where('status',1)->latest()->paginate(12);
+        $services = Service::where('status',1)->whereNull('parent_id')->latest()->paginate(12);
         return view('frontEnd.services.index',compact('services'));
     }
     public function serviceDetails($slug){
         $service = Service::where('slug',$slug)->with('seo','pricings','gallery')->first();
         $seo = $service->seo;
-        $services = Service::where('status',1)->latest()->get()->take(15);
+        $services = Service::where('status',1)->latest()->whereNull('parent_id')->get()->take(15);
         return view('frontEnd.services.details',compact('service','seo','services'));
     }
     public function articles(Request $request){

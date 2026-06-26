@@ -36,4 +36,12 @@ class Service extends Model
             $service->seo()->delete();
         });
     }
+    public function subServices()
+    {
+        return $this->hasMany(Service::class, 'parent_id');
+    }
+    public function parent()
+    {
+        return $this->belongsTo(Service::class, 'parent_id');
+    }
 }

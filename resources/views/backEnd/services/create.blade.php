@@ -1,4 +1,5 @@
 @extends('backEnd.layout.master')
+@section('title','Create Service')
 @section('body')
     <div class=" py-4">
         <form action="{{ route('admin.services.store') }}" method="POST" enctype="multipart/form-data">
@@ -20,9 +21,20 @@
                     <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
                         <h5 class="fw-bold text-slate-800 mb-3 border-bottom pb-2">1. Core Information</h5>
                         <div class="row g-3">
+                            <!-- 🚀 SUB SERVICE SYSTEM: Parent Service Selector -->
+                            <div class="col-12 mb-2">
+                                <label class="form-label fw-semibold text-slate-700">Service Category Type (Parent Service)</label>
+                                <select name="parent_id" class="form-select border-2 border-primary border-opacity-25" id="parentServiceSelect">
+                                    <option value="" selected>None</option>
+                                    @foreach($mainServices ?? [] as $mainService)
+                                        <option value="{{ $mainService->id }}">{{ $mainService->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
                             <div class="col-md-6">
                                 <label class="form-label fw-semibold text-slate-700">Service Name *</label>
-                                <input type="text" name="service_name" class="form-control" placeholder="e.g., Electrical Work" required>
+                                <input type="text" name="service_name" class="form-control" placeholder="e.g., Office Cleaning" required>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label fw-semibold text-slate-700">Page Headline / Main Banner Title</label>
@@ -175,11 +187,21 @@
                         <h5 class="fw-bold text-slate-800 mb-3 border-bottom pb-2">SEO Configurations</h5>
                         <div class="mb-2">
                             <label class="form-label fw-semibold text-slate-700">Meta Title</label>
-                            <input type="text" name="seo_title" class="form-control mb-2" placeholder="Enter SEO Meta Title">
+                            <input type="text" name="meta_title" class="form-control mb-2" placeholder="Enter SEO Meta Title">
                         </div>
                         <div>
                             <label class="form-label fw-semibold text-slate-700">Meta Description</label>
-                            <textarea name="seo_description" class="form-control" rows="3" placeholder="Enter SEO Meta Description String..."></textarea>
+                            <textarea name="meta_description" class="form-control mb-2" rows="3" placeholder="Enter SEO Meta Description String..."></textarea>
+                        </div>
+                        <div>
+                            <label class="form-label fw-semibold text-slate-700">Meta Keywords</label>
+                            <textarea name="meta_keywords" class="form-control mb-2" rows="3" placeholder="Enter SEO Meta Keywords..."></textarea>
+                            <small class="text-danger">Comma separated keywords</small>
+                        </div>
+                        <div>
+                            <label class="form-label fw-semibold text-slate-700">Service Target Cities</label>
+                            <textarea name="target_city" class="form-control" rows="3" placeholder="Enter Service Target Cities..."></textarea>
+                            <small class="text-danger">Comma separated cities, e.g., New York, Brooklyn</small>
                         </div>
                     </div>
                 </div>

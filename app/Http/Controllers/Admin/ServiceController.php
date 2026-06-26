@@ -13,17 +13,25 @@ use Illuminate\Support\Facades\Storage;
 
 class ServiceController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $services = Service::withCount(['items', 'pricings', 'gallery'])->latest()->get();
+        $query = Service::with(['parent'])->withCount(['items', 'pricings', 'gallery', 'subServices']);
+        if ($request->has('parent_id')) {
+            $query->where('parent_id', $request->parent_id);
+        } else {
+            // রিকোয়েস্ট ফাকা থাকলে শুধুমাত্র মেইন সার্ভিসগুলো (যার কোনো parent_id নাই) লিস্টে দেখাবে
+            $query->whereNull('parent_id');
+        }
+
+        $services = $query->latest()->get();
+
         return view('backEnd.services.index', compact('services'));
     }
-
     public function create()
     {
-        return view('backEnd.services.create');
+        $mainServices = Service::whereNull('parent_id')->get();
+        return view('backEnd.services.create',compact('mainServices'));
     }
-
     public function store(Request $request)
     {
         $request->validate([
@@ -59,6 +67,7 @@ class ServiceController extends Controller
         }
 
         $service = Service::create([
+            'parent_id' => $request->parent_id ?? null,
             'name' => $request->service_name,
             'slug' => $slug, // ইউনিক স্লাগটি এখানে সেভ হবে
             'icon_class' => $request->sidebar_icon ?? 'fa-solid fa-bolt',
@@ -75,28 +84,14 @@ class ServiceController extends Controller
             'faq_title' => $request->faq_section_title,
             'cta_title' => $request->action_title,
             'cta_subtitle' => $request->action_subtitle,
-            'meta_title' => $request->seo_title,
-            'meta_description' => $request->seo_description,
+            'meta_title' => $request->meta_title,
+            'meta_description' => $request->meta_description,
+            'meta_keywords' => $request->meta_keywords,
+            'target_city' => $request->target_city,
             'faqs' => $faqs
         ]);
 
-        $service->seo()->updateOrCreate(
-            [
-                'model_type' => Service::class,
-                'model_id'   => $service->id,
-            ],
-            [
-                'page_name'        => $service->name . ' - Service Page',
-                'page_slug'        => $service->slug, // এসইও হাবের জন্য ট্র্যাকিং স্লাগ
-                'meta_title'       => $request->meta_title ?? $request->seo_title ?? $service->name,
-                'meta_description' => $request->meta_description ?? $request->seo_description,
-                'meta_keywords'    => $request->meta_keywords,
-                'canonical_url'    => $request->canonical_url,
-                'schema_script'    => $request->schema_script,
-                'datalayer_json'   => $request->datalayer_json,
-                'meta_robots'      => 'index, follow',
-            ]
-        );
+        SeoHelper::generateAutoSeo($service, $request, 'Service');
 
         // Sub-Items
         if ($request->has('item_titles')) {
@@ -138,13 +133,12 @@ class ServiceController extends Controller
 
         return redirect()->route('admin.services.index')->with('success', 'Service deployed successfully.');
     }
-
     public function edit($id)
     {
         $service = Service::with('items', 'pricings', 'gallery')->find($id);
-        return view('backEnd.services.edit', compact('service'));
+        $mainServices = Service::whereNull('parent_id')->get();
+        return view('backEnd.services.edit', compact('service','mainServices'));
     }
-
     public function update(Request $request, $id)
     {
         $service = Service::find($id);
@@ -189,6 +183,7 @@ class ServiceController extends Controller
 
         // সার্ভিস টেবিল আপডেট
         $service->update([
+            'parent_id' => $request->parent_id ?? null,
             'name' => $request->service_name,
             'slug' => $slug, // জেনারেট হওয়া ইউনিক স্লাগ
             'hero_image' => $hero_image_path,
@@ -207,6 +202,8 @@ class ServiceController extends Controller
             'cta_subtitle' => $request->action_subtitle,
             'meta_title' => $request->meta_title,
             'meta_description' => $request->meta_description,
+            'meta_keywords' => $request->meta_keywords,
+            'target_city' => $request->target_city,
             'faqs' => $faqs
         ]);
 

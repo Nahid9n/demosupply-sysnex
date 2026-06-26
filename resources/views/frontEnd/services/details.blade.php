@@ -53,7 +53,7 @@
 
                 <div class="col-lg-8 col-md-7 order-lg-2 order-1 reveal">
                     <div class="">
-                        <h2 class="fw-bold mb-3 text-dark">{{ $service->page_title }}</h2>
+                        <h1 class="fw-bold mb-3 text-dark" style="font-size: 32px">{{ $service->page_title }}</h1>
                     </div>
                     <div class="mb-4">
                         {{-- Cover Image Dynamic Asset Path Checker --}}

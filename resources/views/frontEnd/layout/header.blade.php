@@ -1,5 +1,5 @@
 @php
-    $services = \App\Models\Service::where('status',1)->latest()->get();
+    $services = \App\Models\Service::where('status',1)->whereNull('parent_id')->latest()->get();
 @endphp
 
 <!-- ================= TOPBAR START ================= -->

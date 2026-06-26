@@ -79,6 +79,25 @@ class DashboardController extends Controller
             ->orderBy('hour')
             ->get();
 
+        // Top Visited Services
+        $topServices = Service::select('services.id', 'services.name', 'services.slug', DB::raw('count(click_logs.id) as total_views'))
+            ->join('click_logs', 'click_logs.url', 'LIKE', DB::raw("CONCAT('%/service/', services.slug, '%')"))
+            // উপরে ফিল্টারিং কুয়েরি অ্যাপ্লাই করার জন্য (যেমন আজ, গতকাল ইত্যাদি)
+            ->where(function($q) use ($filter) {
+                if ($filter == 'today') {
+                    $q->whereDate('click_logs.created_at', \Carbon\Carbon::today());
+                } elseif ($filter == 'yesterday') {
+                    $q->whereDate('click_logs.created_at', \Carbon\Carbon::yesterday());
+                } elseif ($filter == 'last_7_days') {
+                    $q->where('click_logs.created_at', '>=', \Carbon\Carbon::now()->subDays(7));
+                } elseif ($filter == 'last_30_days') {
+                    $q->where('click_logs.created_at', '>=', \Carbon\Carbon::now()->subDays(30));
+                }
+            })
+            ->groupBy('services.id', 'services.name', 'services.slug')
+            ->orderByDesc('total_views')
+            ->take(5)
+            ->get();
         // ২৪ ঘণ্টার সব আওয়ার জিরো দিয়ে ইনিশিয়ালের জন্য অ্যারে প্রিপেয়ার
         $hourlyTicks = array_fill(0, 24, 0);
         foreach ($hourlyData as $data) {
@@ -90,7 +109,7 @@ class DashboardController extends Controller
             'totalTestimonials',
             'totalMessages',
             'recentMessages',
-            'totalClicks', 'uniqueVisitors', 'bounceRateEstimate',
+            'totalClicks', 'uniqueVisitors', 'bounceRateEstimate','topServices',
             'topPages', 'topReferrers', 'deviceData', 'browserData', 'countryData', 'hourlyTicks', 'filter'
         ));
     }

@@ -56,8 +56,37 @@
         </div>
 
         <div class="row">
-            <!-- 🔥 Top 5 Pages -->
             <div class="col-md-6 mb-4">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-header text-dark bg-white py-3 fw-bold d-flex align-items-center">
+                        <span>📊 Top 5 Visited Services</span>
+                    </div>
+                    <div class="card-body p-0">
+                        <table class="table table-hover mb-0 align-middle">
+                            <tbody>
+                            @forelse($topServices as $service)
+                                <tr>
+                                    <td class="ps-3">
+                                        <span class="fw-semibold text-slate-800">{{ $service->name }}</span>
+                                        {{--                                    <br>--}}
+                                        {{--                                    <small class="text-muted">/service/{{ $service->slug }}</small>--}}
+                                    </td>
+                                    <td class="text-end pe-3">
+                                        <span class="badge bg-primary text-white">{{ $service->total_views ?? $service->views_count ?? 0 }} views</span>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="2" class="text-center py-4 text-muted">No service views recorded in this period.</td>
+                                </tr>
+                            @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- 🔥 Top 5 Pages -->
+            <div class="col-md-3 mb-4">
                 <div class="card h-100 shadow-sm border-0">
                     <div class="card-header text-dark bg-white py-3 fw-bold">🔥 Top 5 Visited Pages</div>
                     <div class="card-body p-0">
@@ -76,7 +105,7 @@
             </div>
 
             <!-- 🌐 Top Traffic Sources (Referrers) -->
-            <div class="col-md-6 mb-4">
+            <div class="col-md-3 mb-4">
                 <div class="card h-100 shadow-sm border-0">
                     <div class="card-header text-dark bg-white py-3 fw-bold">📣 Top Referral Channels</div>
                     <div class="card-body p-0">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\ClickLog;
+use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -70,6 +71,25 @@ class AnalyticsController extends Controller
             ->take(5)
             ->get();
 
+        $topServices = Service::select('services.id', 'services.name', 'services.slug', DB::raw('count(click_logs.id) as total_views'))
+            ->join('click_logs', 'click_logs.url', 'LIKE', DB::raw("CONCAT('%/service/', services.slug, '%')"))
+            // উপরে ফিল্টারিং কুয়েরি অ্যাপ্লাই করার জন্য (যেমন আজ, গতকাল ইত্যাদি)
+            ->where(function($q) use ($filter) {
+                if ($filter == 'today') {
+                    $q->whereDate('click_logs.created_at', \Carbon\Carbon::today());
+                } elseif ($filter == 'yesterday') {
+                    $q->whereDate('click_logs.created_at', \Carbon\Carbon::yesterday());
+                } elseif ($filter == 'last_7_days') {
+                    $q->where('click_logs.created_at', '>=', \Carbon\Carbon::now()->subDays(7));
+                } elseif ($filter == 'last_30_days') {
+                    $q->where('click_logs.created_at', '>=', \Carbon\Carbon::now()->subDays(30));
+                }
+            })
+            ->groupBy('services.id', 'services.name', 'services.slug')
+            ->orderByDesc('total_views')
+            ->take(5)
+            ->get();
+
         // ছ) Hourly Traffic Trend (Line Chart - ২৪ ঘণ্টার ট্রেন্ড)
         $hourlyData = (clone $query)->select(DB::raw('HOUR(created_at) as hour'), DB::raw('count(*) as total'))
             ->groupBy('hour')
@@ -84,7 +104,7 @@ class AnalyticsController extends Controller
 
         // সব ডেটা একসাথে ভিউতে পাঠানো হলো
         return view('backEnd.logs.reports', compact(
-            'totalClicks', 'uniqueVisitors', 'bounceRateEstimate',
+            'totalClicks', 'uniqueVisitors', 'bounceRateEstimate','topServices',
             'topPages', 'topReferrers', 'deviceData', 'browserData', 'countryData', 'hourlyTicks', 'filter'
         ));
     }

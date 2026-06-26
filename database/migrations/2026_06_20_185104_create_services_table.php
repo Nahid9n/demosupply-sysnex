@@ -44,6 +44,8 @@ return new class extends Migration
             /* SEO Layer */
             $table->string('meta_title')->nullable();
             $table->text('meta_description')->nullable();
+            $table->text('meta_keywords')->nullable();
+            $table->string('target_city')->nullable()->comment('Comma separated cities, e.g., New York, Brooklyn');
 
             $table->timestamps();
         });
