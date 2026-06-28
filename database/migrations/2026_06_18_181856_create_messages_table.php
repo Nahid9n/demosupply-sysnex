@@ -13,10 +13,18 @@ return new class extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name'); // First Name + Last Name একসাথে সেভ হবে
             $table->string('email');
             $table->string('phone')->nullable();
             $table->string('interest')->nullable();
+
+            // নতুন যুক্ত হওয়া ফিল্ডসমূহ
+            $table->string('zip_code')->nullable();
+            $table->string('street_address')->nullable();
+            $table->string('apartment')->nullable();
+            $table->string('frequency')->nullable();
+            $table->boolean('sms_opt_in')->default(0); // ১ হলে ট্রু, ০ হলে ফলস
+
             $table->text('message')->nullable();
             $table->boolean('status')->default(0);
             $table->timestamps();

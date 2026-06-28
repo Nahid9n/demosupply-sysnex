@@ -107,20 +107,48 @@ class HomeController extends Controller
     }
     public function contactFormSubmit(Request $request)
     {
+        // ১. নতুন ফিল্ডগুলোর ভ্যালিডেশন
         $validatedData = $request->validate([
-            'name'     => 'required|string|max:255',
-            'email'    => 'required|email|max:255',
-            'phone'    => 'nullable|string|max:20',
-            'interest' => 'required',
-            'message'  => 'required|string',
+            'first_name'     => 'required|string|max:120',
+            'last_name'      => 'required|string|max:120',
+            'email'          => 'required|email|max:255',
+            'phone'          => 'required|string|max:20', // ছবিতে রিকোয়ার্ড ছিল
+            'zip_code'       => 'required|string|max:20',
+            'street_address' => 'required|string|max:255',
+            'apartment'      => 'nullable|string|max:100',
+            'interest'       => 'required',
+            'frequency'      => 'required|string|max:50',
+            'sms_opt_in'     => 'nullable|boolean',
+            'message'        => 'nullable|string', // অপশনাল করা হয়েছে
         ]);
-        $messageData = Message::create($validatedData);
+
+        // ২. ডাটাবেজের 'name' কলামের জন্য ফার্স্ট ও লাস্ট নেম যুক্ত করা
+        $fullName = $validatedData['first_name'] . ' ' . $validatedData['last_name'];
+
+        // ৩. ডাটাবেজে সেভ করার জন্য অ্যারে তৈরি
+        $insertData = [
+            'name'           => $fullName,
+            'email'          => $validatedData['email'],
+            'phone'          => $validatedData['phone'],
+            'interest'       => $validatedData['interest'],
+            'zip_code'       => $validatedData['zip_code'],
+            'street_address' => $validatedData['street_address'],
+            'apartment'      => $validatedData['apartment'],
+            'frequency'      => $validatedData['frequency'],
+            'sms_opt_in'     => $request->has('sms_opt_in') ? 1 : 0, // চেকড থাকলে ১, না থাকলে ০
+            'message'        => $validatedData['message'],
+        ];
+
+        // ৪. ডাটাবেজে ইনসার্ট
+        $messageData = Message::create($insertData);
+
+        // ৫. মেইল পাঠানো
         try {
             $adminMail = env('MAIL_FROM_ADDRESS');
             Mail::to($adminMail)->send(new ContactMessageMail($messageData));
             Mail::to($messageData->email)->send(new SenderConfirmationMail($messageData));
         } catch (\Exception $e) {
-
+            // মেইল সার্ভারে সমস্যা হলেও যেন ফর্ম সাবমিট আটকে না যায়
         }
 
         // AJAX এর জন্য JSON রেসপন্স
@@ -150,5 +178,9 @@ class HomeController extends Controller
             'success' => true,
             'message' => 'Thank you for subscribing! Welcome to Hub.'
         ]);
+    }
+    public function requestQuote(){
+        $services = Service::where('status',1)->get();
+        return view('frontEnd.request-quote.index',compact('services'));
     }
 }

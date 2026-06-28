@@ -30,6 +30,7 @@ Route::get('/project-gallery', [\App\Http\Controllers\HomeController::class,'pro
 Route::post('/contact-us-submit', [\App\Http\Controllers\HomeController::class,'contactFormSubmit'])->name('contact.submit');
 Route::get('/sitemap.xml', [\App\Http\Controllers\SitemapController::class, 'index']);
 Route::post('/newsletter/subscribe', [\App\Http\Controllers\HomeController::class, 'subscribe'])->name('newsletter.subscribe');
+Route::get('/request-quote', [\App\Http\Controllers\HomeController::class, 'requestQuote'])->name('request-quote');
 
 Route::redirect('/admin', '/admin/login');
 Route::prefix('admin')->group(function () {

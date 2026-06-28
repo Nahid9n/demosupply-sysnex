@@ -44,42 +44,108 @@
             <div class="row g-5">
                 <div class="col-lg-7 reveal">
                     <div class="contact-card">
-                        <h3 class="mb-4">Send us a message</h3>
+
+                        <div class="text-center mb-4">
+                            <h3 class="mb-4">Request A Quote</h3>
+                            <small class="text-muted">* Indicates a required field</small>
+                        </div>
                         <form id="contactFormSubmit" action="{{ route('contact.submit') }}" method="post">
                             @csrf
                             <div class="row g-3">
+                                <!-- First Name & Last Name -->
                                 <div class="col-md-6">
-                                    <label class="form-label">Full Name</label>
-                                    <input name="name" type="text" class="form-control" required>
+                                    <label class="form-label fw-semibold text-secondary small">First Name*</label>
+                                    <input name="first_name" type="text" class="form-control bg-light border-0 py-2" placeholder="ex. Jane" required>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="form-label">Email</label>
-                                    <input name="email" type="email" class="form-control" required>
+                                    <label class="form-label fw-semibold text-secondary small">Last Name*</label>
+                                    <input name="last_name" type="text" class="form-control bg-light border-0 py-2" placeholder="ex. Smith" required>
+                                </div>
+
+                                <!-- Email & Phone -->
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold text-secondary small">Email*</label>
+                                    <input name="email" type="email" class="form-control bg-light border-0 py-2" placeholder="ex. jane.smith@example.com" required>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="form-label">Phone</label>
-                                    <input name="phone" type="tel" class="form-control">
+                                    <label class="form-label fw-semibold text-secondary small">Phone Number*</label>
+                                    <input name="phone" type="tel" class="form-control bg-light border-0 py-2" placeholder="(555) 555-5555" required>
                                 </div>
+
+                            {{--<!-- SMS Checkbox Opt-in -->
+                            <div class="col-12 my-3">
+                                <div class="form-check d-flex align-items-start gap-2">
+                                    <input class="form-check-input mt-1" type="checkbox" name="sms_opt_in" id="smsOptIn" value="1">
+                                    <label class="form-check-label text-muted" style="font-size: 11px; line-height: 1.4;" for="smsOptIn">
+                                        <strong>Yes! You can text me service reminders and other messages.</strong><br>
+                                        By checking this box, I agree to opt in to receive automated SMS messages. Message data rates may apply. View <a href="#" class="text-decoration-underline text-dark">Terms</a> and <a href="#" class="text-decoration-underline text-dark">Privacy Policy</a>.
+                                    </label>
+                                </div>
+                            </div>--}}
+
+                            <!-- Zip Code -->
                                 <div class="col-md-6">
-                                    <label class="form-label">Interest</label>
-                                    <select name="interest" class="form-select">
-                                        @foreach($services as $service)
-                                        <option value="{{$service->id}}">{{$service->name}}</option>
-                                        @endforeach
-                                    </select>
+                                    <label class="form-label fw-semibold text-secondary small">Zip Code*</label>
+                                    <input name="zip_code" type="text" class="form-control bg-light border-0 py-2" placeholder="ex. 95765" required>
                                 </div>
+                                <div class="col-md-6"></div>
+
+                                <!-- Street & Suite Address -->
+                                <div class="col-md-7">
+                                    <label class="form-label fw-semibold text-secondary small">Street Address*</label>
+                                    <input name="street_address" type="text" class="form-control bg-light border-0 py-2" placeholder="ex. 1234 Example St, New York" required>
+                                </div>
+                                <div class="col-md-5">
+                                    <label class="form-label fw-semibold text-secondary small">Apartment/Suite (optional)</label>
+                                    <input name="apartment" type="text" class="form-control bg-light border-0 py-2" placeholder="Apt 123, Suite A">
+                                </div>
+
+                                <!-- Service / Type of Cleaning (Dynamic Loop formatted as Radio/Select style) -->
                                 <div class="col-12">
-                                    <label class="form-label">Message</label>
-                                    <textarea name="message" class="form-control" rows="5" required></textarea>
+                                    <label class="form-label fw-semibold text-secondary small d-block">Type of Interest / Service*</label>
+                                    <div class="d-flex flex-wrap gap-3">
+                                        @foreach($services as $key => $service)
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="interest" id="service_{{$service->id}}" value="{{$service->id}}" {{ $key == 0 ? 'checked' : '' }}>
+                                                <label class="form-check-label text-secondary" for="service_{{$service->id}}">
+                                                    {{$service->name}}
+                                                </label>
+                                            </div>
+                                        @endforeach
+                                    </div>
                                 </div>
-                                <div class="col-12 d-flex align-items-center gap-3">
-                                    <button id="submitBtn" class="btn btn-brand" type="submit">
-                                        <span id="btnText"><i class="fa-solid fa-paper-plane me-2"></i>Send Message</span>
+
+                                <!-- Frequency (Additional static field from image) -->
+                                <div class="col-12">
+                                    <label class="form-label fw-semibold text-secondary small d-block">Frequency*</label>
+                                    <div class="d-flex gap-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="frequency" id="freqRecurring" value="Recurring" checked>
+                                            <label class="form-check-label text-secondary" for="freqRecurring">Recurring</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="frequency" id="freqOneTime" value="One-Time">
+                                            <label class="form-check-label text-secondary" for="freqOneTime">One-Time Clean</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Message (Retained for contact detail flexability) -->
+                                <div class="col-12">
+                                    <label class="form-label fw-semibold text-secondary small">Additional Message/Notes</label>
+                                    <textarea name="message" class="form-control bg-light border-0" rows="3" placeholder="Tell us more about your requirements..."></textarea>
+                                </div>
+
+                                <!-- Form Buttons -->
+                                <div class="col-12 d-flex align-items-center gap-3 mt-4">
+                                    <button id="submitBtn" class="btn fw-bold px-4 py-2 text-white d-flex align-items-center" type="submit" style="background-color: #1a2b4c; border-radius: 6px;">
+                                        <span id="btnText">Submit and Continue <i class="fa-solid fa-chevron-right ms-2 fs-6"></i></span>
                                         <span id="btnSpinner" class="d-none">
-                                            <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Sending...
-                                        </span>
+                                                    <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Sending...
+                                                </span>
                                     </button>
-                                    <span id="formMsg" class="text-success d-none"><i class="fa-solid fa-circle-check me-1"></i> Thanks — we'll be in touch soon.</span>
+                                    <a href="javascript:history.back()" class="text-decoration-none fw-semibold ps-2" style="color: #e62a5a;">Back</a>
+                                    <span id="formMsg" class="text-success d-none ms-auto"><i class="fa-solid fa-circle-check me-1"></i> Sent!</span>
                                 </div>
                             </div>
                         </form>

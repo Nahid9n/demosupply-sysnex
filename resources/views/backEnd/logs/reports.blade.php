@@ -3,7 +3,6 @@
 
 @section('body')
     <div class="">
-
         <!-- 📅 টপ হেডার এবং ফিল্টার সেকশন -->
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h4 class="mb-0">📊 Performance & Traffic Reports</h4>
@@ -16,7 +15,6 @@
                 </select>
             </form>
         </div>
-
         <!-- 📈 কাউন্টার উইজেটস -->
         <div class="row mb-4">
             <div class="col-md-4">

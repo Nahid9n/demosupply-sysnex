@@ -9,7 +9,8 @@ class Message extends Model
 {
     use HasFactory;
     protected $fillable = [
-      'name',  'email',  'phone',  'interest',  'message', 'status'
+        'name', 'email', 'phone', 'interest', 'zip_code',
+        'street_address', 'apartment', 'frequency', 'sms_opt_in', 'message', 'status'
     ];
 
     public function get_service(){
