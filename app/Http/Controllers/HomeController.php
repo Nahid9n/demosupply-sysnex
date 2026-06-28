@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\ContactMessageMail;
 use App\Mail\SenderConfirmationMail;
+use App\Models\AboutSetting;
 use App\Models\Article;
 use App\Models\Gallery;
 use App\Models\Message;
@@ -95,7 +96,8 @@ class HomeController extends Controller
         return response()->json([]);
     }
     public function about(){
-        return view('frontEnd.about-us.index');
+        $about = AboutSetting::first();
+        return view('frontEnd.about-us.index',compact('about'));
     }
     public function projectGallery(){
         $galleries = Gallery::where('status',1)->get();
