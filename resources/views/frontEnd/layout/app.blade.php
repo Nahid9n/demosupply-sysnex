@@ -98,7 +98,7 @@
         <a href="{{$web_setting->messenger}}" target="_blank" class="floating-btn sub-btn text-white" style="background-color: #006aff;" title="Messenger">
             <i class="fa-brands fa-facebook-messenger"></i>
         </a>
-        <a href="{{$web_setting->whatsApp}}" target="_blank" class="floating-btn sub-btn text-white" style="background-color: #25d366;" title="WhatsApp">
+        <a href="{{$web_setting->whatsapp}}" target="_blank" class="floating-btn sub-btn text-white" style="background-color: #25d366;" title="WhatsApp">
             <i class="fa-brands fa-whatsapp"></i>
         </a>
     </div>

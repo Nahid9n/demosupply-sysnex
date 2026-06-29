@@ -8,14 +8,22 @@
                     {{ $web_setting->company_name }}
                 </a>
                 <p class="text-muted-2" style="color:#94a3b8">
-                    Smart solutions for modern living — premium Electrolite, Devices and Water Filters engineered for healthier homes.
+                    We are a premium, multi-service company engineered to handle your most critical everyday needs. By combining expert appliance & device repair, luxury executive transportation, lightning-fast express delivery, and professional commercial cleaning under one trusted brand, we bring unmatched convenience, peak efficiency, and transparent everyday pricing straight to your doorstep.
                 </p>
                 <div class="d-flex gap-3 mt-3">
-                    <a href="{{$web_setting->facebook}}" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    @if(!empty($web_setting->facebook))
+                    <a href="{{ $web_setting->facebook}}" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    @endif
+                    @if(!empty($web_setting->twitter))
                     <a href="{{$web_setting->twitter}}" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+                     @endif
 {{--                    <a href="{{$web_setting->facebook}}" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>--}}
+                    @if(!empty($web_setting->linkedin))
                     <a href="{{$web_setting->linkedin}}" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                    @endif
+                    @if(!empty($web_setting->youtube))
                     <a href="{{$web_setting->youtube}}" aria-label="Youtube"><i class="fa-brands fa-youtube"></i></a>
+                    @endif
                 </div>
             </div>
             <div class="col-6 col-lg-2">

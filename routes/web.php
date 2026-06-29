@@ -111,7 +111,7 @@ Route::prefix('admin')->group(function () {
         // Message
         Route::get('/messages', [\App\Http\Controllers\MessageController::class, 'index'])->name('admin.message');
         Route::post('/message-read', [\App\Http\Controllers\MessageController::class, 'read'])->name('admin.message.read');
-        Route::post('/message-delete', [\App\Http\Controllers\MessageController::class, 'delete'])->name('admin.message.delete');
+        Route::post('/message-delete', [\App\Http\Controllers\MessageController::class, 'destroy'])->name('admin.message.delete');
 
         Route::controller(\App\Http\Controllers\Admin\UserController::class)->group(function (){
             Route::get('/users','index')->name('admin.user.index');
